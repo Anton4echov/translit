@@ -1,95 +1,167 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Реал-тайм транслитерация (англ → рус)</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-        textarea {
-            width: 100%;
-            height: 150px;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: vertical;
-        }
-        #output {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            min-height: 50px;
-            background-color: #f9f9f9;
-            white-space: pre-wrap;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Онлайн транслитерация: английский → русский в реальном времени</title>
+  <meta name="description" content="Бесплатный онлайн сервис транслитерации. Пишите английскими буквами, и текст автоматически преобразуется в русский в реальном времени. Поддержка Щ, Ъ, Ь и других сочетаний.">
+  <meta name="keywords" content="транслитерация, онлайн, английский в русский, converter, transliteration, англ рус, щ, ъ, ь">
+  <meta name="author" content="Translit Tool">
+  
+  <!-- Schema.org for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Онлайн транслитерация",
+    "url": "https://example.com/translit",
+    "description": "Сервис для быстрой транслитерации английских букв в русский текст онлайн. Поддерживает все основные правила, включая щ, ъ, ь.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+      background: #f4f7fa;
+    }
+    h1 {
+      color: #222;
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical;
+      font-size: 1rem;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      min-height: 50px;
+      background-color: #fff;
+      white-space: pre-wrap;
+      font-size: 1.1rem;
+    }
+    #debug {
+      margin-top: 20px;
+      padding: 10px;
+      background: #eef6ff;
+      border: 1px dashed #5a9;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .combo {
+      font-weight: bold;
+      color: #d14;
+    }
+  </style>
 </head>
 <body>
-    <h1>Реал-тайм транслитерация (англ → рус)</h1>
-    <textarea id="inputText" placeholder="Введите текст на английском..." autofocus></textarea>
-    <div id="output"></div>
+  <h1>Онлайн транслитерация (английский → русский)</h1>
+  <textarea id="inputText" placeholder="Введите текст на английском..." autofocus></textarea>
+  <div id="output"></div>
+  <div id="debug"><em>Здесь будут отображаться найденные комбинации...</em></div>
 
-    <script>
-        const inputText = document.getElementById('inputText');
-        const outputDiv = document.getElementById('output');
+  <script>
+    const inputText = document.getElementById('inputText');
+    const outputDiv = document.getElementById('output');
+    const debugDiv = document.getElementById('debug');
 
-        const translitMap = {
-            'a': 'а', 'b': 'б', 'c': 'ц', 'd': 'д', 'e': 'е', 
-            'f': 'ф', 'g': 'г', 'h': 'х', 'i': 'и', 'j': 'й', 
-            'k': 'к', 'l': 'л', 'm': 'м', 'n': 'н', 'o': 'о', 
-            'p': 'п', 'q': 'к', 'r': 'р', 's': 'с', 't': 'т', 
-            'u': 'у', 'v': 'в', 'w': 'в', 'x': 'кс', 'y': 'ы', 
-            'z': 'з',
-            'A': 'А', 'B': 'Б', 'C': 'Ц', 'D': 'Д', 'E': 'Е', 
-            'F': 'Ф', 'G': 'Г', 'H': 'Х', 'I': 'И', 'J': 'Й', 
-            'K': 'К', 'L': 'Л', 'M': 'М', 'N': 'Н', 'O': 'О', 
-            'P': 'П', 'Q': 'К', 'R': 'Р', 'S': 'С', 'T': 'Т', 
-            'U': 'У', 'V': 'В', 'W': 'В', 'X': 'Кс', 'Y': 'Ы', 
-            'Z': 'З',
-            'sh': 'ш', 'ch': 'ч', 'zh': 'ж', 'yo': 'ё', 'yu': 'ю', 
-            'ya': 'я', 'Sh': 'Ш', 'Ch': 'Ч', 'Zh': 'Ж', 'Yo': 'Ё', 
-            'Yu': 'Ю', 'Ya': 'Я', 'SH': 'Ш', 'CH': 'Ч', 'ZH': 'Ж', 
-            'YO': 'Ё', 'YU': 'Ю', 'YA': 'Я',
-            "'": 'ь', '"': 'ъ', '``': 'ъ', '`': 'ь'
-        };
+    const translitMap = {
+      // multi-letter first
+      'shch': 'щ', 'Shch': 'Щ', 'SHCH': 'Щ',
+      'sch': 'щ',  'Sch': 'Щ',  'SCH': 'Щ',
 
-        inputText.addEventListener('input', function() {
-            let text = this.value;
-            let result = '';
-            let i = 0;
-            
-            while (i < text.length) {
-                let found = false;
-                // Проверяем двухбуквенные сочетания (sh, ch и т.д.)
-                if (i + 1 < text.length) {
-                    const twoChars = text.substr(i, 2);
-                    if (translitMap[twoChars]) {
-                        result += translitMap[twoChars];
-                        i += 2;
-                        found = true;
-                    }
-                }
-                if (!found) {
-                    const char = text[i];
-                    result += translitMap[char] || char;
-                    i++;
-                }
-            }
-            
-            outputDiv.textContent = result;
-        });
-    </script>
+      'sh': 'ш', 'ch': 'ч', 'zh': 'ж', 'yo': 'ё', 'yu': 'ю', 'ya': 'я',
+      'Sh': 'Ш', 'Ch': 'Ч', 'Zh': 'Ж', 'Yo': 'Ё', 'Yu': 'Ю', 'Ya': 'Я',
+      'SH': 'Ш', 'CH': 'Ч', 'ZH': 'Ж', 'YO': 'Ё', 'YU': 'Ю', 'YA': 'Я',
+
+      // single letters
+      'a': 'а','b': 'б','c': 'ц','d': 'д','e': 'е','f': 'ф','g': 'г','h': 'х','i': 'и',
+      'j': 'й','k': 'к','l': 'л','m': 'м','n': 'н','o': 'о','p': 'п','q': 'к','r': 'р',
+      's': 'с','t': 'т','u': 'у','v': 'в','w': 'в','x': 'кс','y': 'ы','z': 'з',
+
+      'A': 'А','B': 'Б','C': 'Ц','D': 'Д','E': 'Е','F': 'Ф','G': 'Г','H': 'Х','I': 'И',
+      'J': 'Й','K': 'К','L': 'Л','M': 'М','N': 'Н','O': 'О','P': 'П','Q': 'К','R': 'Р',
+      'S': 'С','T': 'Т','U': 'У','V': 'В','W': 'В','X': 'Кс','Y': 'Ы','Z': 'З',
+
+      // soft/hard signs
+      "'": 'ь', '`': 'ь', '"': 'ъ',
+      'Ь': 'Ь', 'Ъ': 'Ъ'
+    };
+
+    inputText.addEventListener('input', function() {
+      let text = this.value;
+      let result = '';
+      let debugLog = [];
+      let i = 0;
+
+      while (i < text.length) {
+        let found = false;
+
+        // check 4-letter combos (shch)
+        if (i + 3 < text.length) {
+          const four = text.substr(i, 4);
+          if (translitMap[four]) {
+            result += translitMap[four];
+            debugLog.push(`<span class="combo">${four}</span> → ${translitMap[four]}`);
+            i += 4;
+            found = true;
+            continue;
+          }
+        }
+
+        // check 3-letter combos (sch)
+        if (!found && i + 2 < text.length) {
+          const three = text.substr(i, 3);
+          if (translitMap[three]) {
+            result += translitMap[three];
+            debugLog.push(`<span class="combo">${three}</span> → ${translitMap[three]}`);
+            i += 3;
+            found = true;
+            continue;
+          }
+        }
+
+        // check 2-letter combos
+        if (!found && i + 1 < text.length) {
+          const two = text.substr(i, 2);
+          if (translitMap[two]) {
+            result += translitMap[two];
+            debugLog.push(`<span class="combo">${two}</span> → ${translitMap[two]}`);
+            i += 2;
+            found = true;
+            continue;
+          }
+        }
+
+        // single character
+        const char = text[i];
+        if (translitMap[char]) {
+          result += translitMap[char];
+          debugLog.push(`<span class="combo">${char}</span> → ${translitMap[char]}`);
+        } else {
+          result += char;
+        }
+        i++;
+      }
+
+      outputDiv.textContent = result;
+      debugDiv.innerHTML = debugLog.length ? debugLog.join('<br>') : '<em>Нет совпадений</em>';
+    });
+  </script>
 </body>
 </html>
