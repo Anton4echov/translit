@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Онлайн транслитерация (английский → русский)</title>
+<title>Транслитерация + Переводчик</title>
 <style>
   body {
     font-family: "Segoe UI", Arial, sans-serif;
@@ -14,24 +14,297 @@
     background: #0d0d0d;
     color: #f0f0f0;
   }
-  h1 { font-size: 1.5rem; color: #ff5555; text-align: center; text-shadow: 0 0 6px rgba(255,85,85,0.7); margin-bottom: 10px; }
-  textarea { width: 100%; height: 100px; padding: 6px; margin-bottom: 6px; border: 1px solid #444; border-radius: 4px; resize: vertical; font-size: 0.9rem; background: #1a1a1a; color: #f0f0f0; }
-  #output { margin-top: 6px; padding: 6px; border: 1px solid #444; border-radius: 4px; min-height: 40px; background-color: #111; font-size: 0.95rem; white-space: pre-wrap; }
-  button { margin-top: 6px; padding: 6px 12px; font-size: 0.9rem; border: none; border-radius: 4px; background: #ff5555; color: white; cursor: pointer; transition: 0.2s; }
-  button:hover { background: #ff3333; box-shadow: 0 0 6px #ff3333; }
-  #keyboard { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; }
-  .key { padding: 4px 6px; border-radius: 3px; background: #222; color: #f0f0f0; border: 1px solid #555; cursor: pointer; font-size: 0.8rem; min-width: 24px; text-align: center; user-select: none; line-height: 1.2; }
-  .key:hover { background: #333; color: #ff5555; box-shadow: 0 0 4px #ff5555; }
-  .adv, .produced { font-size: 0.8rem; margin: 6px 0; text-align:center; }
-  .floating-btn { position: fixed; bottom: 15px; right: 15px; width: 50px; height: 50px; border-radius: 50%; background: red; color: white; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; text-decoration: none; box-shadow: 0 0 8px rgba(255,255,255,0.3); animation: spin 3s linear infinite; z-index:1000; }
-  @keyframes spin { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
-  .floating-btn:hover { background:#666; box-shadow:0 0 12px #fff; }
+  h1, h2 { 
+    font-size: 1.5rem; 
+    color: #ff5555; 
+    text-align: center; 
+    text-shadow: 0 0 6px rgba(255,85,85,0.7); 
+    margin: 10px 0; 
+  }
+  h2 { font-size: 1.2rem; }
+  
+  /* Транслитерация */
+  textarea { 
+    width: 100%; 
+    height: 100px; 
+    padding: 6px; 
+    margin-bottom: 6px; 
+    border: 1px solid #444; 
+    border-radius: 4px; 
+    resize: vertical; 
+    font-size: 0.9rem; 
+    background: #1a1a1a; 
+    color: #f0f0f0; 
+  }
+  #output { 
+    margin-top: 6px; 
+    padding: 6px; 
+    border: 1px solid #444; 
+    border-radius: 4px; 
+    min-height: 40px; 
+    background-color: #111; 
+    font-size: 0.95rem; 
+    white-space: pre-wrap; 
+  }
+  button { 
+    margin-top: 6px; 
+    padding: 6px 12px; 
+    font-size: 0.9rem; 
+    border: none; 
+    border-radius: 4px; 
+    background: #ff5555; 
+    color: white; 
+    cursor: pointer; 
+    transition: 0.2s; 
+  }
+  button:hover { 
+    background: #ff3333; 
+    box-shadow: 0 0 6px #ff3333; 
+  }
+  #keyboard { 
+    margin-top: 6px; 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 3px; 
+    justify-content: center; 
+  }
+  .key { 
+    padding: 4px 6px; 
+    border-radius: 3px; 
+    background: #222; 
+    color: #f0f0f0; 
+    border: 1px solid #555; 
+    cursor: pointer; 
+    font-size: 0.8rem; 
+    min-width: 24px; 
+    text-align: center; 
+    user-select: none; 
+    line-height: 1.2; 
+  }
+  .key:hover { 
+    background: #333; 
+    color: #ff5555; 
+    box-shadow: 0 0 4px #ff5555; 
+  }
+  .adv, .produced { 
+    font-size: 0.8rem; 
+    margin: 6px 0; 
+    text-align:center; 
+  }
+  
+  /* Вертикальные плавающие кнопки */
+  .floating-buttons {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+  }
+  .floating-btn { 
+    width: 55px; 
+    height: 55px; 
+    border-radius: 50%; 
+    color: white; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 1.8rem; 
+    text-decoration: none; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .btn-red { 
+    background: rgba(255, 0, 0, 0.7); 
+    animation: spin 3s linear infinite; 
+  }
+  .btn-blue { 
+    background: rgba(0, 102, 204, 0.7); 
+  }
+  .floating-btn:hover { 
+    transform: scale(1.15);
+    background: rgba(255, 85, 85, 0.9);
+    box-shadow: 0 0 20px rgba(255,85,85,0.5);
+    border-color: rgba(255,255,255,0.4);
+  }
+  .btn-blue:hover {
+    background: rgba(0, 153, 255, 0.9);
+  }
+  @keyframes spin { 
+    from{transform:rotate(0deg);} 
+    to{transform:rotate(360deg);} 
+  }
 
   /* Cheat sheet */
-  #cheatsheet { margin-top:6px; font-size:0.75rem; color:#ccc; background:#111; border:1px solid #444; border-radius:4px; padding:6px; }
-  #cheatsheet table { width: 100%; border-collapse: collapse; }
-  #cheatsheet th, #cheatsheet td { border:1px solid #444; padding:2px 4px; text-align:center; }
-  #cheatsheet th { background:#222; color:#ff5555; }
+  #cheatsheet { 
+    margin-top:6px; 
+    font-size:0.75rem; 
+    color:#ccc; 
+    background:#111; 
+    border:1px solid #444; 
+    border-radius:4px; 
+    padding:6px; 
+  }
+  #cheatsheet table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  #cheatsheet th, #cheatsheet td { 
+    border:1px solid #444; 
+    padding:2px 4px; 
+    text-align:center; 
+  }
+  #cheatsheet th { 
+    background:#222; 
+    color:#ff5555; 
+  }
+
+  /* Переводчик */
+  .translator-container {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #444;
+  }
+  .language-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #222;
+    border-radius: 8px;
+  }
+  .lang-badge {
+    padding: 8px 16px;
+    background-color: #ff5555;
+    color: white;
+    border-radius: 20px;
+    font-weight: bold;
+  }
+  .swap-button {
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .swap-button:hover {
+    background-color: #ff5555;
+  }
+  .translator-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #444;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: #111;
+    color: #f0f0f0;
+  }
+  .translator-input:focus {
+    outline: none;
+    border-color: #ff5555;
+  }
+  .translate-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff5555;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px 0;
+  }
+  .translate-btn:hover {
+    background-color: #ff3333;
+  }
+  .translate-btn:disabled {
+    background-color: #444;
+    cursor: not-allowed;
+  }
+  .result {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #111;
+    border-radius: 8px;
+    border-left: 4px solid #ff5555;
+  }
+  .result-label {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 5px;
+  }
+  .result-text {
+    font-size: 20px;
+    color: #f0f0f0;
+    word-break: break-word;
+  }
+  .error {
+    color: #ff5555;
+    margin: 10px 0;
+  }
+  .loading {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #ff5555;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+  }
+  hr {
+    border: 1px solid #444;
+    margin: 20px 0;
+  }
+  
+  /* Кнопка для отправки транслитерированного текста в переводчик */
+  .send-to-translator {
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px 0;
+  }
+  .send-btn {
+    background-color: #444;
+    color: #ff5555;
+    border: 1px solid #ff5555;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .send-btn:hover {
+    background-color: #ff5555;
+    color: white;
+  }
+
+  /* Адаптация для мобильных */
+  @media (max-width: 768px) {
+    .floating-buttons {
+      right: 10px;
+      gap: 10px;
+    }
+    .floating-btn {
+      width: 45px;
+      height: 45px;
+      font-size: 1.5rem;
+    }
+  }
 </style>
 </head>
 <body>
@@ -39,31 +312,72 @@
 <h1>Онлайн транслитерация</h1>
 <div class="adv">Здесь может быть ваша реклама</div>
 
-<textarea id="inputText" placeholder="Введите текст на английском..." autofocus></textarea>
+<textarea id="inputText" placeholder="Введите текст на английском... (например: 'zhizn' 'yagoda' 'pod\"ezd')" autofocus></textarea>
 <div id="keyboard"></div>
 <div id="output"></div>
+
+<div class="send-to-translator">
+  <button class="send-btn" id="sendToTranslatorBtn" title="Отправить транслитерированный текст в переводчик">📤 Отправить в переводчик</button>
+</div>
+
 <button id="copyBtn">📋 Скопировать</button>
 
 <div id="cheatsheet">
   <strong>Комбинации для русских букв:</strong>
   <table>
     <tr><th>English</th><th>Russian</th><th>English</th><th>Russian</th></tr>
-    <tr><td>shch</td><td>щ</td><td>yo</td><td>ё</td></tr>
+    <tr><td>shch / sch</td><td>щ</td><td>yo</td><td>ё</td></tr>
     <tr><td>sh</td><td>ш</td><td>yu</td><td>ю</td></tr>
     <tr><td>ch</td><td>ч</td><td>ya</td><td>я</td></tr>
-    <tr><td>zh</td><td>ж</td><td>'</td><td>ь</td></tr>
-    <tr><td>"</td><td>ъ</td><td>y</td><td>ы</td></tr>
+    <tr><td>zh</td><td>ж</td><td>j</td><td>й</td></tr>
+    <tr><td>y (в конце)</td><td>ы</td><td>J</td><td>Й</td></tr>
+    <tr><td>' (апостроф)</td><td>ь</td><td>" (кавычка)</td><td>ъ</td></tr>
+    <tr><td>'' (два апострофа)</td><td>ъ</td><td>Y (заглавная)</td><td>Ы</td></tr>
   </table>
+  <p><small>Пример: zhizn' → жизнь, pod"ezd → подъезд, yagoda → ягода, jod → йод</small></p>
+</div>
+
+<hr>
+
+<!-- Переводчик -->
+<div class="translator-container">
+  <h2>🌐 Переводчик (Русский ↔ Английский)</h2>
+  
+  <div class="language-selector">
+    <span class="lang-badge" id="sourceLang">Русский</span>
+    <button class="swap-button" onclick="swapLanguages()" title="Поменять языки местами">↔️</button>
+    <span class="lang-badge" id="targetLang">Английский</span>
+  </div>
+
+  <input type="text" class="translator-input" id="translatorInput" placeholder="Введите текст для перевода..." value="Привет">
+  
+  <button class="translate-btn" onclick="translateText()" id="translateBtn">
+    <span id="btnText">Перевести</span>
+  </button>
+  
+  <div class="result">
+    <div class="result-label">Перевод:</div>
+    <div class="result-text" id="translationResult">—</div>
+  </div>
+  
+  <div id="translationError" class="error"></div>
 </div>
 
 <div class="produced">🚀 PRODUCED BY</div>
-<a href="https://ship-spb.onrender.com/friends" class="floating-btn">♥</a>
+
+<!-- Вертикальные плавающие кнопки -->
+<div class="floating-buttons">
+  <a href="https://ship-spb.onrender.com/friends" class="floating-btn btn-red" target="_blank" title="Ship SPB">♥</a>
+  <a href="https://dmitry-ne.onrender.com/" class="floating-btn btn-blue" target="_blank" title="Dmitry NE - Музыка">♪</a>
+</div>
 
 <script>
+// ========== ТРАНСЛИТЕРАЦИЯ ==========
 const inputText=document.getElementById('inputText');
 const outputDiv=document.getElementById('output');
 const copyBtn=document.getElementById('copyBtn');
 const keyboardDiv=document.getElementById('keyboard');
+const sendToTranslatorBtn = document.getElementById('sendToTranslatorBtn');
 
 const keys=[..."ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
 ".",",","?","/",";",":","!","@","#","$","%","&","(",")","-","_","=","+","'","\"","`","~"];
@@ -84,36 +398,230 @@ keys.forEach(symbol=>{
 });
 
 const translitMap={
-  'shch':'щ','Shch':'Щ','SHCH':'Щ',
-  'sch':'щ','Sch':'Щ','SCH':'Щ',
-  'sh':'ш','ch':'ч','zh':'ж','yo':'ё','yu':'ю','ya':'я',
-  'Sh':'Ш','Ch':'Ч','Zh':'Ж','Yo':'Ё','Yu':'Ю','Ya':'Я',
-  'SH':'Ш','CH':'Ч','ZH':'Ж','YO':'Ё','YU':'Ю','YA':'Я',
-  'a':'а','b':'б','c':'ц','d':'д','e':'е','f':'ф','g':'г','h':'х','i':'и',
-  'j':'й','k':'к','l':'л','m':'м','n':'н','o':'о','p':'п','q':'к','r':'р',
-  's':'с','t':'т','u':'у','v':'в','w':'в','x':'кс','y':'ы','z':'з',
-  'A':'А','B':'Б','C':'Ц','D':'Д','E':'Е','F':'Ф','G':'Г','H':'Х','I':'И',
-  'J':'Й','K':'К','L':'Л','M':'М','N':'Н','O':'О','P':'П','Q':'К','R':'Р',
-  'S':'С','T':'Т','U':'У','V':'В','W':'В','X':'Кс','Y':'Ы','Z':'З',
-  "'":'ь', "`":'ь', '"':'ъ','Ь':'Ь','Ъ':'Ъ'
+  // Сложные комбинации (4 буквы)
+  'shch':'щ', 'Shch':'Щ', 'SHCH':'Щ',
+  'sch':'щ', 'Sch':'Щ', 'SCH':'Щ',
+  
+  // Комбинации из 3 букв
+  'sh':'ш', 'ch':'ч', 'zh':'ж', 'yo':'ё', 'yu':'ю', 'ya':'я',
+  'Sh':'Ш', 'Ch':'Ч', 'Zh':'Ж', 'Yo':'Ё', 'Yu':'Ю', 'Ya':'Я',
+  'SH':'Ш', 'CH':'Ч', 'ZH':'Ж', 'YO':'Ё', 'YU':'Ю', 'YA':'Я',
+  
+  // Комбинации из 2 букв (специальные случаи)
+  'ij':'й', 'Ij':'Й', 'IJ':'Й', // для й
+  '``':'ъ', '""':'ъ', '"\'':'ъ', "'\"":'ъ', "''":'ъ', // для твердого знака двумя символами
+  
+  // Отдельные символы (строчные)
+  'a':'а', 'b':'б', 'c':'ц', 'd':'д', 'e':'е', 'f':'ф', 'g':'г', 'h':'х', 
+  'i':'и', 'j':'й', 'k':'к', 'l':'л', 'm':'м', 'n':'н', 'o':'о', 'p':'п', 
+  'q':'к', 'r':'р', 's':'с', 't':'т', 'u':'у', 'v':'в', 'w':'в', 'x':'кс', 
+  'y':'ы', 'z':'з',
+  
+  // Отдельные символы (заглавные)
+  'A':'А', 'B':'Б', 'C':'Ц', 'D':'Д', 'E':'Е', 'F':'Ф', 'G':'Г', 'H':'Х', 
+  'I':'И', 'J':'Й', 'K':'К', 'L':'Л', 'M':'М', 'N':'Н', 'O':'О', 'P':'П', 
+  'Q':'К', 'R':'Р', 'S':'С', 'T':'Т', 'U':'У', 'V':'В', 'W':'В', 'X':'Кс', 
+  'Y':'Ы', 'Z':'З',
+  
+  // Мягкий и твердый знаки
+  "'":'ь', "`":'ь', '"':'ъ',
+  'Ь':'Ь', 'Ъ':'Ъ',
+  
+  // Заглавные Ы, Й
+  'Ы':'Ы', 'Й':'Й'
 };
 
-inputText.addEventListener('input',function(){
-  let text=this.value,result='',i=0;
-  while(i<text.length){
-    let found=false;
-    if(i+3<text.length){const four=text.substr(i,4);if(translitMap[four]){result+=translitMap[four];i+=4;found=true;continue;}}
-    if(!found && i+2<text.length){const three=text.substr(i,3);if(translitMap[three]){result+=translitMap[three];i+=3;found=true;continue;}}
-    if(!found && i+1<text.length){const two=text.substr(i,2);if(translitMap[two]){result+=translitMap[two];i+=2;found=true;continue;}}
-    const char=text[i]; result+=translitMap[char]?translitMap[char]:char;
+// Функция для транслитерации
+function transliterate(text) {
+  let result = '';
+  let i = 0;
+  
+  while (i < text.length) {
+    let found = false;
+    
+    // Проверяем комбинации из 4 символов
+    if (i + 3 < text.length) {
+      const four = text.substr(i, 4);
+      if (translitMap[four]) {
+        result += translitMap[four];
+        i += 4;
+        found = true;
+        continue;
+      }
+    }
+    
+    // Проверяем комбинации из 3 символов
+    if (!found && i + 2 < text.length) {
+      const three = text.substr(i, 3);
+      if (translitMap[three]) {
+        result += translitMap[three];
+        i += 3;
+        found = true;
+        continue;
+      }
+    }
+    
+    // Проверяем комбинации из 2 символов
+    if (!found && i + 1 < text.length) {
+      const two = text.substr(i, 2);
+      if (translitMap[two]) {
+        result += translitMap[two];
+        i += 2;
+        found = true;
+        continue;
+      }
+    }
+    
+    // Одиночный символ
+    const char = text[i];
+    result += translitMap[char] !== undefined ? translitMap[char] : char;
     i++;
   }
-  outputDiv.textContent=result;
+  
+  return result;
+}
+
+inputText.addEventListener('input', function() {
+  outputDiv.textContent = transliterate(this.value);
 });
 
-copyBtn.addEventListener('click',()=>{
-  const text=outputDiv.textContent;
-  if(text.trim()){navigator.clipboard.writeText(text);copyBtn.textContent="✅ Скопировано!";setTimeout(()=>copyBtn.textContent="📋 Скопировать",1500);}
+copyBtn.addEventListener('click', () => {
+  const text = outputDiv.textContent;
+  if (text.trim()) {
+    navigator.clipboard.writeText(text);
+    copyBtn.textContent = "✅ Скопировано!";
+    setTimeout(() => copyBtn.textContent = "📋 Скопировать", 1500);
+  }
+});
+
+// ========== ОТПРАВКА В ПЕРЕВОДЧИК ==========
+sendToTranslatorBtn.addEventListener('click', function() {
+  const transliteratedText = outputDiv.textContent;
+  if (transliteratedText && transliteratedText.trim()) {
+    document.getElementById('translatorInput').value = transliteratedText;
+    // Автоматически запускаем перевод
+    translateText();
+  } else {
+    alert('Сначала введите текст для транслитерации');
+  }
+});
+
+// ========== ПЕРЕВОДЧИК ==========
+let sourceLanguage = 'ru';
+let targetLanguage = 'en';
+
+function updateLanguageDisplay() {
+  const sourceNames = { 'ru': 'Русский', 'en': 'Английский' };
+  const targetNames = { 'en': 'Английский', 'ru': 'Русский' };
+  
+  document.getElementById('sourceLang').textContent = sourceNames[sourceLanguage];
+  document.getElementById('targetLang').textContent = targetNames[targetLanguage];
+}
+
+function swapLanguages() {
+  const temp = sourceLanguage;
+  sourceLanguage = targetLanguage;
+  targetLanguage = temp;
+  updateLanguageDisplay();
+  
+  const translatorInput = document.getElementById('translatorInput');
+  if (translatorInput.value.trim()) {
+    translateText();
+  }
+}
+
+async function translateText() {
+  const inputText = document.getElementById('translatorInput').value.trim();
+  const resultDiv = document.getElementById('translationResult');
+  const errorDiv = document.getElementById('translationError');
+  const translateBtn = document.getElementById('translateBtn');
+  const btnText = document.getElementById('btnText');
+  
+  errorDiv.textContent = '';
+  
+  if (!inputText) {
+    errorDiv.textContent = 'Пожалуйста, введите текст для перевода';
+    return;
+  }
+  
+  translateBtn.disabled = true;
+  btnText.innerHTML = '<span class="loading"></span> Перевод...';
+  resultDiv.textContent = 'Переводим...';
+  
+  try {
+    let translatedText = null;
+    
+    translatedText = await translateWithMyMemory(inputText, sourceLanguage, targetLanguage);
+    
+    if (!translatedText) {
+      translatedText = await translateWithLibre(inputText, sourceLanguage, targetLanguage);
+    }
+    
+    if (!translatedText) {
+      throw new Error('Не удалось получить перевод');
+    }
+    
+    resultDiv.textContent = translatedText;
+    
+  } catch (error) {
+    console.error('Ошибка перевода:', error);
+    resultDiv.textContent = '—';
+    errorDiv.textContent = 'Произошла ошибка при переводе. Попробуйте еще раз.';
+  } finally {
+    translateBtn.disabled = false;
+    btnText.textContent = 'Перевести';
+  }
+}
+
+async function translateWithMyMemory(text, fromLang, toLang) {
+  try {
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${fromLang}|${toLang}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    if (data.responseData && data.responseData.translatedText) {
+      return data.responseData.translatedText;
+    }
+    return null;
+  } catch (error) {
+    console.log('MyMemory API error:', error);
+    return null;
+  }
+}
+
+async function translateWithLibre(text, fromLang, toLang) {
+  try {
+    const url = 'https://libretranslate.com/translate';
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        q: text,
+        source: fromLang,
+        target: toLang,
+        format: 'text'
+      })
+    });
+    
+    const data = await response.json();
+    if (data.translatedText) {
+      return data.translatedText;
+    }
+    return null;
+  } catch (error) {
+    console.log('LibreTranslate API error:', error);
+    return null;
+  }
+}
+
+document.getElementById('translatorInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    translateText();
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  updateLanguageDisplay();
 });
 </script>
 </body>
