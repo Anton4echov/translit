@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Транслитерация + Переводчик</title>
+<title>Транслитерация + Переводчик (Полный алфавит + Caps Soft/Hard)</title>
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
 <style>
   body {
@@ -24,7 +24,6 @@
   }
   h2 { font-size: 1.2rem; }
   
-  /* Транслитерация */
   textarea { 
     width: 100%; 
     height: 100px; 
@@ -93,7 +92,33 @@
     text-align:center; 
   }
   
-  /* Вертикальные плавающие кнопки */
+  /* Чекбокс для заглавных Ь и Ъ */
+  .caps-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+    padding: 8px;
+    background: #1a1a1a;
+    border-radius: 6px;
+    border: 1px solid #444;
+  }
+  .caps-option input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #ff5555;
+  }
+  .caps-option label {
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #ffaaaa;
+  }
+  .caps-option small {
+    color: #888;
+    font-size: 0.7rem;
+  }
+  
   .floating-buttons {
     position: fixed;
     right: 20px;
@@ -140,7 +165,6 @@
     to{transform:rotate(360deg);} 
   }
 
-  /* Cheat sheet */
   #cheatsheet { 
     margin-top:6px; 
     font-size:0.75rem; 
@@ -164,7 +188,6 @@
     color:#ff5555; 
   }
 
-  /* Переводчик */
   .translator-container {
     background-color: #1a1a1a;
     border-radius: 12px;
@@ -274,7 +297,6 @@
     margin: 20px 0;
   }
   
-  /* Кнопка для отправки транслитерированного текста в переводчик */
   .send-to-translator {
     display: flex;
     justify-content: flex-end;
@@ -294,7 +316,6 @@
     color: white;
   }
 
-  /* Адаптация для мобильных */
   @media (max-width: 768px) {
     .floating-buttons {
       right: 10px;
@@ -310,11 +331,19 @@
 </head>
 <body>
 
-<h1>Онлайн транслитерация</h1>
+<h1>Онлайн транслитерация (Полный алфавит)</h1>
 <div class="adv">Здесь может быть ваша реклама</div>
 
-<textarea id="inputText" placeholder="Введите текст на английском... (например: 'zhizn' 'yagoda' 'pod\"ezd')" autofocus></textarea>
+<textarea id="inputText" placeholder="Введите текст на английском... (например: 'Zhizn'' 'SHCHuka' 'Pod''ezd' 'Yolka')" autofocus></textarea>
 <div id="keyboard"></div>
+
+<!-- Чекбокс для заглавных мягкого и твёрдого знаков -->
+<div class="caps-option">
+  <input type="checkbox" id="forceCapitalSoftHard">
+  <label for="forceCapitalSoftHard">🔠 Использовать заглавные <b>Ь</b> и <b>Ъ</b> (для all-caps текста)</label>
+  <small>— при включении ' → Ь, " → Ъ</small>
+</div>
+
 <div id="output"></div>
 
 <div class="send-to-translator">
@@ -324,23 +353,19 @@
 <button id="copyBtn">📋 Скопировать</button>
 
 <div id="cheatsheet">
-  <strong>Комбинации для русских букв:</strong>
+  <strong>Все комбинации (с учётом регистра):</strong>
   <table>
-    <tr><th>English</th><th>Russian</th><th>English</th><th>Russian</th></tr>
-    <tr><td>shch / sch</td><td>щ</td><td>yo</td><td>ё</td></tr>
-    <tr><td>sh</td><td>ш</td><td>yu</td><td>ю</td></tr>
-    <tr><td>ch</td><td>ч</td><td>ya</td><td>я</td></tr>
-    <tr><td>zh</td><td>ж</td><td>j</td><td>й</td></tr>
-    <tr><td>y (в конце)</td><td>ы</td><td>J</td><td>Й</td></tr>
-    <tr><td>' (апостроф)</td><td>ь</td><td>" (кавычка)</td><td>ъ</td></tr>
-    <tr><td>'' (два апострофа)</td><td>ъ</td><td>Y (заглавная)</td><td>Ы</td></tr>
+    <tr><th>Англ.</th><th>Рус.</th><th>Англ.</th><th>Рус.</th><th>Англ.</th><th>Рус.</th></tr>
+    <tr><td>shch / sch</td><td>щ / Щ</td><td>sh</td><td>ш / Ш</td><td>ch</td><td>ч / Ч</td></tr>
+    <tr><td>zh</td><td>ж / Ж</td><td>yo</td><td>ё / Ё</td><td>yu</td><td>ю / Ю</td></tr>
+    <tr><td>ya</td><td>я / Я</td><td>eh</td><td>э / Э</td><td>y (согл.)</td><td>ы / Ы</td></tr>
+    <tr><td>j</td><td>й / Й</td><td>' (апостр.)</td><td>ь / Ь*</td><td>'' или ``</td><td>ъ / Ъ*</td></tr>
   </table>
-  <p><small>Пример: zhizn' → жизнь, pod"ezd → подъезд, yagoda → ягода, jod → йод</small></p>
+  <p><small>* — при включённом чекбоксе становятся заглавными (Ь, Ъ). Примеры: zhizn' → жизнь, ZHIZN' + чекбокс → ЖИЗНЬ, pod''ezd → подъезд, yolka → ёлка</small></p>
 </div>
 
 <hr>
 
-<!-- Переводчик -->
 <div class="translator-container">
   <h2>🌐 Переводчик (Русский ↔ Английский)</h2>
   
@@ -366,81 +391,81 @@
 
 <div class="produced">🚀 PRODUCED BY</div>
 
-<!-- Вертикальные плавающие кнопки -->
 <div class="floating-buttons">
   <a href="https://ship-spb.onrender.com/friends" class="floating-btn btn-red" target="_blank" title="Ship SPB">♥</a>
   <a href="https://dmitry-ne.onrender.com/" class="floating-btn btn-blue" target="_blank" title="Dmitry NE - Музыка">♪</a>
 </div>
 
 <script>
-// ========== ТРАНСЛИТЕРАЦИЯ ==========
-const inputText=document.getElementById('inputText');
-const outputDiv=document.getElementById('output');
-const copyBtn=document.getElementById('copyBtn');
-const keyboardDiv=document.getElementById('keyboard');
+// ========== ПОЛНАЯ ТРАНСЛИТЕРАЦИЯ (все буквы + регистр + опция заглавных Ь/Ъ) ==========
+const inputText = document.getElementById('inputText');
+const outputDiv = document.getElementById('output');
+const copyBtn = document.getElementById('copyBtn');
+const keyboardDiv = document.getElementById('keyboard');
 const sendToTranslatorBtn = document.getElementById('sendToTranslatorBtn');
+const forceCapitalCheckbox = document.getElementById('forceCapitalSoftHard');
 
-const keys=[..."ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
-".",",","?","/",";",":","!","@","#","$","%","&","(",")","-","_","=","+","'","\"","`","~"];
+// Клавиатура
+const keys = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+  ".",",","?","/",";",":","!","@","#","$","%","&","(",")","-","_","=","+","'","\"","`","~"];
 
-keys.forEach(symbol=>{
-  const key=document.createElement('div');
-  key.className='key';
-  key.textContent=symbol;
-  key.addEventListener('click',()=>{
-    const start=inputText.selectionStart;
-    const end=inputText.selectionEnd;
-    inputText.value=inputText.value.substring(0,start)+symbol+inputText.value.substring(end);
+keys.forEach(symbol => {
+  const key = document.createElement('div');
+  key.className = 'key';
+  key.textContent = symbol;
+  key.addEventListener('click', () => {
+    const start = inputText.selectionStart;
+    const end = inputText.selectionEnd;
+    inputText.value = inputText.value.substring(0, start) + symbol + inputText.value.substring(end);
     inputText.focus();
-    inputText.selectionStart=inputText.selectionEnd=start+symbol.length;
+    inputText.selectionStart = inputText.selectionEnd = start + symbol.length;
     inputText.dispatchEvent(new Event('input'));
   });
   keyboardDiv.appendChild(key);
 });
 
-const translitMap={
-  // Сложные комбинации (4 буквы)
-  'shch':'щ', 'Shch':'Щ', 'SHCH':'Щ',
-  'sch':'щ', 'Sch':'Щ', 'SCH':'Щ',
+// ПОЛНАЯ КАРТА ТРАНСЛИТЕРАЦИИ (ВСЕ БУКВЫ)
+const translitMap = {
+  // 4-символьные комбинации
+  'shch': 'щ', 'Shch': 'Щ', 'SHCH': 'Щ',
+  'sch': 'щ', 'Sch': 'Щ', 'SCH': 'Щ',
   
-  // Комбинации из 3 букв
-  'sh':'ш', 'ch':'ч', 'zh':'ж', 'yo':'ё', 'yu':'ю', 'ya':'я',
-  'Sh':'Ш', 'Ch':'Ч', 'Zh':'Ж', 'Yo':'Ё', 'Yu':'Ю', 'Ya':'Я',
-  'SH':'Ш', 'CH':'Ч', 'ZH':'Ж', 'YO':'Ё', 'YU':'Ю', 'YA':'Я',
+  // 3-символьные комбинации
+  'sh': 'ш', 'ch': 'ч', 'zh': 'ж', 'yo': 'ё', 'yu': 'ю', 'ya': 'я', 'eh': 'э',
+  'Sh': 'Ш', 'Ch': 'Ч', 'Zh': 'Ж', 'Yo': 'Ё', 'Yu': 'Ю', 'Ya': 'Я', 'Eh': 'Э',
+  'SH': 'Ш', 'CH': 'Ч', 'ZH': 'Ж', 'YO': 'Ё', 'YU': 'Ю', 'YA': 'Я', 'EH': 'Э',
   
-  // Комбинации из 2 букв (специальные случаи)
-  'ij':'й', 'Ij':'Й', 'IJ':'Й', // для й
-  '``':'ъ', '""':'ъ', '"\'':'ъ', "'\"":'ъ', "''":'ъ', // для твердого знака двумя символами
+  // 2-символьные комбинации (твёрдый знак)
+  '``': 'ъ', '""': 'ъ', '"\'': 'ъ', "'\"": 'ъ', "''": 'ъ',
   
-  // Отдельные символы (строчные)
-  'a':'а', 'b':'б', 'c':'ц', 'd':'д', 'e':'е', 'f':'ф', 'g':'г', 'h':'х', 
-  'i':'и', 'j':'й', 'k':'к', 'l':'л', 'm':'м', 'n':'н', 'o':'о', 'p':'п', 
-  'q':'к', 'r':'р', 's':'с', 't':'т', 'u':'у', 'v':'в', 'w':'в', 'x':'кс', 
-  'y':'ы', 'z':'з',
+  // Одиночные (строчные)
+  'a': 'а', 'b': 'б', 'c': 'ц', 'd': 'д', 'e': 'е', 'f': 'ф', 'g': 'г', 
+  'h': 'х', 'i': 'и', 'j': 'й', 'k': 'к', 'l': 'л', 'm': 'м', 'n': 'н', 
+  'o': 'о', 'p': 'п', 'q': 'к', 'r': 'р', 's': 'с', 't': 'т', 'u': 'у', 
+  'v': 'в', 'w': 'в', 'x': 'кс', 'y': 'ы', 'z': 'з',
   
-  // Отдельные символы (заглавные)
-  'A':'А', 'B':'Б', 'C':'Ц', 'D':'Д', 'E':'Е', 'F':'Ф', 'G':'Г', 'H':'Х', 
-  'I':'И', 'J':'Й', 'K':'К', 'L':'Л', 'M':'М', 'N':'Н', 'O':'О', 'P':'П', 
-  'Q':'К', 'R':'Р', 'S':'С', 'T':'Т', 'U':'У', 'V':'В', 'W':'В', 'X':'Кс', 
-  'Y':'Ы', 'Z':'З',
+  // Одиночные (заглавные)
+  'A': 'А', 'B': 'Б', 'C': 'Ц', 'D': 'Д', 'E': 'Е', 'F': 'Ф', 'G': 'Г', 
+  'H': 'Х', 'I': 'И', 'J': 'Й', 'K': 'К', 'L': 'Л', 'M': 'М', 'N': 'Н', 
+  'O': 'О', 'P': 'П', 'Q': 'К', 'R': 'Р', 'S': 'С', 'T': 'Т', 'U': 'У', 
+  'V': 'В', 'W': 'В', 'X': 'Кс', 'Y': 'Ы', 'Z': 'З',
   
-  // Мягкий и твердый знаки
-  "'":'ь', "`":'ь', '"':'ъ',
-  'Ь':'Ь', 'Ъ':'Ъ',
-  
-  // Заглавные Ы, Й
-  'Ы':'Ы', 'Й':'Й'
+  // Мягкий и твёрдый (базовые, строчные)
+  "'": 'ь', "`": 'ь', '"': 'ъ',
 };
 
-// Функция для транслитерации
+// Функция транслитерации с поддержкой заглавных Ь/Ъ
 function transliterate(text) {
   let result = '';
   let i = 0;
   
+  // Проверяем, включена ли опция "заглавные мягкий/твёрдый"
+  const useCapitalSoftHard = forceCapitalCheckbox.checked;
+  
   while (i < text.length) {
     let found = false;
     
-    // Проверяем комбинации из 4 символов
+    // Проверка 4 символов
     if (i + 3 < text.length) {
       const four = text.substr(i, 4);
       if (translitMap[four]) {
@@ -451,7 +476,7 @@ function transliterate(text) {
       }
     }
     
-    // Проверяем комбинации из 3 символов
+    // Проверка 3 символов
     if (!found && i + 2 < text.length) {
       const three = text.substr(i, 3);
       if (translitMap[three]) {
@@ -462,11 +487,16 @@ function transliterate(text) {
       }
     }
     
-    // Проверяем комбинации из 2 символов
+    // Проверка 2 символов
     if (!found && i + 1 < text.length) {
       const two = text.substr(i, 2);
       if (translitMap[two]) {
-        result += translitMap[two];
+        let mapped = translitMap[two];
+        // Если включена опция и это твёрдый знак (ъ) - делаем заглавным
+        if (useCapitalSoftHard && mapped === 'ъ') {
+          mapped = 'Ъ';
+        }
+        result += mapped;
         i += 2;
         found = true;
         continue;
@@ -475,17 +505,35 @@ function transliterate(text) {
     
     // Одиночный символ
     const char = text[i];
-    result += translitMap[char] !== undefined ? translitMap[char] : char;
+    let mapped = translitMap[char];
+    
+    // Обработка мягкого и твёрдого знака с учётом опции
+    if (mapped !== undefined) {
+      if (useCapitalSoftHard) {
+        if (mapped === 'ь') mapped = 'Ь';  // мягкий знак в заглавный
+        if (mapped === 'ъ') mapped = 'Ъ';  // твёрдый знак в заглавный
+      }
+      result += mapped;
+    } else {
+      result += char;
+    }
     i++;
   }
   
   return result;
 }
 
+// Обновление вывода при вводе
 inputText.addEventListener('input', function() {
   outputDiv.textContent = transliterate(this.value);
 });
 
+// Обновление при изменении чекбокса
+forceCapitalCheckbox.addEventListener('change', function() {
+  outputDiv.textContent = transliterate(inputText.value);
+});
+
+// Копирование
 copyBtn.addEventListener('click', () => {
   const text = outputDiv.textContent;
   if (text.trim()) {
@@ -495,12 +543,11 @@ copyBtn.addEventListener('click', () => {
   }
 });
 
-// ========== ОТПРАВКА В ПЕРЕВОДЧИК ==========
+// Отправка в переводчик
 sendToTranslatorBtn.addEventListener('click', function() {
   const transliteratedText = outputDiv.textContent;
   if (transliteratedText && transliteratedText.trim()) {
     document.getElementById('translatorInput').value = transliteratedText;
-    // Автоматически запускаем перевод
     translateText();
   } else {
     alert('Сначала введите текст для транслитерации');
@@ -532,7 +579,8 @@ function swapLanguages() {
 }
 
 async function translateText() {
-  const inputText = document.getElementById('translatorInput').value.trim();
+  const inputTextElem = document.getElementById('translatorInput');
+  const inputTextVal = inputTextElem.value.trim();
   const resultDiv = document.getElementById('translationResult');
   const errorDiv = document.getElementById('translationError');
   const translateBtn = document.getElementById('translateBtn');
@@ -540,7 +588,7 @@ async function translateText() {
   
   errorDiv.textContent = '';
   
-  if (!inputText) {
+  if (!inputTextVal) {
     errorDiv.textContent = 'Пожалуйста, введите текст для перевода';
     return;
   }
@@ -550,12 +598,10 @@ async function translateText() {
   resultDiv.textContent = 'Переводим...';
   
   try {
-    let translatedText = null;
-    
-    translatedText = await translateWithMyMemory(inputText, sourceLanguage, targetLanguage);
+    let translatedText = await translateWithMyMemory(inputTextVal, sourceLanguage, targetLanguage);
     
     if (!translatedText) {
-      translatedText = await translateWithLibre(inputText, sourceLanguage, targetLanguage);
+      translatedText = await translateWithLibre(inputTextVal, sourceLanguage, targetLanguage);
     }
     
     if (!translatedText) {
