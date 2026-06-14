@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Переводчик онлайн | Русско-английский и вьетнамский перевод с озвучкой</title>
-<meta name="description" content="Бесплатный онлайн переводчик с русского на английский, вьетнамский и обратно. Голосовое воспроизведение текста. Мгновенный перевод, удобный интерфейс.">
-<meta name="keywords" content="переводчик онлайн, русско-английский перевод, русско-вьетнамский перевод, озвучка текста, голосовой перевод, text to speech">
+<title>Переводчик онлайн | Голосовой ввод и озвучка | Русский-Английский-Вьетнамский</title>
+<meta name="description" content="Бесплатный онлайн переводчик с голосовым вводом и озвучкой. Перевод с русского на английский, вьетнамский и обратно. Диктуйте текст - получайте перевод.">
+<meta name="keywords" content="переводчик онлайн, голосовой ввод, диктовка, speech recognition, русско-английский перевод, русско-вьетнамский перевод, озвучка текста">
 <meta name="author" content="Translit Service">
 <meta name="robots" content="index, follow">
 <meta name="googlebot" content="index, follow">
 <meta name="yandex" content="index, follow">
 <link rel="canonical" href="https://translit-eng-rus.onrender.com/ru-en.html">
-<meta property="og:title" content="Переводчик онлайн с озвучкой | Русско-английский и вьетнамский">
-<meta property="og:description" content="Перевод текста и голосовое воспроизведение. Бесплатно.">
+<meta property="og:title" content="Переводчик с голосовым вводом | Русско-английский и вьетнамский">
+<meta property="og:description" content="Перевод текста, голосовой ввод и озвучка. Бесплатно.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://translit-eng-rus.onrender.com/ru-en.html">
 <meta property="og:locale" content="ru_RU">
@@ -23,14 +23,14 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "Переводчик онлайн с озвучкой",
+  "name": "Переводчик с голосовым вводом",
   "url": "https://translit-eng-rus.onrender.com/ru-en.html",
-  "description": "Переводчик с русского на английский и вьетнамский с голосовым воспроизведением.",
+  "description": "Переводчик с русского на английский и вьетнамский с голосовым вводом и озвучкой.",
   "applicationCategory": "Utility",
   "operatingSystem": "All",
   "offers": {"@type": "Offer", "price": "0", "priceCurrency": "RUB"},
   "inLanguage": ["ru", "en", "vi"],
-  "featureList": ["Перевод с русского на английский", "Перевод с русского на вьетнамский", "Голосовое воспроизведение оригинала", "Голосовое воспроизведение перевода"]
+  "featureList": ["Перевод с русского на английский", "Перевод с русского на вьетнамский", "Голосовой ввод текста", "Озвучка оригинала", "Озвучка перевода"]
 }
 </script>
 <style>
@@ -59,33 +59,6 @@
   }
   .card:hover { border-color: #f093fb80; box-shadow: 0 4px 20px rgba(240,147,251,0.1); }
 
-  /* Единый стиль для полей ввода и вывода */
-  .input-area, .output-area {
-    width: 100%;
-    min-height: 120px;
-    padding: 14px;
-    background: #1e1e1e;
-    border: 1px solid #333;
-    border-radius: 12px;
-    color: #e0e0e0;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    transition: all 0.2s;
-  }
-  .input-area:focus {
-    outline: none;
-    border-color: #f093fb;
-    box-shadow: 0 0 0 2px rgba(240,147,251,0.2);
-  }
-  .output-area {
-    background: #1a1a1a;
-    cursor: default;
-    overflow-y: auto;
-    word-break: break-word;
-    white-space: pre-wrap;
-  }
-
   textarea {
     width: 100%;
     min-height: 120px;
@@ -106,30 +79,56 @@
     box-shadow: 0 0 0 2px rgba(240,147,251,0.2);
   }
 
-  /* Блок с кнопками озвучки */
-  .audio-buttons {
-    display: flex;
-    gap: 12px;
-    margin-top: 10px;
-    justify-content: flex-end;
+  .output-area {
+    width: 100%;
+    min-height: 120px;
+    padding: 14px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #e0e0e0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    overflow-y: auto;
+    word-break: break-word;
+    white-space: pre-wrap;
   }
-  .audio-btn {
-    background: rgba(30,30,30,0.8);
+
+  .button-group {
+    display: flex;
+    gap: 10px;
+    margin: 12px 0;
+    flex-wrap: wrap;
+  }
+  .action-btn {
+    background: rgba(30,30,30,0.9);
     border: 1px solid #444;
     color: #f093fb;
-    padding: 6px 12px;
+    padding: 8px 16px;
     border-radius: 30px;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: 0.2s;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
   }
-  .audio-btn:hover {
+  .action-btn:hover {
     background: rgba(240,147,251,0.2);
     border-color: #f093fb;
     transform: scale(1.02);
+  }
+  .action-btn.recording {
+    background: #ff4444;
+    color: white;
+    border-color: #ff4444;
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,68,68,0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(255,68,68,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,68,68,0); }
   }
 
   button, .btn {
@@ -211,9 +210,7 @@
   }
   .swap-button:hover { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); transform: rotate(180deg); }
 
-  .result-area {
-    margin-top: 16px;
-  }
+  .result-area { margin-top: 16px; }
   .result-label {
     font-size: 0.7rem;
     text-transform: uppercase;
@@ -254,6 +251,34 @@
     gap: 8px;
   }
 
+  /* Социальные кнопки-иконки под кнопкой заказа */
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0 10px;
+  }
+  .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(30, 30, 30, 0.8);
+    border: 1px solid rgba(240, 147, 251, 0.4);
+    color: #f093fb;
+    text-decoration: none;
+    font-size: 1.3rem;
+    transition: all 0.2s ease;
+  }
+  .social-icon:hover {
+    transform: scale(1.1);
+    background: rgba(240, 147, 251, 0.3);
+    border-color: #f093fb;
+    color: white;
+  }
+
   .back-link {
     display: inline-flex;
     align-items: center;
@@ -266,7 +291,6 @@
   }
   .back-link:hover { color: white; transform: translateX(-3px); }
 
-  /* Модальные окна */
   .modal {
     display: none;
     position: fixed;
@@ -333,36 +357,6 @@
   .modal-message.success { display: block; background: #1e4a2e; color: #90ee90; }
   .modal-message.error { display: block; background: #4a1e1e; color: #ff8888; }
 
-  /* Плавающие кнопки */
-  .floating-buttons {
-    position: fixed;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    z-index: 1000;
-  }
-  .floating-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(30, 30, 30, 0.5);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    text-decoration: none;
-    color: #f093fb;
-    border: 1px solid rgba(240, 147, 251, 0.4);
-    transition: all 0.2s ease;
-  }
-  .floating-btn:hover { transform: scale(1.1); background: rgba(240, 147, 251, 0.3); backdrop-filter: blur(12px); color: white; border-color: #f093fb; }
-  .btn-red { animation: pulse 2s infinite; }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(240,147,251,0.4); } 70% { box-shadow: 0 0 0 6px rgba(240,147,251,0); } 100% { box-shadow: 0 0 0 0 rgba(240,147,251,0); } }
-
   .seo-footer { text-align: center; margin-top: 30px; padding: 20px 0 10px; border-top: 1px solid #2a2a2a; font-size: 0.7rem; color: #555; }
   .seo-footer a { color: #f093fb; text-decoration: none; }
   .seo-footer a:hover { text-decoration: underline; }
@@ -371,12 +365,12 @@
 
   @media (max-width: 650px) {
     body { padding: 12px; }
-    .floating-buttons { right: 10px; gap: 8px; }
-    .floating-btn { width: 42px; height: 42px; font-size: 1.2rem; }
     .swap-button { width: 40px; height: 40px; }
     .lang-badge { font-size: 0.75rem; padding: 6px 12px; }
     .modal-wrapper { max-width: 95%; }
-    .input-area, .output-area, textarea { min-height: 100px; }
+    .button-group { gap: 8px; }
+    .action-btn { padding: 6px 12px; font-size: 0.7rem; }
+    .social-icon { width: 40px; height: 40px; font-size: 1.1rem; }
   }
 </style>
 </head>
@@ -420,22 +414,21 @@
     </div>
 
     <!-- Поле ввода оригинала -->
-    <textarea id="inputText" placeholder="Введите текст для перевода...&#10;Например: Привет, как дела?"></textarea>
+    <textarea id="inputText" placeholder="Введите текст для перевода... или используйте голосовой ввод 🎤"></textarea>
     
-    <!-- Кнопки озвучки оригинала -->
-    <div class="audio-buttons">
-      <button class="audio-btn" id="speakOriginalBtn" title="Озвучить оригинал">🔊 Озвучить оригинал</button>
+    <div class="button-group">
+      <button class="action-btn" id="voiceInputBtn" title="Голосовой ввод">🎤 Голосовой ввод</button>
+      <button class="action-btn" id="speakOriginalBtn" title="Озвучить оригинал">🔊 Озвучить оригинал</button>
     </div>
     
     <button id="translateBtn">🌐 Перевести</button>
     
-    <!-- Результат перевода (единый стиль с полем ввода) -->
+    <!-- Результат перевода -->
     <div class="result-area">
       <div class="result-label">Перевод</div>
       <div class="output-area" id="translationResult">—</div>
-      <!-- Кнопки озвучки перевода -->
-      <div class="audio-buttons">
-        <button class="audio-btn" id="speakTranslationBtn" title="Озвучить перевод">🔊 Озвучить перевод</button>
+      <div class="button-group">
+        <button class="action-btn" id="speakTranslationBtn" title="Озвучить перевод">🔊 Озвучить перевод</button>
       </div>
     </div>
     <div id="translationError" class="error"></div>
@@ -443,17 +436,17 @@
   
   <button class="order-site-btn" id="openOrderModalBtn">💻 Заказать веб-сайт</button>
 
+  <!-- Социальные кнопки-иконки (вместо плавающих) -->
+  <div class="social-links">
+    <a href="https://ship-spb.onrender.com/friends" class="social-icon" target="_blank" title="Ship SPB">♥</a>
+    <a href="https://dmitry-ne.onrender.com/" class="social-icon" target="_blank" title="Dmitry NE - Музыка">♪</a>
+    <a href="/" class="social-icon" target="_blank" title="Транслитератор">🔤</a>
+  </div>
+
   <div class="seo-footer">
-    <p>🌍 <strong>Переводчик онлайн с озвучкой</strong> — перевод текста и голосовое воспроизведение на русском, английском и вьетнамском языках. 🇷🇺 🇬🇧 🇻🇳</p>
+    <p>🌍 <strong>Переводчик с голосовым вводом</strong> — диктуйте текст, получайте перевод и озвучку. Поддерживает русский, английский и вьетнамский языки. 🎤 🇷🇺 🇬🇧 🇻🇳</p>
     <p>© 2025 <a href="https://translit-eng-rus.onrender.com/">Translit-Eng-Rus</a></p>
   </div>
-</div>
-
-<!-- ПЛАВАЮЩИЕ КНОПКИ -->
-<div class="floating-buttons">
-  <a href="https://ship-spb.onrender.com/friends" class="floating-btn btn-red" target="_blank" title="Ship SPB">♥</a>
-  <a href="https://dmitry-ne.onrender.com/" class="floating-btn" target="_blank" title="Dmitry NE">♪</a>
-  <a href="/" class="floating-btn" target="_blank" title="Транслитератор">🔤</a>
 </div>
 
 <!-- МОДАЛЬНОЕ ОКНО ДЛЯ РЕКЛАМЫ -->
@@ -509,6 +502,8 @@
 let sourceLanguage = 'ru', targetLanguage = 'en';
 const langNames = { ru: 'Русский', en: 'English', vi: 'Tiếng Việt' };
 let currentTranslation = '';
+let recognition = null;
+let isRecording = false;
 
 function updateLanguageDisplay() {
   document.getElementById('sourceLangBtn').textContent = langNames[sourceLanguage] + ' ▼';
@@ -625,40 +620,121 @@ async function translateText() {
   }
 }
 
+// ========== ГОЛОСОВОЙ ВВОД ==========
+function initSpeechRecognition() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    const errorDiv = document.getElementById('translationError');
+    errorDiv.textContent = 'Голосовой ввод не поддерживается вашим браузером. Используйте Chrome, Edge или Safari.';
+    return false;
+  }
+  
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SpeechRecognition();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+  
+  recognition.onstart = () => {
+    isRecording = true;
+    const voiceBtn = document.getElementById('voiceInputBtn');
+    voiceBtn.classList.add('recording');
+    voiceBtn.innerHTML = '🔴 Запись...';
+    document.getElementById('translationError').textContent = '🎤 Говорите...';
+  };
+  
+  recognition.onend = () => {
+    isRecording = false;
+    const voiceBtn = document.getElementById('voiceInputBtn');
+    voiceBtn.classList.remove('recording');
+    voiceBtn.innerHTML = '🎤 Голосовой ввод';
+    setTimeout(() => {
+      if (document.getElementById('translationError').textContent === '🎤 Говорите...') {
+        document.getElementById('translationError').textContent = '';
+      }
+    }, 1000);
+  };
+  
+  recognition.onerror = (event) => {
+    console.error('Speech recognition error:', event.error);
+    isRecording = false;
+    const voiceBtn = document.getElementById('voiceInputBtn');
+    voiceBtn.classList.remove('recording');
+    voiceBtn.innerHTML = '🎤 Голосовой ввод';
+    
+    let errorMsg = 'Ошибка распознавания. ';
+    switch(event.error) {
+      case 'not-allowed': errorMsg += 'Разрешите доступ к микрофону.'; break;
+      case 'no-speech': errorMsg += 'Не удалось распознать речь. Попробуйте еще раз.'; break;
+      case 'audio-capture': errorMsg += 'Микрофон не обнаружен.'; break;
+      default: errorMsg += 'Попробуйте еще раз.';
+    }
+    document.getElementById('translationError').textContent = errorMsg;
+    setTimeout(() => {
+      if (document.getElementById('translationError').textContent === errorMsg) {
+        document.getElementById('translationError').textContent = '';
+      }
+    }, 3000);
+  };
+  
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    const inputTextArea = document.getElementById('inputText');
+    inputTextArea.value = transcript;
+    document.getElementById('translationError').textContent = '✅ Распознано: "' + transcript + '"';
+    setTimeout(() => {
+      if (document.getElementById('translationError').textContent.includes('Распознано')) {
+        document.getElementById('translationError').textContent = '';
+      }
+    }, 2000);
+    translateText();
+  };
+  
+  return true;
+}
+
+function startVoiceInput() {
+  if (!recognition) {
+    if (!initSpeechRecognition()) return;
+  }
+  
+  if (isRecording) {
+    recognition.stop();
+    return;
+  }
+  
+  switch(sourceLanguage) {
+    case 'ru': recognition.lang = 'ru-RU'; break;
+    case 'en': recognition.lang = 'en-US'; break;
+    case 'vi': recognition.lang = 'vi-VN'; break;
+    default: recognition.lang = 'ru-RU';
+  }
+  
+  try {
+    recognition.start();
+  } catch(e) {
+    document.getElementById('translationError').textContent = 'Ошибка запуска микрофона. Попробуйте еще раз.';
+  }
+}
+
 // ========== ГОЛОСОВОЕ ВОСПРОИЗВЕДЕНИЕ ==========
 function speakText(text, language) {
   if (!text || text === '—' || text === 'Переводим...') return;
-  
-  // Останавливаем текущее воспроизведение
-  if (window.speechSynthesis.speaking) {
-    window.speechSynthesis.cancel();
-  }
-  
+  if (window.speechSynthesis.speaking) window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
-  
-  // Настройка языка для синтезатора
   switch(language) {
-    case 'ru':
-      utterance.lang = 'ru-RU';
-      break;
-    case 'en':
-      utterance.lang = 'en-US';
-      break;
-    case 'vi':
-      utterance.lang = 'vi-VN';
-      break;
-    default:
-      utterance.lang = 'ru-RU';
+    case 'ru': utterance.lang = 'ru-RU'; break;
+    case 'en': utterance.lang = 'en-US'; break;
+    case 'vi': utterance.lang = 'vi-VN'; break;
+    default: utterance.lang = 'ru-RU';
   }
-  
   utterance.rate = 0.9;
   utterance.pitch = 1;
   utterance.volume = 1;
-  
   window.speechSynthesis.speak(utterance);
 }
 
-// Озвучка оригинала
+// Обработчики
+document.getElementById('voiceInputBtn').addEventListener('click', startVoiceInput);
 document.getElementById('speakOriginalBtn').addEventListener('click', () => {
   const originalText = document.getElementById('inputText').value.trim();
   if (!originalText) {
@@ -668,8 +744,6 @@ document.getElementById('speakOriginalBtn').addEventListener('click', () => {
   }
   speakText(originalText, sourceLanguage);
 });
-
-// Озвучка перевода
 document.getElementById('speakTranslationBtn').addEventListener('click', () => {
   const translationText = document.getElementById('translationResult').textContent;
   if (!translationText || translationText === '—' || translationText === 'Переводим...') {
@@ -679,13 +753,13 @@ document.getElementById('speakTranslationBtn').addEventListener('click', () => {
   }
   speakText(translationText, targetLanguage);
 });
-
-// Обработчики событий
 document.getElementById('translateBtn').addEventListener('click', translateText);
 document.getElementById('swapLangBtn').addEventListener('click', swapLanguages);
 document.getElementById('inputText').addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); translateText(); } });
+
 setupDropdowns();
 updateLanguageDisplay();
+initSpeechRecognition();
 
 // ========== GOOGLE SCRIPT ==========
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzx5KFXhCB9zauBitCsyoWFBNFM08PAJJ1wIL1MTSM4iLg0joTu75058pQFzuNTeVA/exec';
