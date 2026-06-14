@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Переводчик онлайн | Русско-английский и вьетнамский перевод с озвучкой</title>
+<meta name="description" content="Бесплатный онлайн переводчик с русского на английский, вьетнамский и обратно. Голосовое воспроизведение текста. Мгновенный перевод, удобный интерфейс.">
+<meta name="keywords" content="переводчик онлайн, русско-английский перевод, русско-вьетнамский перевод, озвучка текста, голосовой перевод, text to speech">
+<meta name="author" content="Translit Service">
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow">
+<meta name="yandex" content="index, follow">
+<link rel="canonical" href="https://translit-eng-rus.onrender.com/ru-en.html">
+<meta property="og:title" content="Переводчик онлайн с озвучкой | Русско-английский и вьетнамский">
+<meta property="og:description" content="Перевод текста и голосовое воспроизведение. Бесплатно.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://translit-eng-rus.onrender.com/ru-en.html">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Переводчик онлайн с озвучкой",
+  "url": "https://translit-eng-rus.onrender.com/ru-en.html",
+  "description": "Переводчик с русского на английский и вьетнамский с голосовым воспроизведением.",
+  "applicationCategory": "Utility",
+  "operatingSystem": "All",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "RUB"},
+  "inLanguage": ["ru", "en", "vi"],
+  "featureList": ["Перевод с русского на английский", "Перевод с русского на вьетнамский", "Голосовое воспроизведение оригинала", "Голосовое воспроизведение перевода"]
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #0a0a0a;
+    color: #e0e0e0;
+    line-height: 1.5;
+    padding: 20px;
+  }
+
+  .container { max-width: 800px; margin: 0 auto; }
+
+  h1 { font-size: 1.6rem; text-align: center; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 8px; font-weight: 600; }
+  h2 { font-size: 1rem; color: #f093fb; margin-bottom: 12px; font-weight: 500; text-align: center; }
+
+  .card {
+    background: #141414;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid #2a2a2a;
+    transition: all 0.2s ease;
+  }
+  .card:hover { border-color: #f093fb80; box-shadow: 0 4px 20px rgba(240,147,251,0.1); }
+
+  /* Единый стиль для полей ввода и вывода */
+  .input-area, .output-area {
+    width: 100%;
+    min-height: 120px;
+    padding: 14px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #e0e0e0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    transition: all 0.2s;
+  }
+  .input-area:focus {
+    outline: none;
+    border-color: #f093fb;
+    box-shadow: 0 0 0 2px rgba(240,147,251,0.2);
+  }
+  .output-area {
+    background: #1a1a1a;
+    cursor: default;
+    overflow-y: auto;
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 14px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #e0e0e0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    resize: vertical;
+    transition: all 0.2s;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: #f093fb;
+    box-shadow: 0 0 0 2px rgba(240,147,251,0.2);
+  }
+
+  /* Блок с кнопками озвучки */
+  .audio-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    justify-content: flex-end;
+  }
+  .audio-btn {
+    background: rgba(30,30,30,0.8);
+    border: 1px solid #444;
+    color: #f093fb;
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .audio-btn:hover {
+    background: rgba(240,147,251,0.2);
+    border-color: #f093fb;
+    transform: scale(1.02);
+  }
+
+  button, .btn {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  button:hover, .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(240,147,251,0.4); }
+  button:active { transform: translateY(0); }
+
+  .language-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .lang-box { flex: 1; text-align: center; }
+  .lang-label { font-size: 0.7rem; color: #888; margin-bottom: 8px; }
+  .lang-badge {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    padding: 8px 16px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-block;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .lang-badge:hover { transform: scale(1.02); box-shadow: 0 2px 8px rgba(240,147,251,0.3); }
+
+  .lang-dropdown { position: relative; display: inline-block; }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e1e1e;
+    min-width: 130px;
+    border-radius: 12px;
+    border: 1px solid #f093fb;
+    z-index: 100;
+    margin-top: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  }
+  .dropdown-content a {
+    color: #e0e0e0;
+    padding: 8px 14px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.8rem;
+    transition: 0.1s;
+    border-radius: 12px;
+  }
+  .dropdown-content a:hover { background: rgba(240,147,251,0.2); color: #f093fb; }
+  .lang-dropdown.active .dropdown-content { display: block; }
+
+  .swap-button {
+    background: #2a2a2a;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+    padding: 0;
+    justify-content: center;
+  }
+  .swap-button:hover { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); transform: rotate(180deg); }
+
+  .result-area {
+    margin-top: 16px;
+  }
+  .result-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    margin-bottom: 6px;
+  }
+  .error { color: #f5576c; margin-top: 10px; text-align: center; font-size: 0.75rem; }
+
+  .adv-block {
+    background: linear-gradient(135deg, #141414 0%, #1a1a1a 100%);
+    border-radius: 40px;
+    padding: 10px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #2a2a2a;
+  }
+  .adv-text { font-size: 0.8rem; color: #aaa; }
+  .ad-button {
+    background: transparent;
+    border: 1px solid #f093fb;
+    color: #f093fb;
+    padding: 5px 14px;
+    font-size: 0.75rem;
+  }
+  .ad-button:hover { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+
+  .order-site-btn {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    margin: 20px auto 10px;
+    padding: 10px 20px;
+    gap: 8px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #f093fb;
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-bottom: 16px;
+    transition: 0.2s;
+  }
+  .back-link:hover { color: white; transform: translateX(-3px); }
+
+  /* Модальные окна */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal.show { display: flex; }
+  .modal-wrapper { position: relative; width: 100%; max-width: 440px; margin: 0 auto; }
+  .modal-content {
+    background: #141414;
+    border-radius: 20px;
+    border: 1px solid #f093fb;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .modal-header {
+    position: sticky;
+    top: 0;
+    background: #141414;
+    padding: 14px 20px 10px 20px;
+    border-bottom: 1px solid #2a2a2a;
+    z-index: 10;
+  }
+  .modal-header h3 { font-size: 1.1rem; margin: 0; text-align: center; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
+    transition: 0.2s;
+    background: none;
+    padding: 0;
+    width: auto;
+    border-radius: 0;
+    z-index: 20;
+  }
+  .modal-close:hover { background: none; color: #f093fb; transform: none; box-shadow: none; }
+  .modal-body {
+    padding: 16px 20px 20px 20px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .modal-body::-webkit-scrollbar { width: 5px; }
+  .modal-body::-webkit-scrollbar-track { background: #2a2a2a; border-radius: 10px; }
+  .modal-body::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 10px; }
+  .modal-body .form-group { margin-bottom: 12px; }
+  .modal-body input, .modal-body select, .modal-body textarea { padding: 8px 12px; margin: 4px 0 6px 0; width: 100%; background: #1e1e1e; border: 1px solid #333; border-radius: 10px; color: #e0e0e0; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; }
+  .modal-body textarea { min-height: 60px; resize: vertical; }
+  .modal-body label { font-size: 0.7rem; font-weight: 500; color: #bbb; display: block; margin-top: 4px; }
+  .modal-body button[type="submit"] { width: 100%; margin-top: 10px; justify-content: center; padding: 8px; }
+  .modal-message { margin-top: 10px; padding: 8px; border-radius: 10px; font-size: 0.75rem; display: none; text-align: center; }
+  .modal-message.success { display: block; background: #1e4a2e; color: #90ee90; }
+  .modal-message.error { display: block; background: #4a1e1e; color: #ff8888; }
+
+  /* Плавающие кнопки */
+  .floating-buttons {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1000;
+  }
+  .floating-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(30, 30, 30, 0.5);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    text-decoration: none;
+    color: #f093fb;
+    border: 1px solid rgba(240, 147, 251, 0.4);
+    transition: all 0.2s ease;
+  }
+  .floating-btn:hover { transform: scale(1.1); background: rgba(240, 147, 251, 0.3); backdrop-filter: blur(12px); color: white; border-color: #f093fb; }
+  .btn-red { animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(240,147,251,0.4); } 70% { box-shadow: 0 0 0 6px rgba(240,147,251,0); } 100% { box-shadow: 0 0 0 0 rgba(240,147,251,0); } }
+
+  .seo-footer { text-align: center; margin-top: 30px; padding: 20px 0 10px; border-top: 1px solid #2a2a2a; font-size: 0.7rem; color: #555; }
+  .seo-footer a { color: #f093fb; text-decoration: none; }
+  .seo-footer a:hover { text-decoration: underline; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 650px) {
+    body { padding: 12px; }
+    .floating-buttons { right: 10px; gap: 8px; }
+    .floating-btn { width: 42px; height: 42px; font-size: 1.2rem; }
+    .swap-button { width: 40px; height: 40px; }
+    .lang-badge { font-size: 0.75rem; padding: 6px 12px; }
+    .modal-wrapper { max-width: 95%; }
+    .input-area, .output-area, textarea { min-height: 100px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="/" class="back-link">← Назад к транслитератору</a>
+  
+  <h1>🌐 Переводчик онлайн</h1>
+  <h2>Русский ↔ English ↔ Tiếng Việt</h2>
+  
+  <div class="adv-block">
+    <span class="adv-text">📢 Здесь может быть ваша реклама</span>
+    <button class="ad-button" id="openAdModalBtn">📝 Подать заявку</button>
+  </div>
+
+  <div class="card">
+    <div class="language-selector">
+      <div class="lang-box">
+        <div class="lang-label">Язык источника</div>
+        <div class="lang-dropdown" id="sourceDropdown">
+          <div class="lang-badge" id="sourceLangBtn">Русский ▼</div>
+          <div class="dropdown-content">
+            <a href="#" data-lang="ru">Русский</a>
+            <a href="#" data-lang="en">English</a>
+            <a href="#" data-lang="vi">Tiếng Việt</a>
+          </div>
+        </div>
+      </div>
+      <button class="swap-button" id="swapLangBtn" title="Поменять языки">↻</button>
+      <div class="lang-box">
+        <div class="lang-label">Язык перевода</div>
+        <div class="lang-dropdown" id="targetDropdown">
+          <div class="lang-badge" id="targetLangBtn">English ▼</div>
+          <div class="dropdown-content">
+            <a href="#" data-lang="en">English</a>
+            <a href="#" data-lang="vi">Tiếng Việt</a>
+            <a href="#" data-lang="ru">Русский</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Поле ввода оригинала -->
+    <textarea id="inputText" placeholder="Введите текст для перевода...&#10;Например: Привет, как дела?"></textarea>
+    
+    <!-- Кнопки озвучки оригинала -->
+    <div class="audio-buttons">
+      <button class="audio-btn" id="speakOriginalBtn" title="Озвучить оригинал">🔊 Озвучить оригинал</button>
+    </div>
+    
+    <button id="translateBtn">🌐 Перевести</button>
+    
+    <!-- Результат перевода (единый стиль с полем ввода) -->
+    <div class="result-area">
+      <div class="result-label">Перевод</div>
+      <div class="output-area" id="translationResult">—</div>
+      <!-- Кнопки озвучки перевода -->
+      <div class="audio-buttons">
+        <button class="audio-btn" id="speakTranslationBtn" title="Озвучить перевод">🔊 Озвучить перевод</button>
+      </div>
+    </div>
+    <div id="translationError" class="error"></div>
+  </div>
+  
+  <button class="order-site-btn" id="openOrderModalBtn">💻 Заказать веб-сайт</button>
+
+  <div class="seo-footer">
+    <p>🌍 <strong>Переводчик онлайн с озвучкой</strong> — перевод текста и голосовое воспроизведение на русском, английском и вьетнамском языках. 🇷🇺 🇬🇧 🇻🇳</p>
+    <p>© 2025 <a href="https://translit-eng-rus.onrender.com/">Translit-Eng-Rus</a></p>
+  </div>
+</div>
+
+<!-- ПЛАВАЮЩИЕ КНОПКИ -->
+<div class="floating-buttons">
+  <a href="https://ship-spb.onrender.com/friends" class="floating-btn btn-red" target="_blank" title="Ship SPB">♥</a>
+  <a href="https://dmitry-ne.onrender.com/" class="floating-btn" target="_blank" title="Dmitry NE">♪</a>
+  <a href="/" class="floating-btn" target="_blank" title="Транслитератор">🔤</a>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ РЕКЛАМЫ -->
+<div id="adModal" class="modal">
+  <div class="modal-wrapper">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="modal-close" id="closeModalBtn">×</button>
+        <h3>📢 Заявка на рекламу</h3>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <form id="adForm">
+          <div class="form-group"><label>Ваше имя <span style="color:#f5576c">*</span></label><input type="text" id="adName" required placeholder="Как вас зовут?"></div>
+          <div class="form-group"><label>Telegram / телефон <span style="color:#f5576c">*</span></label><input type="text" id="adContact" required placeholder="@username или +7..."></div>
+          <div class="form-group"><label>Компания / бренд</label><input type="text" id="adCompany" placeholder="Название"></div>
+          <div class="form-group"><label>Тип рекламы</label><select id="adType"><option>Баннер / текст</option><option>Партнёрство</option><option>Премиум</option><option>Другое</option></select></div>
+          <div class="form-group"><label>Бюджет</label><select id="adBudget"><option>до 5 000 ₽</option><option>5 000–15 000 ₽</option><option>15 000–30 000 ₽</option><option>от 30 000 ₽</option><option selected>Обсудим</option></select></div>
+          <div class="form-group"><label>Сообщение</label><textarea id="adMessage" rows="2" placeholder="Ваши пожелания..."></textarea></div>
+          <button type="submit" id="adSubmitBtn">📨 Отправить заявку</button>
+          <div id="adModalMessage" class="modal-message"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ ЗАКАЗА САЙТА -->
+<div id="orderModal" class="modal">
+  <div class="modal-wrapper">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="modal-close" id="closeOrderModalBtn">×</button>
+        <h3>💻 Заказ веб-сайта</h3>
+      </div>
+      <div class="modal-body" id="orderModalBody">
+        <form id="orderForm">
+          <div class="form-group"><label>Ваше имя <span style="color:#f5576c">*</span></label><input type="text" id="orderName" required placeholder="Как вас зовут?"></div>
+          <div class="form-group"><label>Telegram / телефон <span style="color:#f5576c">*</span></label><input type="text" id="orderContact" required placeholder="@username или +7..."></div>
+          <div class="form-group"><label>Тип сайта</label><select id="orderType"><option>Лендинг / Сайт-визитка</option><option>Многостраничный сайт</option><option>Интернет-магазин</option><option>Сайт с интеграцией</option><option>Telegram бот</option><option>Другое</option></select></div>
+          <div class="form-group"><label>Бюджет</label><select id="orderBudget"><option>до 10 000 ₽</option><option>10 000–20 000 ₽</option><option>20 000–35 000 ₽</option><option>35 000–50 000 ₽</option><option>от 50 000 ₽</option><option selected>Обсудим</option></select></div>
+          <div class="form-group"><label>Сроки</label><input type="text" id="orderDeadline" placeholder="например: через 2 недели"></div>
+          <div class="form-group"><label>Описание проекта</label><textarea id="orderDescription" rows="2" placeholder="Расскажите о своих пожеланиях..."></textarea></div>
+          <button type="submit" id="orderSubmitBtn">📨 Отправить заявку</button>
+          <div id="orderModalMessage" class="modal-message"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== ПЕРЕВОДЧИК ==========
+let sourceLanguage = 'ru', targetLanguage = 'en';
+const langNames = { ru: 'Русский', en: 'English', vi: 'Tiếng Việt' };
+let currentTranslation = '';
+
+function updateLanguageDisplay() {
+  document.getElementById('sourceLangBtn').textContent = langNames[sourceLanguage] + ' ▼';
+  document.getElementById('targetLangBtn').textContent = langNames[targetLanguage] + ' ▼';
+}
+
+function setupDropdowns() {
+  const sourceDropdown = document.getElementById('sourceDropdown');
+  const targetDropdown = document.getElementById('targetDropdown');
+  const sourceBtn = document.getElementById('sourceLangBtn');
+  const targetBtn = document.getElementById('targetLangBtn');
+  
+  document.addEventListener('click', function(e) {
+    if (!sourceDropdown.contains(e.target)) sourceDropdown.classList.remove('active');
+    if (!targetDropdown.contains(e.target)) targetDropdown.classList.remove('active');
+  });
+  
+  sourceBtn.addEventListener('click', (e) => { e.stopPropagation(); sourceDropdown.classList.toggle('active'); targetDropdown.classList.remove('active'); });
+  targetBtn.addEventListener('click', (e) => { e.stopPropagation(); targetDropdown.classList.toggle('active'); sourceDropdown.classList.remove('active'); });
+  
+  sourceDropdown.querySelectorAll('.dropdown-content a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const newLang = link.dataset.lang;
+      if (newLang !== sourceLanguage) {
+        sourceLanguage = newLang;
+        updateLanguageDisplay();
+        sourceDropdown.classList.remove('active');
+        if (sourceLanguage === targetLanguage) targetLanguage = sourceLanguage === 'ru' ? 'en' : (sourceLanguage === 'en' ? 'vi' : 'ru');
+        updateLanguageDisplay();
+        if (document.getElementById('inputText').value.trim()) translateText();
+      }
+    });
+  });
+  
+  targetDropdown.querySelectorAll('.dropdown-content a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const newLang = link.dataset.lang;
+      if (newLang !== targetLanguage) {
+        targetLanguage = newLang;
+        updateLanguageDisplay();
+        targetDropdown.classList.remove('active');
+        if (sourceLanguage === targetLanguage) sourceLanguage = targetLanguage === 'ru' ? 'en' : (targetLanguage === 'en' ? 'vi' : 'ru');
+        updateLanguageDisplay();
+        if (document.getElementById('inputText').value.trim()) translateText();
+      }
+    });
+  });
+}
+
+function swapLanguages() {
+  [sourceLanguage, targetLanguage] = [targetLanguage, sourceLanguage];
+  updateLanguageDisplay();
+  const inputText = document.getElementById('inputText');
+  const resultDiv = document.getElementById('translationResult');
+  const resultValue = resultDiv.textContent;
+  if (resultValue !== '—' && resultValue !== 'Переводим...' && !resultValue.includes('Ошибка')) {
+    inputText.value = resultValue;
+    resultDiv.textContent = '—';
+    currentTranslation = '';
+  }
+}
+
+async function translateText() {
+  const inputText = document.getElementById('inputText').value.trim();
+  const resultDiv = document.getElementById('translationResult');
+  const errorDiv = document.getElementById('translationError');
+  const translateBtn = document.getElementById('translateBtn');
+  
+  errorDiv.textContent = '';
+  if (!inputText) { errorDiv.textContent = 'Введите текст для перевода'; return; }
+  
+  translateBtn.disabled = true;
+  const originalText = translateBtn.innerHTML;
+  translateBtn.innerHTML = '⏳ Перевод...';
+  resultDiv.textContent = 'Переводим...';
+  
+  try {
+    let translatedText = null;
+    try {
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(inputText)}&langpair=${sourceLanguage}|${targetLanguage}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.responseData?.translatedText) translatedText = data.responseData.translatedText.replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+    } catch(e) { console.log('MyMemory error:', e); }
+    
+    if (!translatedText) {
+      try {
+        const response = await fetch('https://libretranslate.com/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ q: inputText, source: sourceLanguage, target: targetLanguage, format: 'text' })
+        });
+        const data = await response.json();
+        if (data.translatedText) translatedText = data.translatedText;
+      } catch(e) { console.log('LibreTranslate error:', e); }
+    }
+    
+    if (translatedText) {
+      resultDiv.textContent = translatedText;
+      currentTranslation = translatedText;
+    } else {
+      resultDiv.textContent = '—';
+      throw new Error('Нет перевода');
+    }
+  } catch(error) {
+    resultDiv.textContent = '—';
+    currentTranslation = '';
+    errorDiv.textContent = 'Ошибка перевода. Попробуйте еще раз.';
+  } finally {
+    translateBtn.disabled = false;
+    translateBtn.innerHTML = originalText;
+  }
+}
+
+// ========== ГОЛОСОВОЕ ВОСПРОИЗВЕДЕНИЕ ==========
+function speakText(text, language) {
+  if (!text || text === '—' || text === 'Переводим...') return;
+  
+  // Останавливаем текущее воспроизведение
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+  }
+  
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Настройка языка для синтезатора
+  switch(language) {
+    case 'ru':
+      utterance.lang = 'ru-RU';
+      break;
+    case 'en':
+      utterance.lang = 'en-US';
+      break;
+    case 'vi':
+      utterance.lang = 'vi-VN';
+      break;
+    default:
+      utterance.lang = 'ru-RU';
+  }
+  
+  utterance.rate = 0.9;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+  
+  window.speechSynthesis.speak(utterance);
+}
+
+// Озвучка оригинала
+document.getElementById('speakOriginalBtn').addEventListener('click', () => {
+  const originalText = document.getElementById('inputText').value.trim();
+  if (!originalText) {
+    document.getElementById('translationError').textContent = 'Нет текста для озвучки';
+    setTimeout(() => document.getElementById('translationError').textContent = '', 2000);
+    return;
+  }
+  speakText(originalText, sourceLanguage);
+});
+
+// Озвучка перевода
+document.getElementById('speakTranslationBtn').addEventListener('click', () => {
+  const translationText = document.getElementById('translationResult').textContent;
+  if (!translationText || translationText === '—' || translationText === 'Переводим...') {
+    document.getElementById('translationError').textContent = 'Нет перевода для озвучки';
+    setTimeout(() => document.getElementById('translationError').textContent = '', 2000);
+    return;
+  }
+  speakText(translationText, targetLanguage);
+});
+
+// Обработчики событий
+document.getElementById('translateBtn').addEventListener('click', translateText);
+document.getElementById('swapLangBtn').addEventListener('click', swapLanguages);
+document.getElementById('inputText').addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); translateText(); } });
+setupDropdowns();
+updateLanguageDisplay();
+
+// ========== GOOGLE SCRIPT ==========
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzx5KFXhCB9zauBitCsyoWFBNFM08PAJJ1wIL1MTSM4iLg0joTu75058pQFzuNTeVA/exec';
+
+// Модалка рекламы
+const adModal = document.getElementById('adModal'), adModalBody = document.getElementById('modalBody'), openAdBtn = document.getElementById('openAdModalBtn'), closeAdBtn = document.getElementById('closeModalBtn');
+function openAdModal() { adModal.classList.add('show'); document.body.style.overflow = 'hidden'; if (adModalBody) adModalBody.scrollTop = 0; }
+function closeAdModal() { adModal.classList.remove('show'); document.body.style.overflow = ''; }
+openAdBtn.addEventListener('click', openAdModal);
+closeAdBtn.addEventListener('click', closeAdModal);
+adModal.addEventListener('click', (e) => { if(e.target === adModal) closeAdModal(); });
+document.getElementById('adForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('adName').value.trim(), contact = document.getElementById('adContact').value.trim();
+  if(!name || !contact) { showAdModalMsg('❌ Заполните имя и контакт', 'error'); return; }
+  const formData = { Имя: name, Контакт: contact, Название_компании: document.getElementById('adCompany').value.trim(), Тип_рекламы: document.getElementById('adType').value, Бюджет_реклама: document.getElementById('adBudget').value, Сообщение: document.getElementById('adMessage').value.trim(), Источник: 'Переводчик-реклама' };
+  const btn = document.getElementById('adSubmitBtn'), orig = btn.innerHTML;
+  btn.disabled = true; btn.innerHTML = '⏳ Отправка...';
+  try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) }); showAdModalMsg('✅ Заявка отправлена!', 'success'); document.getElementById('adForm').reset(); setTimeout(() => closeAdModal(), 2000); } catch(e) { showAdModalMsg('❌ Ошибка отправки', 'error'); } finally { btn.disabled = false; btn.innerHTML = orig; }
+});
+function showAdModalMsg(msg, type) { const d = document.getElementById('adModalMessage'); d.textContent = msg; d.className = `modal-message ${type}`; setTimeout(() => { d.className = 'modal-message'; d.textContent = ''; }, 3000); }
+
+// Модалка заказа
+const orderModal = document.getElementById('orderModal'), orderModalBody = document.getElementById('orderModalBody'), openOrderBtn = document.getElementById('openOrderModalBtn'), closeOrderBtn = document.getElementById('closeOrderModalBtn');
+function openOrderModal() { orderModal.classList.add('show'); document.body.style.overflow = 'hidden'; if (orderModalBody) orderModalBody.scrollTop = 0; }
+function closeOrderModal() { orderModal.classList.remove('show'); document.body.style.overflow = ''; }
+openOrderBtn.addEventListener('click', openOrderModal);
+closeOrderBtn.addEventListener('click', closeOrderModal);
+orderModal.addEventListener('click', (e) => { if(e.target === orderModal) closeOrderModal(); });
+document.getElementById('orderForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('orderName').value.trim(), contact = document.getElementById('orderContact').value.trim();
+  if(!name || !contact) { showOrderModalMsg('❌ Заполните имя и контакт', 'error'); return; }
+  const formData = { Имя: name, Контакт: contact, Тип_сайта: document.getElementById('orderType').value, Бюджет: document.getElementById('orderBudget').value, Сроки: document.getElementById('orderDeadline').value.trim(), Описание: document.getElementById('orderDescription').value.trim(), Источник: 'Переводчик-заказ_сайта' };
+  const btn = document.getElementById('orderSubmitBtn'), orig = btn.innerHTML;
+  btn.disabled = true; btn.innerHTML = '⏳ Отправка...';
+  try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) }); showOrderModalMsg('✅ Заявка отправлена!', 'success'); document.getElementById('orderForm').reset(); setTimeout(() => closeOrderModal(), 2000); } catch(e) { showOrderModalMsg('❌ Ошибка отправки', 'error'); } finally { btn.disabled = false; btn.innerHTML = orig; }
+});
+function showOrderModalMsg(msg, type) { const d = document.getElementById('orderModalMessage'); d.textContent = msg; d.className = `modal-message ${type}`; setTimeout(() => { d.className = 'modal-message'; d.textContent = ''; }, 3000); }
+
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (adModal.classList.contains('show')) closeAdModal(); if (orderModal.classList.contains('show')) closeOrderModal(); } });
+</script>
+</body>
+</html>
