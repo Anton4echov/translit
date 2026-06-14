@@ -33,13 +33,19 @@
   h1 {
     font-size: 1.8rem;
     text-align: center;
-    color: #ff6b6b;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     margin-bottom: 8px;
     font-weight: 600;
   }
   h2 {
     font-size: 1.4rem;
-    color: #ff6b6b;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     margin-bottom: 16px;
     font-weight: 500;
   }
@@ -53,8 +59,8 @@
     transition: all 0.2s ease;
   }
   .card:hover {
-    border-color: #ff6b6b40;
-    box-shadow: 0 4px 20px rgba(255,107,107,0.1);
+    border-color: #f093fb80;
+    box-shadow: 0 4px 20px rgba(240,147,251,0.1);
   }
 
   textarea, input, select {
@@ -71,15 +77,15 @@
   }
   textarea:focus, input:focus, select:focus {
     outline: none;
-    border-color: #ff6b6b;
-    box-shadow: 0 0 0 2px rgba(255,107,107,0.2);
+    border-color: #f093fb;
+    box-shadow: 0 0 0 2px rgba(240,147,251,0.2);
   }
   textarea {
     min-height: 110px;
   }
 
   button, .btn {
-    background: #ff6b6b;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -91,23 +97,23 @@
     transition: all 0.2s;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
   }
   button:hover, .btn:hover {
-    background: #ff5252;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255,107,107,0.3);
+    box-shadow: 0 4px 12px rgba(240,147,251,0.4);
   }
   button:active {
     transform: translateY(0);
   }
   .btn-outline {
     background: transparent;
-    border: 1px solid #ff6b6b;
-    color: #ff6b6b;
+    border: 1px solid #f093fb;
+    color: #f093fb;
   }
   .btn-outline:hover {
-    background: #ff6b6b20;
+    background: rgba(240,147,251,0.1);
     transform: translateY(-2px);
   }
 
@@ -130,9 +136,9 @@
     color: #ccc;
   }
   .key:hover {
-    background: #ff6b6b;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
-    border-color: #ff6b6b;
+    border-color: #f093fb;
     transform: scale(1.02);
   }
 
@@ -160,7 +166,7 @@
   .caps-option input {
     width: 18px;
     height: 18px;
-    accent-color: #ff6b6b;
+    accent-color: #f093fb;
   }
   .caps-option label {
     font-size: 0.85rem;
@@ -186,7 +192,7 @@
   }
   #cheatsheet th {
     background: #1e1e1e;
-    color: #ff6b6b;
+    color: #f093fb;
     font-weight: 500;
   }
 
@@ -205,7 +211,7 @@
     gap: 12px;
   }
   .lang-badge {
-    background: #ff6b6b;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     padding: 6px 18px;
     border-radius: 40px;
     font-weight: 500;
@@ -221,7 +227,7 @@
     justify-content: center;
   }
   .swap-button:hover {
-    background: #ff6b6b;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     transform: rotate(180deg);
   }
   .result {
@@ -229,7 +235,7 @@
     border-radius: 12px;
     padding: 16px;
     margin-top: 16px;
-    border-left: 4px solid #ff6b6b;
+    border-left: 4px solid #f093fb;
   }
   .result-label {
     font-size: 0.7rem;
@@ -243,7 +249,7 @@
     font-weight: 500;
   }
   .error {
-    color: #ff6b6b;
+    color: #f5576c;
     margin-top: 8px;
     font-size: 0.8rem;
   }
@@ -266,17 +272,28 @@
   }
   .ad-button {
     background: transparent;
-    border: 1px solid #ff6b6b;
-    color: #ff6b6b;
+    border: 1px solid #f093fb;
+    color: #f093fb;
     padding: 6px 16px;
     font-size: 0.8rem;
   }
   .ad-button:hover {
-    background: #ff6b6b;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
   }
 
-  /* Модальное окно - исправлено */
+  /* Кнопка заказа сайта */
+  .order-site-btn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto 10px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    gap: 10px;
+  }
+
+  /* Модальное окно - общий стиль */
   .modal {
     display: none;
     position: fixed;
@@ -293,29 +310,52 @@
   .modal.show {
     display: flex;
   }
+  .modal-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    max-width: 95vw;
+  }
+  .modal-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+  }
   .modal-content {
     background: #141414;
     border-radius: 24px;
-    padding: 28px;
-    max-width: 480px;
-    width: 90%;
-    max-height: 85vh;
-    overflow-y: auto;
-    border: 1px solid #ff6b6b;
+    border: 1px solid #f093fb;
     box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    position: relative;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
-  .modal-content h3 {
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-    color: #ff6b6b;
+  .modal-header {
+    position: sticky;
+    top: 0;
+    background: #141414;
+    padding: 18px 24px 12px 24px;
+    border-bottom: 1px solid #2a2a2a;
+    border-radius: 24px 24px 0 0;
+    z-index: 10;
+  }
+  .modal-header h3 {
+    font-size: 1.3rem;
+    margin: 0;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     text-align: center;
   }
   .modal-close {
     position: absolute;
-    top: 12px;
-    right: 18px;
-    font-size: 28px;
+    top: 14px;
+    right: 20px;
+    font-size: 26px;
     cursor: pointer;
     color: #888;
     transition: 0.2s;
@@ -323,34 +363,65 @@
     padding: 0;
     width: auto;
     border-radius: 0;
+    z-index: 20;
   }
   .modal-close:hover {
     background: none;
-    color: #ff6b6b;
+    color: #f093fb;
     transform: none;
     box-shadow: none;
   }
-  .modal-content input, .modal-content select, .modal-content textarea {
-    margin: 8px 0 12px 0;
-    width: 100%;
+  .modal-body {
+    padding: 20px 24px 24px 24px;
+    overflow-y: auto;
+    flex: 1;
   }
-  .modal-content label {
-    font-size: 0.8rem;
+  .modal-body::-webkit-scrollbar {
+    width: 5px;
+  }
+  .modal-body::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 10px;
+  }
+  .modal-body::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 10px;
+  }
+  .modal-body .form-group {
+    margin-bottom: 14px;
+  }
+  .modal-body input, .modal-body select {
+    padding: 10px 14px;
+    margin: 4px 0 8px 0;
+    width: 100%;
+    font-size: 0.85rem;
+  }
+  .modal-body textarea {
+    padding: 10px 14px;
+    margin: 4px 0 8px 0;
+    width: 100%;
+    font-size: 0.85rem;
+    min-height: 70px;
+    resize: vertical;
+  }
+  .modal-body label {
+    font-size: 0.75rem;
     font-weight: 500;
     color: #bbb;
     display: block;
-    margin-top: 8px;
+    margin-top: 4px;
   }
-  .modal-content button[type="submit"] {
+  .modal-body button[type="submit"] {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 12px;
     justify-content: center;
+    padding: 10px;
   }
   .modal-message {
-    margin-top: 12px;
-    padding: 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 10px;
+    font-size: 0.75rem;
     display: none;
     text-align: center;
   }
@@ -363,6 +434,38 @@
     display: block;
     background: #4a1e1e;
     color: #ff8888;
+  }
+
+  /* Кнопки скролла */
+  .modal-scroll-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .scroll-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(240,147,251,0.3);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(240,147,251,0.5);
+    color: #f093fb;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .scroll-btn:hover {
+    background: rgba(240,147,251,0.6);
+    transform: scale(1.05);
+    color: white;
+    border-color: #f093fb;
+  }
+  .scroll-btn:active {
+    transform: scale(0.95);
   }
 
   .floating-buttons {
@@ -386,49 +489,73 @@
     justify-content: center;
     font-size: 1.6rem;
     text-decoration: none;
-    color: #ff6b6b;
-    border: 1px solid #ff6b6b40;
+    color: #f093fb;
+    border: 1px solid #f093fb40;
     transition: 0.2s;
   }
   .floating-btn:hover {
     transform: scale(1.1);
-    background: #ff6b6b;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
-    border-color: #ff6b6b;
+    border-color: #f093fb;
   }
   .btn-red {
     animation: pulse 2s infinite;
   }
   @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 #ff6b6b80; }
-    70% { box-shadow: 0 0 0 6px #ff6b6b00; }
-    100% { box-shadow: 0 0 0 0 #ff6b6b00; }
-  }
-
-  .produced {
-    text-align: center;
-    font-size: 0.7rem;
-    color: #555;
-    margin: 30px 0 10px;
-    letter-spacing: 1px;
-  }
-
-  hr {
-    border: none;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
-    margin: 20px 0;
+    0% { box-shadow: 0 0 0 0 #f093fb80; }
+    70% { box-shadow: 0 0 0 6px #f093fb00; }
+    100% { box-shadow: 0 0 0 0 #f093fb00; }
   }
 
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
 
-  @media (max-width: 700px) {
+  .translate-btn {
+    margin: 0;
+  }
+  .translator-input {
+    margin-bottom: 16px;
+  }
+  .result {
+    margin-top: 16px;
+  }
+
+  @media (max-width: 650px) {
     body { padding: 12px; }
     .floating-buttons { right: 10px; gap: 8px; }
     .floating-btn { width: 44px; height: 44px; font-size: 1.3rem; }
     .adv-block { flex-direction: column; text-align: center; }
+    .scroll-btn {
+      width: 36px;
+      height: 36px;
+      font-size: 1rem;
+    }
+    .modal-container {
+      gap: 8px;
+    }
+    .modal-header {
+      padding: 14px 20px 10px 20px;
+    }
+    .modal-body {
+      padding: 14px 20px 20px 20px;
+    }
+    .order-site-btn {
+      max-width: 260px;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .scroll-btn {
+      width: 32px;
+      height: 32px;
+      font-size: 0.9rem;
+    }
+    .modal-container {
+      gap: 6px;
+    }
   }
 </style>
 </head>
@@ -461,13 +588,17 @@
   <div id="cheatsheet">
     <div style="font-weight: 600; margin-bottom: 10px;">📖 Правила транслитерации</div>
     <table>
-      <tr><th>Англ</th><th>Рус</th><th>Англ</th><th>Рус</th><th>Англ</th><th>Рус</th></tr>
-      <tr><td>shch / sch</td><td>щ / Щ</td><td>sh</td><td>ш / Ш</td><td>ch</td><td>ч / Ч</td></tr>
-      <tr><td>zh</td><td>ж / Ж</td><td>yo</td><td>ё / Ё</td><td>yu</td><td>ю / Ю</td></tr>
-      <tr><td>ya</td><td>я / Я</td><td>eh</td><td>э / Э</td><td>j</td><td>й / Й</td></tr>
-      <tr><td>'</td><td>ь / Ь*</td><td>'' / ""</td><td>ъ / Ъ*</td><td>y (согл)</td><td>ы / Ы</td></tr>
+      <thead>
+        <tr><th>Англ</th><th>Рус</th><th>Англ</th><th>Рус</th><th>Англ</th><th>Рус</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>shch / sch</td><td>щ / Щ</td><td>sh</td><td>ш / Ш</td><td>ch</td><td>ч / Ч</td></tr>
+        <tr><td>zh</td><td>ж / Ж</td><td>yo</td><td>ё / Ё</td><td>yu</td><td>ю / Ю</td></tr>
+        <tr><td>ya</td><td>я / Я</td><td>eh</td><td>э / Э</td><td>j</td><td>й / Й</td></tr>
+        <tr><td>'</td><td>ь / Ь*</td><td>'' / ""</td><td>ъ / Ъ*</td><td>y (согл)</td><td>ы / Ы</td></tr>
+      </tbody>
     </table>
-    <div style="font-size: 0.7rem; margin-top: 10px;">* при включённом чекбоксе становятся заглавными (Ь, Ъ)</div>
+    <div style="font-size: 0.7rem; margin-top: 10px;">* — при включённом чекбоксе становятся заглавными (Ь, Ъ)</div>
   </div>
 
   <div class="translator-container">
@@ -478,7 +609,10 @@
       <span class="lang-badge" id="targetLang">Английский</span>
     </div>
     <input type="text" class="translator-input" id="translatorInput" placeholder="Введите текст..." value="Привет">
-    <button class="translate-btn" id="translateBtn">Перевести</button>
+    <button class="translate-btn" id="translateBtn">
+      <span id="translateIcon">↻</span>
+      <span id="translateText">Перевести</span>
+    </button>
     <div class="result">
       <div class="result-label">Перевод</div>
       <div class="result-text" id="translationResult">—</div>
@@ -486,7 +620,11 @@
     <div id="translationError" class="error"></div>
   </div>
   
-  <div class="produced">🚀 PRODUCED BY</div>
+  <!-- Кнопка заказа сайта вместо PRODUCED BY -->
+  <button class="order-site-btn" id="openOrderModalBtn">
+    💻 Заказать веб-сайт
+  </button>
+
 </div>
 
 <div class="floating-buttons">
@@ -494,44 +632,136 @@
   <a href="https://dmitry-ne.onrender.com/" class="floating-btn" target="_blank">♪</a>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО - ИСПРАВЛЕНО -->
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ РЕКЛАМЫ -->
 <div id="adModal" class="modal">
-  <div class="modal-content">
-    <button class="modal-close" id="closeModalBtn">×</button>
-    <h3>📢 Заявка на рекламу</h3>
-    <form id="adForm">
-      <label>Ваше имя <span style="color:#ff6b6b">*</span></label>
-      <input type="text" id="adName" required placeholder="Как вас зовут?">
-      
-      <label>Telegram / телефон <span style="color:#ff6b6b">*</span></label>
-      <input type="text" id="adContact" required placeholder="@username или +7...">
-      
-      <label>Компания / бренд</label>
-      <input type="text" id="adCompany" placeholder="Название">
-      
-      <label>Тип рекламы</label>
-      <select id="adType">
-        <option>Баннер / текст</option>
-        <option>Партнёрство</option>
-        <option>Премиум</option>
-        <option>Другое</option>
-      </select>
-      
-      <label>Бюджет</label>
-      <select id="adBudget">
-        <option>до 5 000 ₽</option>
-        <option>5 000–15 000 ₽</option>
-        <option>15 000–30 000 ₽</option>
-        <option>от 30 000 ₽</option>
-        <option selected>Обсудим</option>
-      </select>
-      
-      <label>Сообщение</label>
-      <textarea id="adMessage" rows="3" placeholder="Ваши пожелания..."></textarea>
-      
-      <button type="submit" id="adSubmitBtn">📨 Отправить заявку</button>
-      <div id="adModalMessage" class="modal-message"></div>
-    </form>
+  <div class="modal-container">
+    <div class="modal-scroll-buttons">
+      <button class="scroll-btn" id="scrollUpBtn" title="Вверх">▲</button>
+      <button class="scroll-btn" id="scrollDownBtn" title="Вниз">▼</button>
+    </div>
+    <div class="modal-wrapper">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="modal-close" id="closeModalBtn">×</button>
+          <h3>📢 Заявка на рекламу</h3>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <form id="adForm">
+            <div class="form-group">
+              <label>Ваше имя <span style="color:#f5576c">*</span></label>
+              <input type="text" id="adName" required placeholder="Как вас зовут?">
+            </div>
+            
+            <div class="form-group">
+              <label>Telegram / телефон <span style="color:#f5576c">*</span></label>
+              <input type="text" id="adContact" required placeholder="@username или +7...">
+            </div>
+            
+            <div class="form-group">
+              <label>Компания / бренд</label>
+              <input type="text" id="adCompany" placeholder="Название">
+            </div>
+            
+            <div class="form-group">
+              <label>Тип рекламы</label>
+              <select id="adType">
+                <option>Баннер / текст</option>
+                <option>Партнёрство</option>
+                <option>Премиум</option>
+                <option>Другое</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Бюджет</label>
+              <select id="adBudget">
+                <option>до 5 000 ₽</option>
+                <option>5 000–15 000 ₽</option>
+                <option>15 000–30 000 ₽</option>
+                <option>от 30 000 ₽</option>
+                <option selected>Обсудим</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Сообщение</label>
+              <textarea id="adMessage" rows="3" placeholder="Ваши пожелания..."></textarea>
+            </div>
+            
+            <button type="submit" id="adSubmitBtn">📨 Отправить заявку</button>
+            <div id="adModalMessage" class="modal-message"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ ЗАКАЗА САЙТА -->
+<div id="orderModal" class="modal">
+  <div class="modal-container">
+    <div class="modal-scroll-buttons">
+      <button class="scroll-btn" id="orderScrollUpBtn" title="Вверх">▲</button>
+      <button class="scroll-btn" id="orderScrollDownBtn" title="Вниз">▼</button>
+    </div>
+    <div class="modal-wrapper">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="modal-close" id="closeOrderModalBtn">×</button>
+          <h3>💻 Заказ веб-сайта</h3>
+        </div>
+        <div class="modal-body" id="orderModalBody">
+          <form id="orderForm">
+            <div class="form-group">
+              <label>Ваше имя <span style="color:#f5576c">*</span></label>
+              <input type="text" id="orderName" required placeholder="Как вас зовут?">
+            </div>
+            
+            <div class="form-group">
+              <label>Telegram / телефон <span style="color:#f5576c">*</span></label>
+              <input type="text" id="orderContact" required placeholder="@username или +7...">
+            </div>
+            
+            <div class="form-group">
+              <label>Тип сайта</label>
+              <select id="orderType">
+                <option>Лендинг / Сайт-визитка</option>
+                <option>Многостраничный сайт (до 5 страниц)</option>
+                <option>Интернет-магазин / Каталог</option>
+                <option>Сайт с интеграцией (Google Sheets)</option>
+                <option>Telegram бот</option>
+                <option>Другое</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Бюджет</label>
+              <select id="orderBudget">
+                <option>до 10 000 ₽</option>
+                <option>10 000–20 000 ₽</option>
+                <option>20 000–35 000 ₽</option>
+                <option>35 000–50 000 ₽</option>
+                <option>от 50 000 ₽</option>
+                <option selected>Обсудим</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Сроки (если важны)</label>
+              <input type="text" id="orderDeadline" placeholder="например: через 2 недели">
+            </div>
+            
+            <div class="form-group">
+              <label>Описание проекта</label>
+              <textarea id="orderDescription" rows="3" placeholder="Расскажите о своих пожеланиях..."></textarea>
+            </div>
+            
+            <button type="submit" id="orderSubmitBtn">📨 Отправить заявку</button>
+            <div id="orderModalMessage" class="modal-message"></div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -627,10 +857,14 @@ document.getElementById('swapLangBtn').addEventListener('click', swapLanguages);
 async function translateText() {
   const txt = document.getElementById('translatorInput').value.trim();
   if(!txt) return;
+  
   const btn = document.getElementById('translateBtn');
-  const originalText = btn.innerHTML;
-  btn.disabled = true; 
-  btn.innerHTML = '<span style="display:inline-block; width:14px; height:14px; border:2px solid white; border-top-color:transparent; border-radius:50%; animation:spin 0.8s linear infinite;"></span> Перевод...';
+  const textSpan = document.getElementById('translateText');
+  const originalText = textSpan.innerHTML;
+  
+  btn.disabled = true;
+  textSpan.innerHTML = 'Перевод...';
+  
   try {
     let res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(txt)}&langpair=${sourceLanguage}|${targetLanguage}`);
     let data = await res.json();
@@ -651,43 +885,50 @@ async function translateText() {
       document.getElementById('translationResult').textContent = 'Ошибка перевода. Попробуйте позже.';
     }
   }
-  btn.disabled = false; 
-  btn.innerHTML = 'Перевести';
+  
+  btn.disabled = false;
+  textSpan.innerHTML = originalText;
 }
+
 document.getElementById('translateBtn').addEventListener('click', translateText);
 document.getElementById('translatorInput').addEventListener('keypress', e => { if(e.key==='Enter') translateText(); });
 updateLanguageDisplay();
 
-// ========== МОДАЛЬНОЕ ОКНО - РАБОТАЕТ ==========
-const modal = document.getElementById('adModal');
-const openBtn = document.getElementById('openAdModalBtn');
-const closeBtn = document.getElementById('closeModalBtn');
-
-function openModal() {
-  modal.classList.add('show');
-}
-function closeModal() {
-  modal.classList.remove('show');
-}
-openBtn.addEventListener('click', openModal);
-closeBtn.addEventListener('click', closeModal);
-modal.addEventListener('click', (e) => {
-  if(e.target === modal) closeModal();
-});
-
-// Отправка формы
+// ========== ОБЩИЙ GOOGLE SCRIPT URL ==========
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzx5KFXhCB9zauBitCsyoWFBNFM08PAJJ1wIL1MTSM4iLg0joTu75058pQFzuNTeVA/exec';
 
+// ========== МОДАЛЬНОЕ ОКНО ДЛЯ РЕКЛАМЫ ==========
+const adModal = document.getElementById('adModal');
+const adModalBody = document.getElementById('modalBody');
+const openAdBtn = document.getElementById('openAdModalBtn');
+const closeAdBtn = document.getElementById('closeModalBtn');
+const adScrollUp = document.getElementById('scrollUpBtn');
+const adScrollDown = document.getElementById('scrollDownBtn');
+
+function openAdModal() {
+  adModal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  if (adModalBody) adModalBody.scrollTop = 0;
+}
+function closeAdModal() {
+  adModal.classList.remove('show');
+  document.body.style.overflow = '';
+}
+adScrollUp?.addEventListener('click', () => adModalBody.scrollBy({ top: -70, behavior: 'smooth' }));
+adScrollDown?.addEventListener('click', () => adModalBody.scrollBy({ top: 70, behavior: 'smooth' }));
+openAdBtn.addEventListener('click', openAdModal);
+closeAdBtn.addEventListener('click', closeAdModal);
+adModal.addEventListener('click', (e) => { if(e.target === adModal) closeAdModal(); });
+
+// Отправка формы рекламы
 document.getElementById('adForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = document.getElementById('adName').value.trim();
   const contact = document.getElementById('adContact').value.trim();
-  
   if(!name || !contact) {
-    showModalMsg('❌ Заполните имя и контактные данные', 'error');
+    showAdModalMsg('❌ Заполните имя и контакт', 'error');
     return;
   }
-  
   const formData = {
     Имя: name,
     Контакт: contact,
@@ -695,47 +936,102 @@ document.getElementById('adForm').addEventListener('submit', async (e) => {
     Тип_рекламы: document.getElementById('adType').value,
     Бюджет_реклама: document.getElementById('adBudget').value,
     Сообщение: document.getElementById('adMessage').value.trim(),
-    Источник: 'Транслитератор-виджет'
+    Источник: 'Транслитератор-реклама'
   };
-  
   const submitBtn = document.getElementById('adSubmitBtn');
   const originalText = submitBtn.innerHTML;
   submitBtn.disabled = true;
   submitBtn.innerHTML = '⏳ Отправка...';
-  
   try {
-    await fetch(SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    });
-    
-    showModalMsg('✅ Заявка успешно отправлена! Мы свяжемся с вами.', 'success');
+    await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
+    showAdModalMsg('✅ Заявка отправлена!', 'success');
     document.getElementById('adForm').reset();
-    
-    setTimeout(() => {
-      closeModal();
-    }, 2000);
-    
+    setTimeout(() => closeAdModal(), 2000);
   } catch(error) {
-    console.error('Ошибка:', error);
-    showModalMsg('❌ Ошибка отправки. Попробуйте позже.', 'error');
+    showAdModalMsg('❌ Ошибка отправки', 'error');
   } finally {
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalText;
   }
 });
-
-function showModalMsg(msg, type) {
+function showAdModalMsg(msg, type) {
   const msgDiv = document.getElementById('adModalMessage');
   msgDiv.textContent = msg;
   msgDiv.className = `modal-message ${type}`;
-  setTimeout(() => {
-    msgDiv.className = 'modal-message';
-    msgDiv.textContent = '';
-  }, 3000);
+  setTimeout(() => { msgDiv.className = 'modal-message'; msgDiv.textContent = ''; }, 3000);
 }
+
+// ========== МОДАЛЬНОЕ ОКНО ДЛЯ ЗАКАЗА САЙТА ==========
+const orderModal = document.getElementById('orderModal');
+const orderModalBody = document.getElementById('orderModalBody');
+const openOrderBtn = document.getElementById('openOrderModalBtn');
+const closeOrderBtn = document.getElementById('closeOrderModalBtn');
+const orderScrollUp = document.getElementById('orderScrollUpBtn');
+const orderScrollDown = document.getElementById('orderScrollDownBtn');
+
+function openOrderModal() {
+  orderModal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  if (orderModalBody) orderModalBody.scrollTop = 0;
+}
+function closeOrderModal() {
+  orderModal.classList.remove('show');
+  document.body.style.overflow = '';
+}
+orderScrollUp?.addEventListener('click', () => orderModalBody.scrollBy({ top: -70, behavior: 'smooth' }));
+orderScrollDown?.addEventListener('click', () => orderModalBody.scrollBy({ top: 70, behavior: 'smooth' }));
+openOrderBtn.addEventListener('click', openOrderModal);
+closeOrderBtn.addEventListener('click', closeOrderModal);
+orderModal.addEventListener('click', (e) => { if(e.target === orderModal) closeOrderModal(); });
+
+// Отправка формы заказа сайта
+document.getElementById('orderForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('orderName').value.trim();
+  const contact = document.getElementById('orderContact').value.trim();
+  if(!name || !contact) {
+    showOrderModalMsg('❌ Заполните имя и контакт', 'error');
+    return;
+  }
+  const formData = {
+    Имя: name,
+    Контакт: contact,
+    Тип_сайта: document.getElementById('orderType').value,
+    Бюджет: document.getElementById('orderBudget').value,
+    Сроки: document.getElementById('orderDeadline').value.trim(),
+    Описание: document.getElementById('orderDescription').value.trim(),
+    Источник: 'Транслитератор-заказ_сайта'
+  };
+  const submitBtn = document.getElementById('orderSubmitBtn');
+  const originalText = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '⏳ Отправка...';
+  try {
+    await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
+    showOrderModalMsg('✅ Заявка отправлена! Мы свяжемся с вами.', 'success');
+    document.getElementById('orderForm').reset();
+    setTimeout(() => closeOrderModal(), 2000);
+  } catch(error) {
+    showOrderModalMsg('❌ Ошибка отправки', 'error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
+  }
+});
+function showOrderModalMsg(msg, type) {
+  const msgDiv = document.getElementById('orderModalMessage');
+  msgDiv.textContent = msg;
+  msgDiv.className = `modal-message ${type}`;
+  setTimeout(() => { msgDiv.className = 'modal-message'; msgDiv.textContent = ''; }, 3000);
+}
+
+// Закрытие по Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (adModal.classList.contains('show')) closeAdModal();
+    if (orderModal.classList.contains('show')) closeOrderModal();
+  }
+});
 </script>
 </body>
 </html>
