@@ -2,10 +2,60 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Транслитератор + Переводчик | Современный сервис</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Транслитератор онлайн | Русско-английский перевод + транслитерация</title>
+<meta name="description" content="Мощный онлайн транслитератор с русского на английский и обратно. Перевод текста, виртуальная клавиатура, интеграция с Google Sheets. Быстро и бесплатно.">
+<meta name="keywords" content="транслитератор, транслитерация онлайн, перевод с русского на английский, транслит, транслитерация русских букв, конвертер русской раскладки, latin to cyrillic, русско-английский переводчик">
+<meta name="author" content="Translit Service">
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow">
+<meta name="yandex" content="index, follow">
+<meta name="revisit-after" content="1 day">
+<meta name="language" content="Russian">
+<meta name="distribution" content="global">
+<meta name="rating" content="general">
+<meta name="format-detection" content="telephone=no">
+<link rel="canonical" href="https://translit-eng-rus.onrender.com/">
+<meta property="og:title" content="Транслитератор онлайн | Русско-английский перевод">
+<meta property="og:description" content="Преобразование текста из латиницы в кириллицу и обратно. Бесплатный инструмент с переводчиком.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://translit-eng-rus.onrender.com/">
+<meta property="og:image" content="https://translit-eng-rus.onrender.com/og-image.png">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+ <meta name="yandex-verification" content="875668153873254e" />
+<meta name="twitter:title" content="Транслитератор онлайн | Русско-английский перевод">
+<meta name="twitter:description" content="Бесплатный инструмент для транслитерации и перевода текста.">
+<meta name="twitter:image" content="https://translit-eng-rus.onrender.com/og-image.png">
 <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Schema.org разметка для SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Транслитератор онлайн",
+  "url": "https://translit-eng-rus.onrender.com/",
+  "description": "Бесплатный онлайн транслитератор и переводчик с русского на английский и обратно. Поддержка всех букв кириллицы, виртуальная клавиатура.",
+  "applicationCategory": "Utility",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "RUB"
+  },
+  "inLanguage": ["ru", "en"],
+  "featureList": [
+    "Транслитерация латиницы в кириллицу",
+    "Перевод с русского на английский",
+    "Перевод с английского на русский",
+    "Виртуальная клавиатура",
+    "Поддержка всех букв (Ё, Ъ, Ы, Ь)",
+    "Заглавные буквы и all-caps режим",
+    "Отправка заявок в Google Sheets"
+  ]
+}
+</script>
 <style>
   * {
     margin: 0;
@@ -282,7 +332,6 @@
     color: white;
   }
 
-  /* Кнопка заказа сайта */
   .order-site-btn {
     display: block;
     width: 100%;
@@ -293,7 +342,6 @@
     gap: 10px;
   }
 
-  /* Модальное окно - общий стиль */
   .modal {
     display: none;
     position: fixed;
@@ -436,7 +484,6 @@
     color: #ff8888;
   }
 
-  /* Кнопки скролла */
   .modal-scroll-buttons {
     display: flex;
     flex-direction: column;
@@ -522,6 +569,22 @@
     margin-top: 16px;
   }
 
+  .seo-footer {
+    text-align: center;
+    font-size: 0.7rem;
+    color: #555;
+    margin-top: 30px;
+    padding: 20px 0 10px;
+    border-top: 1px solid #2a2a2a;
+  }
+  .seo-footer a {
+    color: #f093fb;
+    text-decoration: none;
+  }
+  .seo-footer a:hover {
+    text-decoration: underline;
+  }
+
   @media (max-width: 650px) {
     body { padding: 12px; }
     .floating-buttons { right: 10px; gap: 8px; }
@@ -561,7 +624,7 @@
 </head>
 <body>
 <div class="container">
-  <h1>🌐 Транслитератор</h1>
+  <h1>🌐 Транслитератор онлайн</h1>
   
   <div class="adv-block">
     <span class="adv-text">📢 Здесь может быть ваша реклама</span>
@@ -602,13 +665,13 @@
   </div>
 
   <div class="translator-container">
-    <h2>🌐 Переводчик</h2>
+    <h2>🌐 Переводчик (Русский ↔ Английский)</h2>
     <div class="language-selector">
       <span class="lang-badge" id="sourceLang">Русский</span>
       <button class="swap-button" id="swapLangBtn">↻</button>
       <span class="lang-badge" id="targetLang">Английский</span>
     </div>
-    <input type="text" class="translator-input" id="translatorInput" placeholder="Введите текст..." value="Привет">
+    <input type="text" class="translator-input" id="translatorInput" placeholder="Введите текст для перевода..." value="Привет">
     <button class="translate-btn" id="translateBtn">
       <span id="translateIcon">↻</span>
       <span id="translateText">Перевести</span>
@@ -620,11 +683,14 @@
     <div id="translationError" class="error"></div>
   </div>
   
-  <!-- Кнопка заказа сайта вместо PRODUCED BY -->
   <button class="order-site-btn" id="openOrderModalBtn">
     💻 Заказать веб-сайт
   </button>
 
+  <div class="seo-footer">
+    <p>🔤 <strong>Транслитератор онлайн</strong> — преобразование текста из латиницы в кириллицу и обратно. Поддерживает все буквы русского алфавита, включая Ё, Ъ, Ы, Ь. Виртуальная клавиатура, режим all-caps, встроенный переводчик.</p>
+    <p>© 2025 <a href="https://translit-eng-rus.onrender.com/">Translit-Eng-Rus</a> | Бесплатный сервис транслитерации</p>
+  </div>
 </div>
 
 <div class="floating-buttons">
@@ -651,17 +717,14 @@
               <label>Ваше имя <span style="color:#f5576c">*</span></label>
               <input type="text" id="adName" required placeholder="Как вас зовут?">
             </div>
-            
             <div class="form-group">
               <label>Telegram / телефон <span style="color:#f5576c">*</span></label>
               <input type="text" id="adContact" required placeholder="@username или +7...">
             </div>
-            
             <div class="form-group">
               <label>Компания / бренд</label>
               <input type="text" id="adCompany" placeholder="Название">
             </div>
-            
             <div class="form-group">
               <label>Тип рекламы</label>
               <select id="adType">
@@ -671,7 +734,6 @@
                 <option>Другое</option>
               </select>
             </div>
-            
             <div class="form-group">
               <label>Бюджет</label>
               <select id="adBudget">
@@ -682,12 +744,10 @@
                 <option selected>Обсудим</option>
               </select>
             </div>
-            
             <div class="form-group">
               <label>Сообщение</label>
               <textarea id="adMessage" rows="3" placeholder="Ваши пожелания..."></textarea>
             </div>
-            
             <button type="submit" id="adSubmitBtn">📨 Отправить заявку</button>
             <div id="adModalMessage" class="modal-message"></div>
           </form>
@@ -716,12 +776,10 @@
               <label>Ваше имя <span style="color:#f5576c">*</span></label>
               <input type="text" id="orderName" required placeholder="Как вас зовут?">
             </div>
-            
             <div class="form-group">
               <label>Telegram / телефон <span style="color:#f5576c">*</span></label>
               <input type="text" id="orderContact" required placeholder="@username или +7...">
             </div>
-            
             <div class="form-group">
               <label>Тип сайта</label>
               <select id="orderType">
@@ -733,7 +791,6 @@
                 <option>Другое</option>
               </select>
             </div>
-            
             <div class="form-group">
               <label>Бюджет</label>
               <select id="orderBudget">
@@ -745,17 +802,14 @@
                 <option selected>Обсудим</option>
               </select>
             </div>
-            
             <div class="form-group">
               <label>Сроки (если важны)</label>
               <input type="text" id="orderDeadline" placeholder="например: через 2 недели">
             </div>
-            
             <div class="form-group">
               <label>Описание проекта</label>
               <textarea id="orderDescription" rows="3" placeholder="Расскажите о своих пожеланиях..."></textarea>
             </div>
-            
             <button type="submit" id="orderSubmitBtn">📨 Отправить заявку</button>
             <div id="orderModalMessage" class="modal-message"></div>
           </form>
@@ -857,14 +911,11 @@ document.getElementById('swapLangBtn').addEventListener('click', swapLanguages);
 async function translateText() {
   const txt = document.getElementById('translatorInput').value.trim();
   if(!txt) return;
-  
   const btn = document.getElementById('translateBtn');
   const textSpan = document.getElementById('translateText');
   const originalText = textSpan.innerHTML;
-  
   btn.disabled = true;
   textSpan.innerHTML = 'Перевод...';
-  
   try {
     let res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(txt)}&langpair=${sourceLanguage}|${targetLanguage}`);
     let data = await res.json();
@@ -885,7 +936,6 @@ async function translateText() {
       document.getElementById('translationResult').textContent = 'Ошибка перевода. Попробуйте позже.';
     }
   }
-  
   btn.disabled = false;
   textSpan.innerHTML = originalText;
 }
@@ -894,7 +944,7 @@ document.getElementById('translateBtn').addEventListener('click', translateText)
 document.getElementById('translatorInput').addEventListener('keypress', e => { if(e.key==='Enter') translateText(); });
 updateLanguageDisplay();
 
-// ========== ОБЩИЙ GOOGLE SCRIPT URL ==========
+// ========== GOOGLE SCRIPT URL ==========
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzx5KFXhCB9zauBitCsyoWFBNFM08PAJJ1wIL1MTSM4iLg0joTu75058pQFzuNTeVA/exec';
 
 // ========== МОДАЛЬНОЕ ОКНО ДЛЯ РЕКЛАМЫ ==========
@@ -905,61 +955,26 @@ const closeAdBtn = document.getElementById('closeModalBtn');
 const adScrollUp = document.getElementById('scrollUpBtn');
 const adScrollDown = document.getElementById('scrollDownBtn');
 
-function openAdModal() {
-  adModal.classList.add('show');
-  document.body.style.overflow = 'hidden';
-  if (adModalBody) adModalBody.scrollTop = 0;
-}
-function closeAdModal() {
-  adModal.classList.remove('show');
-  document.body.style.overflow = '';
-}
+function openAdModal() { adModal.classList.add('show'); document.body.style.overflow = 'hidden'; if (adModalBody) adModalBody.scrollTop = 0; }
+function closeAdModal() { adModal.classList.remove('show'); document.body.style.overflow = ''; }
 adScrollUp?.addEventListener('click', () => adModalBody.scrollBy({ top: -70, behavior: 'smooth' }));
 adScrollDown?.addEventListener('click', () => adModalBody.scrollBy({ top: 70, behavior: 'smooth' }));
 openAdBtn.addEventListener('click', openAdModal);
 closeAdBtn.addEventListener('click', closeAdModal);
 adModal.addEventListener('click', (e) => { if(e.target === adModal) closeAdModal(); });
 
-// Отправка формы рекламы
 document.getElementById('adForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = document.getElementById('adName').value.trim();
   const contact = document.getElementById('adContact').value.trim();
-  if(!name || !contact) {
-    showAdModalMsg('❌ Заполните имя и контакт', 'error');
-    return;
-  }
-  const formData = {
-    Имя: name,
-    Контакт: contact,
-    Название_компании: document.getElementById('adCompany').value.trim(),
-    Тип_рекламы: document.getElementById('adType').value,
-    Бюджет_реклама: document.getElementById('adBudget').value,
-    Сообщение: document.getElementById('adMessage').value.trim(),
-    Источник: 'Транслитератор-реклама'
-  };
+  if(!name || !contact) { showAdModalMsg('❌ Заполните имя и контакт', 'error'); return; }
+  const formData = { Имя: name, Контакт: contact, Название_компании: document.getElementById('adCompany').value.trim(), Тип_рекламы: document.getElementById('adType').value, Бюджет_реклама: document.getElementById('adBudget').value, Сообщение: document.getElementById('adMessage').value.trim(), Источник: 'Транслитератор-реклама' };
   const submitBtn = document.getElementById('adSubmitBtn');
   const originalText = submitBtn.innerHTML;
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '⏳ Отправка...';
-  try {
-    await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
-    showAdModalMsg('✅ Заявка отправлена!', 'success');
-    document.getElementById('adForm').reset();
-    setTimeout(() => closeAdModal(), 2000);
-  } catch(error) {
-    showAdModalMsg('❌ Ошибка отправки', 'error');
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalText;
-  }
+  submitBtn.disabled = true; submitBtn.innerHTML = '⏳ Отправка...';
+  try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) }); showAdModalMsg('✅ Заявка отправлена!', 'success'); document.getElementById('adForm').reset(); setTimeout(() => closeAdModal(), 2000); } catch(error) { showAdModalMsg('❌ Ошибка отправки', 'error'); } finally { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
 });
-function showAdModalMsg(msg, type) {
-  const msgDiv = document.getElementById('adModalMessage');
-  msgDiv.textContent = msg;
-  msgDiv.className = `modal-message ${type}`;
-  setTimeout(() => { msgDiv.className = 'modal-message'; msgDiv.textContent = ''; }, 3000);
-}
+function showAdModalMsg(msg, type) { const msgDiv = document.getElementById('adModalMessage'); msgDiv.textContent = msg; msgDiv.className = `modal-message ${type}`; setTimeout(() => { msgDiv.className = 'modal-message'; msgDiv.textContent = ''; }, 3000); }
 
 // ========== МОДАЛЬНОЕ ОКНО ДЛЯ ЗАКАЗА САЙТА ==========
 const orderModal = document.getElementById('orderModal');
@@ -969,69 +984,28 @@ const closeOrderBtn = document.getElementById('closeOrderModalBtn');
 const orderScrollUp = document.getElementById('orderScrollUpBtn');
 const orderScrollDown = document.getElementById('orderScrollDownBtn');
 
-function openOrderModal() {
-  orderModal.classList.add('show');
-  document.body.style.overflow = 'hidden';
-  if (orderModalBody) orderModalBody.scrollTop = 0;
-}
-function closeOrderModal() {
-  orderModal.classList.remove('show');
-  document.body.style.overflow = '';
-}
+function openOrderModal() { orderModal.classList.add('show'); document.body.style.overflow = 'hidden'; if (orderModalBody) orderModalBody.scrollTop = 0; }
+function closeOrderModal() { orderModal.classList.remove('show'); document.body.style.overflow = ''; }
 orderScrollUp?.addEventListener('click', () => orderModalBody.scrollBy({ top: -70, behavior: 'smooth' }));
 orderScrollDown?.addEventListener('click', () => orderModalBody.scrollBy({ top: 70, behavior: 'smooth' }));
 openOrderBtn.addEventListener('click', openOrderModal);
 closeOrderBtn.addEventListener('click', closeOrderModal);
 orderModal.addEventListener('click', (e) => { if(e.target === orderModal) closeOrderModal(); });
 
-// Отправка формы заказа сайта
 document.getElementById('orderForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = document.getElementById('orderName').value.trim();
   const contact = document.getElementById('orderContact').value.trim();
-  if(!name || !contact) {
-    showOrderModalMsg('❌ Заполните имя и контакт', 'error');
-    return;
-  }
-  const formData = {
-    Имя: name,
-    Контакт: contact,
-    Тип_сайта: document.getElementById('orderType').value,
-    Бюджет: document.getElementById('orderBudget').value,
-    Сроки: document.getElementById('orderDeadline').value.trim(),
-    Описание: document.getElementById('orderDescription').value.trim(),
-    Источник: 'Транслитератор-заказ_сайта'
-  };
+  if(!name || !contact) { showOrderModalMsg('❌ Заполните имя и контакт', 'error'); return; }
+  const formData = { Имя: name, Контакт: contact, Тип_сайта: document.getElementById('orderType').value, Бюджет: document.getElementById('orderBudget').value, Сроки: document.getElementById('orderDeadline').value.trim(), Описание: document.getElementById('orderDescription').value.trim(), Источник: 'Транслитератор-заказ_сайта' };
   const submitBtn = document.getElementById('orderSubmitBtn');
   const originalText = submitBtn.innerHTML;
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '⏳ Отправка...';
-  try {
-    await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
-    showOrderModalMsg('✅ Заявка отправлена! Мы свяжемся с вами.', 'success');
-    document.getElementById('orderForm').reset();
-    setTimeout(() => closeOrderModal(), 2000);
-  } catch(error) {
-    showOrderModalMsg('❌ Ошибка отправки', 'error');
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalText;
-  }
+  submitBtn.disabled = true; submitBtn.innerHTML = '⏳ Отправка...';
+  try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) }); showOrderModalMsg('✅ Заявка отправлена! Мы свяжемся с вами.', 'success'); document.getElementById('orderForm').reset(); setTimeout(() => closeOrderModal(), 2000); } catch(error) { showOrderModalMsg('❌ Ошибка отправки', 'error'); } finally { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
 });
-function showOrderModalMsg(msg, type) {
-  const msgDiv = document.getElementById('orderModalMessage');
-  msgDiv.textContent = msg;
-  msgDiv.className = `modal-message ${type}`;
-  setTimeout(() => { msgDiv.className = 'modal-message'; msgDiv.textContent = ''; }, 3000);
-}
+function showOrderModalMsg(msg, type) { const msgDiv = document.getElementById('orderModalMessage'); msgDiv.textContent = msg; msgDiv.className = `modal-message ${type}`; setTimeout(() => { msgDiv.className = 'modal-message'; msgDiv.textContent = ''; }, 3000); }
 
-// Закрытие по Escape
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    if (adModal.classList.contains('show')) closeAdModal();
-    if (orderModal.classList.contains('show')) closeOrderModal();
-  }
-});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (adModal.classList.contains('show')) closeAdModal(); if (orderModal.classList.contains('show')) closeOrderModal(); } });
 </script>
 </body>
 </html>
