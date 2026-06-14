@@ -251,6 +251,34 @@
     gap: 8px;
   }
 
+  /* Социальные кнопки-иконки под кнопкой заказа */
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0 10px;
+  }
+  .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(30, 30, 30, 0.8);
+    border: 1px solid rgba(240, 147, 251, 0.4);
+    color: #f093fb;
+    text-decoration: none;
+    font-size: 1.3rem;
+    transition: all 0.2s ease;
+  }
+  .social-icon:hover {
+    transform: scale(1.1);
+    background: rgba(240, 147, 251, 0.3);
+    border-color: #f093fb;
+    color: white;
+  }
+
   .back-link {
     display: inline-flex;
     align-items: center;
@@ -329,35 +357,6 @@
   .modal-message.success { display: block; background: #1e4a2e; color: #90ee90; }
   .modal-message.error { display: block; background: #4a1e1e; color: #ff8888; }
 
-  .floating-buttons {
-    position: fixed;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    z-index: 1000;
-  }
-  .floating-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(30, 30, 30, 0.5);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    text-decoration: none;
-    color: #f093fb;
-    border: 1px solid rgba(240, 147, 251, 0.4);
-    transition: all 0.2s ease;
-  }
-  .floating-btn:hover { transform: scale(1.1); background: rgba(240, 147, 251, 0.3); backdrop-filter: blur(12px); color: white; border-color: #f093fb; }
-  .btn-red { animation: pulse-f 2s infinite; }
-  @keyframes pulse-f { 0% { box-shadow: 0 0 0 0 rgba(240,147,251,0.4); } 70% { box-shadow: 0 0 0 6px rgba(240,147,251,0); } 100% { box-shadow: 0 0 0 0 rgba(240,147,251,0); } }
-
   .seo-footer { text-align: center; margin-top: 30px; padding: 20px 0 10px; border-top: 1px solid #2a2a2a; font-size: 0.7rem; color: #555; }
   .seo-footer a { color: #f093fb; text-decoration: none; }
   .seo-footer a:hover { text-decoration: underline; }
@@ -366,13 +365,12 @@
 
   @media (max-width: 650px) {
     body { padding: 12px; }
-    .floating-buttons { right: 10px; gap: 8px; }
-    .floating-btn { width: 42px; height: 42px; font-size: 1.2rem; }
     .swap-button { width: 40px; height: 40px; }
     .lang-badge { font-size: 0.75rem; padding: 6px 12px; }
     .modal-wrapper { max-width: 95%; }
     .button-group { gap: 8px; }
     .action-btn { padding: 6px 12px; font-size: 0.7rem; }
+    .social-icon { width: 40px; height: 40px; font-size: 1.1rem; }
   }
 </style>
 </head>
@@ -415,7 +413,7 @@
       </div>
     </div>
 
-    <!-- Поле ввода оригинала с кнопками -->
+    <!-- Поле ввода оригинала -->
     <textarea id="inputText" placeholder="Введите текст для перевода... или используйте голосовой ввод 🎤"></textarea>
     
     <div class="button-group">
@@ -438,17 +436,17 @@
   
   <button class="order-site-btn" id="openOrderModalBtn">💻 Заказать веб-сайт</button>
 
+  <!-- Социальные кнопки-иконки (вместо плавающих) -->
+  <div class="social-links">
+    <a href="https://ship-spb.onrender.com/friends" class="social-icon" target="_blank" title="Ship SPB">♥</a>
+    <a href="https://dmitry-ne.onrender.com/" class="social-icon" target="_blank" title="Dmitry NE - Музыка">♪</a>
+    <a href="/" class="social-icon" target="_blank" title="Транслитератор">🔤</a>
+  </div>
+
   <div class="seo-footer">
     <p>🌍 <strong>Переводчик с голосовым вводом</strong> — диктуйте текст, получайте перевод и озвучку. Поддерживает русский, английский и вьетнамский языки. 🎤 🇷🇺 🇬🇧 🇻🇳</p>
     <p>© 2025 <a href="https://translit-eng-rus.onrender.com/">Translit-Eng-Rus</a></p>
   </div>
-</div>
-
-<!-- ПЛАВАЮЩИЕ КНОПКИ -->
-<div class="floating-buttons">
-  <a href="https://ship-spb.onrender.com/friends" class="floating-btn btn-red" target="_blank" title="Ship SPB">♥</a>
-  <a href="https://dmitry-ne.onrender.com/" class="floating-btn" target="_blank" title="Dmitry NE">♪</a>
-  <a href="/" class="floating-btn" target="_blank" title="Транслитератор">🔤</a>
 </div>
 
 <!-- МОДАЛЬНОЕ ОКНО ДЛЯ РЕКЛАМЫ -->
@@ -704,25 +702,16 @@ function startVoiceInput() {
     return;
   }
   
-  // Устанавливаем язык распознавания
   switch(sourceLanguage) {
-    case 'ru':
-      recognition.lang = 'ru-RU';
-      break;
-    case 'en':
-      recognition.lang = 'en-US';
-      break;
-    case 'vi':
-      recognition.lang = 'vi-VN';
-      break;
-    default:
-      recognition.lang = 'ru-RU';
+    case 'ru': recognition.lang = 'ru-RU'; break;
+    case 'en': recognition.lang = 'en-US'; break;
+    case 'vi': recognition.lang = 'vi-VN'; break;
+    default: recognition.lang = 'ru-RU';
   }
   
   try {
     recognition.start();
   } catch(e) {
-    console.log('Recognition start error:', e);
     document.getElementById('translationError').textContent = 'Ошибка запуска микрофона. Попробуйте еще раз.';
   }
 }
@@ -730,35 +719,21 @@ function startVoiceInput() {
 // ========== ГОЛОСОВОЕ ВОСПРОИЗВЕДЕНИЕ ==========
 function speakText(text, language) {
   if (!text || text === '—' || text === 'Переводим...') return;
-  
-  if (window.speechSynthesis.speaking) {
-    window.speechSynthesis.cancel();
-  }
-  
+  if (window.speechSynthesis.speaking) window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
-  
   switch(language) {
-    case 'ru':
-      utterance.lang = 'ru-RU';
-      break;
-    case 'en':
-      utterance.lang = 'en-US';
-      break;
-    case 'vi':
-      utterance.lang = 'vi-VN';
-      break;
-    default:
-      utterance.lang = 'ru-RU';
+    case 'ru': utterance.lang = 'ru-RU'; break;
+    case 'en': utterance.lang = 'en-US'; break;
+    case 'vi': utterance.lang = 'vi-VN'; break;
+    default: utterance.lang = 'ru-RU';
   }
-  
   utterance.rate = 0.9;
   utterance.pitch = 1;
   utterance.volume = 1;
-  
   window.speechSynthesis.speak(utterance);
 }
 
-// Обработчики событий
+// Обработчики
 document.getElementById('voiceInputBtn').addEventListener('click', startVoiceInput);
 document.getElementById('speakOriginalBtn').addEventListener('click', () => {
   const originalText = document.getElementById('inputText').value.trim();
@@ -782,7 +757,6 @@ document.getElementById('translateBtn').addEventListener('click', translateText)
 document.getElementById('swapLangBtn').addEventListener('click', swapLanguages);
 document.getElementById('inputText').addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); translateText(); } });
 
-// Инициализация
 setupDropdowns();
 updateLanguageDisplay();
 initSpeechRecognition();
