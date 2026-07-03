@@ -131,6 +131,48 @@
     100% { box-shadow: 0 0 0 0 rgba(255,68,68,0); }
   }
 
+  /* Круглые иконки-кнопки под полями */
+  .field-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    justify-content: flex-end;
+  }
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(30,30,30,0.9);
+    border: 1px solid #444;
+    color: #888;
+    cursor: pointer;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    padding: 0;
+    flex-shrink: 0;
+  }
+  .icon-btn:hover {
+    background: rgba(240,147,251,0.2);
+    border-color: #f093fb;
+    color: #f093fb;
+    transform: scale(1.08);
+  }
+  .icon-btn.copied {
+    background: rgba(46, 160, 67, 0.25);
+    border-color: #2ea043;
+    color: #2ea043;
+  }
+  .icon-btn.cleared {
+    animation: clearFlash 0.4s ease;
+  }
+  @keyframes clearFlash {
+    0% { background: rgba(255,68,68,0.5); border-color: #ff4444; color: #ff4444; transform: scale(1.1); }
+    100% { background: rgba(30,30,30,0.9); border-color: #444; color: #888; transform: scale(1); }
+  }
+
   button, .btn {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
@@ -207,6 +249,7 @@
     font-size: 1.2rem;
     padding: 0;
     justify-content: center;
+    flex-shrink: 0;
   }
   .swap-button:hover { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); transform: rotate(180deg); }
 
@@ -380,6 +423,7 @@
     .button-group { gap: 8px; }
     .action-btn { padding: 6px 12px; font-size: 0.7rem; }
     .social-icon { width: 40px; height: 40px; font-size: 1.1rem; }
+    .icon-btn { width: 32px; height: 32px; font-size: 0.8rem; }
   }
 </style>
 </head>
@@ -424,6 +468,10 @@
 
     <!-- Поле ввода оригинала -->
     <textarea id="inputText" placeholder="Введите текст для перевода... или используйте голосовой ввод 🎤"></textarea>
+    <div class="field-actions">
+      <button class="icon-btn" id="copyInputBtn" title="Копировать текст">📋</button>
+      <button class="icon-btn" id="clearInputBtn" title="Очистить поле">🗑️</button>
+    </div>
     
     <div class="button-group">
       <button class="action-btn" id="voiceInputBtn" title="Начать/остановить запись">🎤 Голосовой ввод</button>
@@ -437,6 +485,10 @@
     <div class="result-area">
       <div class="result-label">Перевод</div>
       <div class="output-area" id="translationResult">—</div>
+      <div class="field-actions">
+        <button class="icon-btn" id="copyResultBtn" title="Копировать перевод">📋</button>
+        <button class="icon-btn" id="clearResultBtn" title="Очистить перевод">🗑️</button>
+      </div>
       <div class="button-group">
         <button class="action-btn" id="speakTranslationBtn" title="Озвучить перевод">🔊 Озвучить перевод</button>
       </div>
@@ -629,6 +681,43 @@ async function translateText() {
   }
 }
 
+// ========== КОПИРОВАНИЕ И ОЧИСТКА ==========
+function copyText(text, btnElement) {
+  if (!text || text === '—' || text === 'Переводим...') {
+    btnElement.classList.add('copied');
+    setTimeout(() => btnElement.classList.remove('copied'), 1000);
+    return;
+  }
+  
+  navigator.clipboard.writeText(text).then(() => {
+    btnElement.classList.add('copied');
+    setTimeout(() => btnElement.classList.remove('copied'), 1500);
+  }).catch(() => {
+    // fallback
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    btnElement.classList.add('copied');
+    setTimeout(() => btnElement.classList.remove('copied'), 1500);
+  });
+}
+
+function clearText(element, btnElement) {
+  if (element.tagName === 'TEXTAREA') {
+    element.value = '';
+  } else {
+    element.textContent = '—';
+  }
+  btnElement.classList.add('cleared');
+  setTimeout(() => btnElement.classList.remove('cleared'), 400);
+  if (element.id === 'translationResult') {
+    currentTranslation = '';
+  }
+}
+
 // ========== ГОЛОСОВОЙ ВВОД ==========
 function initSpeechRecognition() {
   if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
@@ -639,8 +728,8 @@ function initSpeechRecognition() {
   
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SpeechRecognition();
-  recognition.continuous = false;  // Останавливаемся после паузы
-  recognition.interimResults = false;  // Только финальный результат
+  recognition.continuous = false;
+  recognition.interimResults = false;
   recognition.maxAlternatives = 1;
   
   recognition.onstart = () => {
@@ -662,7 +751,6 @@ function initSpeechRecognition() {
     document.getElementById('voiceStatus').textContent = '🎙️ Запись завершена';
     document.getElementById('voiceStatus').className = 'voice-status';
     
-    // После остановки записи автоматически переводим
     const text = document.getElementById('inputText').value.trim();
     if (text) {
       setTimeout(() => translateText(), 300);
@@ -694,14 +782,12 @@ function initSpeechRecognition() {
   };
   
   recognition.onresult = (event) => {
-    // Берем только финальный результат
     const result = event.results[event.results.length - 1];
     if (result.isFinal) {
       const transcript = result[0].transcript;
       document.getElementById('inputText').value = transcript;
       document.getElementById('voiceStatus').textContent = '✅ Распознано: "' + transcript + '"';
       document.getElementById('voiceStatus').className = 'voice-status';
-      // Перевод будет выполнен после onend
     }
   };
   
@@ -713,13 +799,11 @@ function toggleVoiceInput() {
     if (!initSpeechRecognition()) return;
   }
   
-  // Если уже запись - останавливаем
   if (isRecording) {
     try { recognition.stop(); } catch(e) {}
     return;
   }
   
-  // Устанавливаем язык
   switch(sourceLanguage) {
     case 'ru': recognition.lang = 'ru-RU'; break;
     case 'en': recognition.lang = 'en-US'; break;
@@ -751,8 +835,29 @@ function speakText(text, language) {
   window.speechSynthesis.speak(utterance);
 }
 
-// Обработчики
+// ========== ОБРАБОТЧИКИ ==========
+// Копирование
+document.getElementById('copyInputBtn').addEventListener('click', () => {
+  const text = document.getElementById('inputText').value;
+  copyText(text, document.getElementById('copyInputBtn'));
+});
+document.getElementById('copyResultBtn').addEventListener('click', () => {
+  const text = document.getElementById('translationResult').textContent;
+  copyText(text, document.getElementById('copyResultBtn'));
+});
+
+// Очистка
+document.getElementById('clearInputBtn').addEventListener('click', () => {
+  clearText(document.getElementById('inputText'), document.getElementById('clearInputBtn'));
+});
+document.getElementById('clearResultBtn').addEventListener('click', () => {
+  clearText(document.getElementById('translationResult'), document.getElementById('clearResultBtn'));
+});
+
+// Голосовой ввод
 document.getElementById('voiceInputBtn').addEventListener('click', toggleVoiceInput);
+
+// Озвучка
 document.getElementById('speakOriginalBtn').addEventListener('click', () => {
   const originalText = document.getElementById('inputText').value.trim();
   if (!originalText) {
@@ -771,6 +876,8 @@ document.getElementById('speakTranslationBtn').addEventListener('click', () => {
   }
   speakText(translationText, targetLanguage);
 });
+
+// Перевод
 document.getElementById('translateBtn').addEventListener('click', translateText);
 document.getElementById('swapLangBtn').addEventListener('click', swapLanguages);
 document.getElementById('inputText').addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); translateText(); } });
