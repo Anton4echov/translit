@@ -125,12 +125,6 @@
     border-color: #ff4444;
     animation: pulse 1s infinite;
   }
-  .action-btn.recording-stop {
-    background: #ff8800;
-    color: white;
-    border-color: #ff8800;
-    animation: pulse 1.5s infinite;
-  }
   @keyframes pulse {
     0% { box-shadow: 0 0 0 0 rgba(255,68,68,0.4); }
     70% { box-shadow: 0 0 0 8px rgba(255,68,68,0); }
@@ -432,7 +426,7 @@
     <textarea id="inputText" placeholder="Введите текст для перевода... или используйте голосовой ввод 🎤"></textarea>
     
     <div class="button-group">
-      <button class="action-btn" id="voiceInputBtn" title="Голосовой ввод (постоянный)">🎤 Голосовой ввод</button>
+      <button class="action-btn" id="voiceInputBtn" title="Начать/остановить запись">🎤 Голосовой ввод</button>
       <button class="action-btn" id="speakOriginalBtn" title="Озвучить оригинал">🔊 Озвучить оригинал</button>
     </div>
     <div class="voice-status" id="voiceStatus">🎙️ Нажмите кнопку для голосового ввода</div>
@@ -519,10 +513,6 @@ const langNames = { ru: 'Русский', en: 'English', vi: 'Tiếng Việt' };
 let currentTranslation = '';
 let recognition = null;
 let isRecording = false;
-let isContinuousRecording = false;
-let recognitionTimeout = null;
-let accumulatedText = '';
-let lastFinalText = ''; // для предотвращения дублирования
 
 function updateLanguageDisplay() {
   document.getElementById('sourceLangBtn').textContent = langNames[sourceLanguage] + ' ▼';
@@ -639,7 +629,7 @@ async function translateText() {
   }
 }
 
-// ========== ГОЛОСОВОЙ ВВОД (ПОСТОЯННЫЙ) ==========
+// ========== ГОЛОСОВОЙ ВВОД ==========
 function initSpeechRecognition() {
   if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
     const errorDiv = document.getElementById('translationError');
@@ -649,56 +639,41 @@ function initSpeechRecognition() {
   
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SpeechRecognition();
-  recognition.continuous = true;
-  recognition.interimResults = true;
+  recognition.continuous = false;  // Останавливаемся после паузы
+  recognition.interimResults = false;  // Только финальный результат
   recognition.maxAlternatives = 1;
   
   recognition.onstart = () => {
     isRecording = true;
-    isContinuousRecording = true;
     const voiceBtn = document.getElementById('voiceInputBtn');
-    voiceBtn.classList.add('recording-stop');
-    voiceBtn.innerHTML = '⏹️ Остановить запись';
-    document.getElementById('voiceStatus').textContent = '🎤 Идёт запись... Говорите непрерывно';
+    voiceBtn.classList.add('recording');
+    voiceBtn.innerHTML = '🔴 Запись...';
+    document.getElementById('voiceStatus').textContent = '🎤 Говорите... (запись остановится автоматически)';
     document.getElementById('voiceStatus').className = 'voice-status active';
     document.getElementById('translationError').textContent = '';
-    accumulatedText = '';
-    lastFinalText = '';
+    document.getElementById('inputText').value = '';
   };
   
   recognition.onend = () => {
     isRecording = false;
     const voiceBtn = document.getElementById('voiceInputBtn');
-    voiceBtn.classList.remove('recording', 'recording-stop');
+    voiceBtn.classList.remove('recording');
     voiceBtn.innerHTML = '🎤 Голосовой ввод';
-    document.getElementById('voiceStatus').textContent = '🎙️ Запись остановлена';
+    document.getElementById('voiceStatus').textContent = '🎙️ Запись завершена';
     document.getElementById('voiceStatus').className = 'voice-status';
     
-    if (isContinuousRecording) {
-      setTimeout(() => {
-        if (isContinuousRecording && !isRecording) {
-          try { recognition.start(); } catch(e) {}
-        }
-      }, 100);
+    // После остановки записи автоматически переводим
+    const text = document.getElementById('inputText').value.trim();
+    if (text) {
+      setTimeout(() => translateText(), 300);
     }
   };
   
   recognition.onerror = (event) => {
     console.error('Speech recognition error:', event.error);
-    
-    if (event.error === 'no-speech' && isContinuousRecording) {
-      try { recognition.stop(); } catch(e) {}
-      setTimeout(() => {
-        if (isContinuousRecording && !isRecording) {
-          try { recognition.start(); } catch(e) {}
-        }
-      }, 300);
-      return;
-    }
-    
     isRecording = false;
     const voiceBtn = document.getElementById('voiceInputBtn');
-    voiceBtn.classList.remove('recording', 'recording-stop');
+    voiceBtn.classList.remove('recording');
     voiceBtn.innerHTML = '🎤 Голосовой ввод';
     document.getElementById('voiceStatus').textContent = '❌ Ошибка: ' + event.error;
     document.getElementById('voiceStatus').className = 'voice-status';
@@ -706,79 +681,45 @@ function initSpeechRecognition() {
     let errorMsg = 'Ошибка распознавания. ';
     switch(event.error) {
       case 'not-allowed': errorMsg += 'Разрешите доступ к микрофону.'; break;
+      case 'no-speech': errorMsg += 'Не удалось распознать речь. Попробуйте еще раз.'; break;
       case 'audio-capture': errorMsg += 'Микрофон не обнаружен.'; break;
       default: errorMsg += 'Попробуйте еще раз.';
     }
     document.getElementById('translationError').textContent = errorMsg;
-    
-    if (isContinuousRecording) {
-      setTimeout(() => {
-        if (isContinuousRecording && !isRecording) {
-          try { recognition.start(); } catch(e) {}
-        }
-      }, 2000);
-    }
+    setTimeout(() => {
+      if (document.getElementById('translationError').textContent === errorMsg) {
+        document.getElementById('translationError').textContent = '';
+      }
+    }, 3000);
   };
   
   recognition.onresult = (event) => {
-    const inputTextArea = document.getElementById('inputText');
-    let newFinalText = '';
-    let interimText = '';
-    
-    // Собираем все новые результаты
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      if (event.results[i].isFinal) {
-        newFinalText += event.results[i][0].transcript;
-      } else {
-        interimText += event.results[i][0].transcript;
-      }
-    }
-    
-    // Если есть финальный текст и он не равен последнему добавленному
-    if (newFinalText) {
-      // Проверяем, не является ли этот текст уже добавленным (защита от дублей)
-      if (!lastFinalText.includes(newFinalText) && newFinalText !== lastFinalText) {
-        if (accumulatedText) accumulatedText += ' ';
-        accumulatedText += newFinalText;
-        lastFinalText = newFinalText;
-        inputTextArea.value = accumulatedText;
-        document.getElementById('voiceStatus').textContent = '🎤 Распознано: ' + newFinalText;
-        
-        // Автоперевод
-        clearTimeout(recognitionTimeout);
-        recognitionTimeout = setTimeout(() => {
-          if (inputTextArea.value.trim()) translateText();
-        }, 800);
-      } else if (newFinalText === lastFinalText) {
-        // Текст уже добавлен, ничего не делаем
-      }
-    }
-    
-    // Показываем промежуточные результаты
-    if (interimText) {
-      const displayText = accumulatedText + (accumulatedText ? ' ' : '') + interimText;
-      inputTextArea.value = displayText;
+    // Берем только финальный результат
+    const result = event.results[event.results.length - 1];
+    if (result.isFinal) {
+      const transcript = result[0].transcript;
+      document.getElementById('inputText').value = transcript;
+      document.getElementById('voiceStatus').textContent = '✅ Распознано: "' + transcript + '"';
+      document.getElementById('voiceStatus').className = 'voice-status';
+      // Перевод будет выполнен после onend
     }
   };
   
   return true;
 }
 
-function startVoiceInput() {
+function toggleVoiceInput() {
   if (!recognition) {
     if (!initSpeechRecognition()) return;
   }
   
+  // Если уже запись - останавливаем
   if (isRecording) {
-    isContinuousRecording = false;
     try { recognition.stop(); } catch(e) {}
     return;
   }
   
-  isContinuousRecording = true;
-  accumulatedText = '';
-  lastFinalText = '';
-  
+  // Устанавливаем язык
   switch(sourceLanguage) {
     case 'ru': recognition.lang = 'ru-RU'; break;
     case 'en': recognition.lang = 'en-US'; break;
@@ -790,7 +731,6 @@ function startVoiceInput() {
     recognition.start();
   } catch(e) {
     document.getElementById('translationError').textContent = 'Ошибка запуска микрофона. Попробуйте еще раз.';
-    isContinuousRecording = false;
   }
 }
 
@@ -812,7 +752,7 @@ function speakText(text, language) {
 }
 
 // Обработчики
-document.getElementById('voiceInputBtn').addEventListener('click', startVoiceInput);
+document.getElementById('voiceInputBtn').addEventListener('click', toggleVoiceInput);
 document.getElementById('speakOriginalBtn').addEventListener('click', () => {
   const originalText = document.getElementById('inputText').value.trim();
   if (!originalText) {
