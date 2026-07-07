@@ -8,8 +8,6 @@
 <meta name="keywords" content="переводчик онлайн, голосовой ввод, диктовка, speech recognition, русско-английский перевод, русско-вьетнамский перевод, озвучка текста">
 <meta name="author" content="Translit Service">
 <meta name="robots" content="index, follow">
-<meta name="googlebot" content="index, follow">
-<meta name="yandex" content="index, follow">
 <link rel="canonical" href="https://translit-eng-rus.onrender.com/ru-en.html">
 <meta property="og:title" content="Переводчик с голосовым вводом | Русско-английский и вьетнамский">
 <meta property="og:description" content="Перевод текста, голосовой ввод и озвучка. Бесплатно.">
@@ -45,6 +43,44 @@
   }
 
   .container { max-width: 800px; margin: 0 auto; }
+
+  .lang-switch-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+  .lang-switch-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(30,30,30,0.9);
+    border: 1px solid #444;
+    border-radius: 30px;
+    padding: 6px 14px 6px 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    color: #e0e0e0;
+  }
+  .lang-switch-btn:hover {
+    background: rgba(240,147,251,0.15);
+    border-color: #f093fb;
+    transform: scale(1.02);
+  }
+  .lang-switch-btn .flag {
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+  .lang-switch-btn .lang-label {
+    font-weight: 500;
+  }
+  .lang-switch-btn .lang-label.active-lang {
+    color: #f093fb;
+  }
+  .lang-switch-btn .lang-label.inactive-lang {
+    color: #666;
+  }
 
   h1 { font-size: 1.6rem; text-align: center; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 8px; font-weight: 600; }
   h2 { font-size: 1rem; color: #f093fb; margin-bottom: 12px; font-weight: 500; text-align: center; }
@@ -131,6 +167,81 @@
     100% { box-shadow: 0 0 0 0 rgba(255,68,68,0); }
   }
 
+  .field-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    justify-content: flex-end;
+  }
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(30,30,30,0.9);
+    border: 1px solid #444;
+    color: #888;
+    cursor: pointer;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    padding: 0;
+    flex-shrink: 0;
+  }
+  .icon-btn:hover {
+    background: rgba(240,147,251,0.2);
+    border-color: #f093fb;
+    color: #f093fb;
+    transform: scale(1.08);
+  }
+  .icon-btn.copied {
+    background: rgba(46, 160, 67, 0.25);
+    border-color: #2ea043;
+    color: #2ea043;
+  }
+  .icon-btn.cleared {
+    animation: clearFlash 0.4s ease;
+  }
+  @keyframes clearFlash {
+    0% { background: rgba(255,68,68,0.5); border-color: #ff4444; color: #ff4444; transform: scale(1.1); }
+    100% { background: rgba(30,30,30,0.9); border-color: #444; color: #888; transform: scale(1); }
+  }
+
+  .translate-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0 0 0;
+  }
+  .translate-icon-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border: none;
+    color: white;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(240,147,251,0.3);
+  }
+  .translate-icon-btn:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 6px 25px rgba(240,147,251,0.5);
+  }
+  .translate-icon-btn:active {
+    transform: scale(0.95);
+  }
+  .translate-icon-btn.loading {
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
   button, .btn {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
@@ -207,6 +318,7 @@
     font-size: 1.2rem;
     padding: 0;
     justify-content: center;
+    flex-shrink: 0;
   }
   .swap-button:hover { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); transform: rotate(180deg); }
 
@@ -219,6 +331,16 @@
     margin-bottom: 6px;
   }
   .error { color: #f5576c; margin-top: 10px; text-align: center; font-size: 0.75rem; }
+  
+  .voice-status {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #f093fb;
+    margin-top: 6px;
+    min-height: 24px;
+    transition: all 0.3s;
+  }
+  .voice-status.active { color: #ff4444; font-weight: 600; }
 
   .adv-block {
     background: linear-gradient(135deg, #141414 0%, #1a1a1a 100%);
@@ -251,7 +373,6 @@
     gap: 8px;
   }
 
-  /* Социальные кнопки-иконки под кнопкой заказа */
   .social-links {
     display: flex;
     justify-content: center;
@@ -361,8 +482,6 @@
   .seo-footer a { color: #f093fb; text-decoration: none; }
   .seo-footer a:hover { text-decoration: underline; }
 
-  @keyframes spin { to { transform: rotate(360deg); } }
-
   @media (max-width: 650px) {
     body { padding: 12px; }
     .swap-button { width: 40px; height: 40px; }
@@ -371,72 +490,88 @@
     .button-group { gap: 8px; }
     .action-btn { padding: 6px 12px; font-size: 0.7rem; }
     .social-icon { width: 40px; height: 40px; font-size: 1.1rem; }
+    .icon-btn { width: 32px; height: 32px; font-size: 0.8rem; }
+    .lang-switch-btn { font-size: 0.7rem; padding: 4px 10px 4px 8px; }
+    .lang-switch-btn .flag { font-size: 1.2rem; }
+    .translate-icon-btn { width: 48px; height: 48px; font-size: 1.4rem; }
   }
 </style>
 </head>
 <body>
 <div class="container">
-  <a href="/" class="back-link">← Назад к транслитератору</a>
+  <div class="lang-switch-wrapper">
+    <button class="lang-switch-btn" id="siteLangSwitch" title="Переключить язык сайта">
+      <span class="flag" id="siteFlag">🇷🇺</span>
+      <span class="lang-label active-lang" id="siteLangLabel">RU</span>
+      <span style="color:#666;font-weight:300;">/</span>
+      <span class="lang-label inactive-lang" id="siteLangLabel2">EN</span>
+    </button>
+  </div>
+
+  <a href="/" class="back-link" id="backLink">← Назад к транслитератору</a>
   
-  <h1>🌐 Переводчик онлайн</h1>
-  <h2>Русский ↔ English ↔ Tiếng Việt</h2>
+  <h1 id="mainTitle">🌐 Переводчик онлайн</h1>
+  <h2 id="subTitle">Русский ↔ English ↔ Tiếng Việt</h2>
   
   <div class="adv-block">
-    <span class="adv-text">📢 Здесь может быть ваша реклама</span>
-    <button class="ad-button" id="openAdModalBtn">📝 Подать заявку</button>
+    <span class="adv-text" id="adText">📢 Здесь может быть ваша реклама</span>
+    <button class="ad-button" id="openAdModalBtn"><span id="adBtnText">📝 Подать заявку</span></button>
   </div>
 
   <div class="card">
     <div class="language-selector">
       <div class="lang-box">
-        <div class="lang-label">Язык источника</div>
+        <div class="lang-label" id="sourceLangLabel">Язык источника</div>
         <div class="lang-dropdown" id="sourceDropdown">
           <div class="lang-badge" id="sourceLangBtn">Русский ▼</div>
-          <div class="dropdown-content">
-            <a href="#" data-lang="ru">Русский</a>
-            <a href="#" data-lang="en">English</a>
-            <a href="#" data-lang="vi">Tiếng Việt</a>
+          <div class="dropdown-content" id="sourceDropdownContent">
+            <a href="#" data-lang="ru" id="sourceLangRu">Русский</a>
+            <a href="#" data-lang="en" id="sourceLangEn">English</a>
+            <a href="#" data-lang="vi" id="sourceLangVi">Tiếng Việt</a>
           </div>
         </div>
       </div>
       <button class="swap-button" id="swapLangBtn" title="Поменять языки">↻</button>
       <div class="lang-box">
-        <div class="lang-label">Язык перевода</div>
+        <div class="lang-label" id="targetLangLabel">Язык перевода</div>
         <div class="lang-dropdown" id="targetDropdown">
           <div class="lang-badge" id="targetLangBtn">English ▼</div>
-          <div class="dropdown-content">
-            <a href="#" data-lang="en">English</a>
-            <a href="#" data-lang="vi">Tiếng Việt</a>
-            <a href="#" data-lang="ru">Русский</a>
+          <div class="dropdown-content" id="targetDropdownContent">
+            <a href="#" data-lang="en" id="targetLangEn">English</a>
+            <a href="#" data-lang="vi" id="targetLangVi">Tiếng Việt</a>
+            <a href="#" data-lang="ru" id="targetLangRu">Русский</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Поле ввода оригинала -->
     <textarea id="inputText" placeholder="Введите текст для перевода... или используйте голосовой ввод 🎤"></textarea>
-    
-    <div class="button-group">
-      <button class="action-btn" id="voiceInputBtn" title="Голосовой ввод">🎤 Голосовой ввод</button>
-      <button class="action-btn" id="speakOriginalBtn" title="Озвучить оригинал">🔊 Озвучить оригинал</button>
+    <div class="field-actions">
+      <button class="icon-btn" id="speakOriginalIconBtn" title="Озвучить оригинал">🔊</button>
+      <button class="icon-btn" id="voiceInputIconBtn" title="Голосовой ввод">🎤</button>
+      <button class="icon-btn" id="copyInputBtn" title="Копировать текст">📋</button>
+      <button class="icon-btn" id="clearInputBtn" title="Очистить поле">🗑️</button>
+    </div>
+
+    <div class="translate-btn-wrapper">
+      <button class="translate-icon-btn" id="translateBtn" title="Перевести">🌐</button>
     </div>
     
-    <button id="translateBtn">🌐 Перевести</button>
-    
-    <!-- Результат перевода -->
     <div class="result-area">
-      <div class="result-label">Перевод</div>
+      <div class="result-label" id="resultLabel">Перевод</div>
       <div class="output-area" id="translationResult">—</div>
-      <div class="button-group">
-        <button class="action-btn" id="speakTranslationBtn" title="Озвучить перевод">🔊 Озвучить перевод</button>
+      <div class="field-actions">
+        <button class="icon-btn" id="speakTranslationIconBtn" title="Озвучить перевод">🔊</button>
+        <button class="icon-btn" id="copyResultBtn" title="Копировать перевод">📋</button>
+        <button class="icon-btn" id="clearResultBtn" title="Очистить перевод">🗑️</button>
       </div>
     </div>
     <div id="translationError" class="error"></div>
+    <div class="voice-status" id="voiceStatus">🎙️ Нажмите кнопку для голосового ввода</div>
   </div>
   
-  <button class="order-site-btn" id="openOrderModalBtn">💻 Заказать веб-сайт</button>
+  <button class="order-site-btn" id="openOrderModalBtn"><span id="orderBtnText">💻 Заказать веб-сайт</span></button>
 
-  <!-- Социальные кнопки-иконки (вместо плавающих) -->
   <div class="social-links">
     <a href="https://ship-spb.onrender.com/friends" class="social-icon" target="_blank" title="Ship SPB">♥</a>
     <a href="https://dmitry-ne.onrender.com/" class="social-icon" target="_blank" title="Dmitry NE - Музыка">♪</a>
@@ -444,7 +579,7 @@
   </div>
 
   <div class="seo-footer">
-    <p>🌍 <strong>Переводчик с голосовым вводом</strong> — диктуйте текст, получайте перевод и озвучку. Поддерживает русский, английский и вьетнамский языки. 🎤 🇷🇺 🇬🇧 🇻🇳</p>
+    <p id="seoText">🌍 <strong>Переводчик с голосовым вводом</strong> — диктуйте текст, получайте перевод и озвучку. Поддерживает русский, английский и вьетнамский языки. 🎤 🇷🇺 🇬🇧 🇻🇳</p>
     <p>© 2025 <a href="https://translit-eng-rus.onrender.com/">Translit-Eng-Rus</a></p>
   </div>
 </div>
@@ -455,16 +590,31 @@
     <div class="modal-content">
       <div class="modal-header">
         <button class="modal-close" id="closeModalBtn">×</button>
-        <h3>📢 Заявка на рекламу</h3>
+        <h3 id="adModalTitle">📢 Заявка на рекламу</h3>
       </div>
       <div class="modal-body" id="modalBody">
         <form id="adForm">
-          <div class="form-group"><label>Ваше имя <span style="color:#f5576c">*</span></label><input type="text" id="adName" required placeholder="Как вас зовут?"></div>
-          <div class="form-group"><label>Telegram / телефон <span style="color:#f5576c">*</span></label><input type="text" id="adContact" required placeholder="@username или +7..."></div>
-          <div class="form-group"><label>Компания / бренд</label><input type="text" id="adCompany" placeholder="Название"></div>
-          <div class="form-group"><label>Тип рекламы</label><select id="adType"><option>Баннер / текст</option><option>Партнёрство</option><option>Премиум</option><option>Другое</option></select></div>
-          <div class="form-group"><label>Бюджет</label><select id="adBudget"><option>до 5 000 ₽</option><option>5 000–15 000 ₽</option><option>15 000–30 000 ₽</option><option>от 30 000 ₽</option><option selected>Обсудим</option></select></div>
-          <div class="form-group"><label>Сообщение</label><textarea id="adMessage" rows="2" placeholder="Ваши пожелания..."></textarea></div>
+          <div class="form-group"><label id="adNameLabel">Ваше имя <span style="color:#f5576c">*</span></label><input type="text" id="adName" required placeholder="Как вас зовут?"></div>
+          <div class="form-group"><label id="adContactLabel">Telegram / телефон <span style="color:#f5576c">*</span></label><input type="text" id="adContact" required placeholder="@username или +7..."></div>
+          <div class="form-group"><label id="adCompanyLabel">Компания / бренд</label><input type="text" id="adCompany" placeholder="Название"></div>
+          <div class="form-group"><label id="adTypeLabel">Тип рекламы</label>
+            <select id="adType">
+              <option id="adTypeBanner" value="Баннер / текст">Баннер / текст</option>
+              <option id="adTypePartner" value="Партнёрство">Партнёрство</option>
+              <option id="adTypePremium" value="Премиум">Премиум</option>
+              <option id="adTypeOther" value="Другое">Другое</option>
+            </select>
+          </div>
+          <div class="form-group"><label id="adBudgetLabel">Бюджет</label>
+            <select id="adBudget">
+              <option id="adBudget1" value="до 5 000 ₽">до 5 000 ₽</option>
+              <option id="adBudget2" value="5 000–15 000 ₽">5 000–15 000 ₽</option>
+              <option id="adBudget3" value="15 000–30 000 ₽">15 000–30 000 ₽</option>
+              <option id="adBudget4" value="от 30 000 ₽">от 30 000 ₽</option>
+              <option id="adBudgetDiscuss" value="Обсудим" selected>Обсудим</option>
+            </select>
+          </div>
+          <div class="form-group"><label id="adMessageLabel">Сообщение</label><textarea id="adMessage" rows="2" placeholder="Ваши пожелания..."></textarea></div>
           <button type="submit" id="adSubmitBtn">📨 Отправить заявку</button>
           <div id="adModalMessage" class="modal-message"></div>
         </form>
@@ -479,16 +629,34 @@
     <div class="modal-content">
       <div class="modal-header">
         <button class="modal-close" id="closeOrderModalBtn">×</button>
-        <h3>💻 Заказ веб-сайта</h3>
+        <h3 id="orderModalTitle">💻 Заказ веб-сайта</h3>
       </div>
       <div class="modal-body" id="orderModalBody">
         <form id="orderForm">
-          <div class="form-group"><label>Ваше имя <span style="color:#f5576c">*</span></label><input type="text" id="orderName" required placeholder="Как вас зовут?"></div>
-          <div class="form-group"><label>Telegram / телефон <span style="color:#f5576c">*</span></label><input type="text" id="orderContact" required placeholder="@username или +7..."></div>
-          <div class="form-group"><label>Тип сайта</label><select id="orderType"><option>Лендинг / Сайт-визитка</option><option>Многостраничный сайт</option><option>Интернет-магазин</option><option>Сайт с интеграцией</option><option>Telegram бот</option><option>Другое</option></select></div>
-          <div class="form-group"><label>Бюджет</label><select id="orderBudget"><option>до 10 000 ₽</option><option>10 000–20 000 ₽</option><option>20 000–35 000 ₽</option><option>35 000–50 000 ₽</option><option>от 50 000 ₽</option><option selected>Обсудим</option></select></div>
-          <div class="form-group"><label>Сроки</label><input type="text" id="orderDeadline" placeholder="например: через 2 недели"></div>
-          <div class="form-group"><label>Описание проекта</label><textarea id="orderDescription" rows="2" placeholder="Расскажите о своих пожеланиях..."></textarea></div>
+          <div class="form-group"><label id="orderNameLabel">Ваше имя <span style="color:#f5576c">*</span></label><input type="text" id="orderName" required placeholder="Как вас зовут?"></div>
+          <div class="form-group"><label id="orderContactLabel">Telegram / телефон <span style="color:#f5576c">*</span></label><input type="text" id="orderContact" required placeholder="@username или +7..."></div>
+          <div class="form-group"><label id="orderTypeLabel">Тип сайта</label>
+            <select id="orderType">
+              <option id="orderTypeLanding" value="Лендинг / Сайт-визитка">Лендинг / Сайт-визитка</option>
+              <option id="orderTypeMulti" value="Многостраничный сайт">Многостраничный сайт</option>
+              <option id="orderTypeShop" value="Интернет-магазин">Интернет-магазин</option>
+              <option id="orderTypeIntegration" value="Сайт с интеграцией">Сайт с интеграцией</option>
+              <option id="orderTypeBot" value="Telegram бот">Telegram бот</option>
+              <option id="orderTypeOther" value="Другое">Другое</option>
+            </select>
+          </div>
+          <div class="form-group"><label id="orderBudgetLabel">Бюджет</label>
+            <select id="orderBudget">
+              <option id="orderBudget1" value="до 10 000 ₽">до 10 000 ₽</option>
+              <option id="orderBudget2" value="10 000–20 000 ₽">10 000–20 000 ₽</option>
+              <option id="orderBudget3" value="20 000–35 000 ₽">20 000–35 000 ₽</option>
+              <option id="orderBudget4" value="35 000–50 000 ₽">35 000–50 000 ₽</option>
+              <option id="orderBudget5" value="от 50 000 ₽">от 50 000 ₽</option>
+              <option id="orderBudgetDiscuss" value="Обсудим" selected>Обсудим</option>
+            </select>
+          </div>
+          <div class="form-group"><label id="orderDeadlineLabel">Сроки</label><input type="text" id="orderDeadline" placeholder="например: через 2 недели"></div>
+          <div class="form-group"><label id="orderDescLabel">Описание проекта</label><textarea id="orderDescription" rows="2" placeholder="Расскажите о своих пожеланиях..."></textarea></div>
           <button type="submit" id="orderSubmitBtn">📨 Отправить заявку</button>
           <div id="orderModalMessage" class="modal-message"></div>
         </form>
@@ -505,6 +673,258 @@ let currentTranslation = '';
 let recognition = null;
 let isRecording = false;
 
+// ========== ЯЗЫК ИНТЕРФЕЙСА ==========
+let siteLang = 'ru';
+
+const translations = {
+  ru: {
+    backLink: '← Назад к транслитератору',
+    mainTitle: '🌐 Переводчик онлайн',
+    subTitle: 'Русский ↔ English ↔ Tiếng Việt',
+    adText: '📢 Здесь может быть ваша реклама',
+    adBtn: '📝 Подать заявку',
+    sourceLangLabel: 'Язык источника',
+    targetLangLabel: 'Язык перевода',
+    inputPlaceholder: 'Введите текст для перевода... или используйте голосовой ввод 🎤',
+    resultLabel: 'Перевод',
+    orderBtn: '💻 Заказать веб-сайт',
+    seoText: '🌍 <strong>Переводчик с голосовым вводом</strong> — диктуйте текст, получайте перевод и озвучку. Поддерживает русский, английский и вьетнамский языки. 🎤 🇷🇺 🇬🇧 🇻🇳',
+    voiceStatus: '🎙️ Нажмите кнопку для голосового ввода',
+    recording: '🔴 Запись...',
+    recordingDone: '🎙️ Запись завершена',
+    speakHint: '🎤 Говорите... (запись остановится автоматически)',
+    errorNoText: 'Нет текста для озвучки',
+    errorNoTranslate: 'Нет перевода для озвучки',
+    errorEnterText: 'Введите текст для перевода',
+    copyTitle: 'Копировать текст',
+    clearTitle: 'Очистить поле',
+    copyResultTitle: 'Копировать перевод',
+    clearResultTitle: 'Очистить перевод',
+    swapTitle: 'Поменять языки',
+    adModalTitle: '📢 Заявка на рекламу',
+    orderModalTitle: '💻 Заказ веб-сайта',
+    adNameLabel: 'Ваше имя *',
+    adContactLabel: 'Telegram / телефон *',
+    adCompanyLabel: 'Компания / бренд',
+    adTypeLabel: 'Тип рекламы',
+    adBudgetLabel: 'Бюджет',
+    adMessageLabel: 'Сообщение',
+    adSubmit: '📨 Отправить заявку',
+    orderNameLabel: 'Ваше имя *',
+    orderContactLabel: 'Telegram / телефон *',
+    orderTypeLabel: 'Тип сайта',
+    orderBudgetLabel: 'Бюджет',
+    orderDeadlineLabel: 'Сроки',
+    orderDescLabel: 'Описание проекта',
+    orderSubmit: '📨 Отправить заявку',
+    langRu: 'Русский',
+    langEn: 'English',
+    langVi: 'Tiếng Việt',
+    adTypeBanner: 'Баннер / текст',
+    adTypePartner: 'Партнёрство',
+    adTypePremium: 'Премиум',
+    adTypeOther: 'Другое',
+    adBudget1: 'до 5 000 ₽',
+    adBudget2: '5 000–15 000 ₽',
+    adBudget3: '15 000–30 000 ₽',
+    adBudget4: 'от 30 000 ₽',
+    adBudgetDiscuss: 'Обсудим',
+    orderTypeLanding: 'Лендинг / Сайт-визитка',
+    orderTypeMulti: 'Многостраничный сайт',
+    orderTypeShop: 'Интернет-магазин',
+    orderTypeIntegration: 'Сайт с интеграцией',
+    orderTypeBot: 'Telegram бот',
+    orderTypeOther: 'Другое',
+    orderBudget1: 'до 10 000 ₽',
+    orderBudget2: '10 000–20 000 ₽',
+    orderBudget3: '20 000–35 000 ₽',
+    orderBudget4: '35 000–50 000 ₽',
+    orderBudget5: 'от 50 000 ₽',
+    orderBudgetDiscuss: 'Обсудим',
+    adNamePlaceholder: 'Как вас зовут?',
+    adContactPlaceholder: '@username или +7...',
+    adCompanyPlaceholder: 'Название',
+    adMessagePlaceholder: 'Ваши пожелания...',
+    orderNamePlaceholder: 'Как вас зовут?',
+    orderContactPlaceholder: '@username или +7...',
+    orderDeadlinePlaceholder: 'например: через 2 недели',
+    orderDescPlaceholder: 'Расскажите о своих пожеланиях...'
+  },
+  en: {
+    backLink: '← Back to transliterator',
+    mainTitle: '🌐 Online Translator',
+    subTitle: 'Russian ↔ English ↔ Vietnamese',
+    adText: '📢 Your ad here',
+    adBtn: '📝 Submit ad request',
+    sourceLangLabel: 'Source language',
+    targetLangLabel: 'Target language',
+    inputPlaceholder: 'Enter text to translate... or use voice input 🎤',
+    resultLabel: 'Translation',
+    orderBtn: '💻 Order a website',
+    seoText: '🌍 <strong>Voice input translator</strong> — dictate text, get translation and voiceover. Supports Russian, English and Vietnamese. 🎤 🇷🇺 🇬🇧 🇻🇳',
+    voiceStatus: '🎙️ Click the button for voice input',
+    recording: '🔴 Recording...',
+    recordingDone: '🎙️ Recording finished',
+    speakHint: '🎤 Speak... (recording will stop automatically)',
+    errorNoText: 'No text to speak',
+    errorNoTranslate: 'No translation to speak',
+    errorEnterText: 'Enter text to translate',
+    copyTitle: 'Copy text',
+    clearTitle: 'Clear field',
+    copyResultTitle: 'Copy translation',
+    clearResultTitle: 'Clear translation',
+    swapTitle: 'Swap languages',
+    adModalTitle: '📢 Ad request',
+    orderModalTitle: '💻 Website order',
+    adNameLabel: 'Your name *',
+    adContactLabel: 'Telegram / phone *',
+    adCompanyLabel: 'Company / brand',
+    adTypeLabel: 'Ad type',
+    adBudgetLabel: 'Budget',
+    adMessageLabel: 'Message',
+    adSubmit: '📨 Submit request',
+    orderNameLabel: 'Your name *',
+    orderContactLabel: 'Telegram / phone *',
+    orderTypeLabel: 'Website type',
+    orderBudgetLabel: 'Budget',
+    orderDeadlineLabel: 'Deadline',
+    orderDescLabel: 'Project description',
+    orderSubmit: '📨 Submit request',
+    langRu: 'Russian',
+    langEn: 'English',
+    langVi: 'Vietnamese',
+    adTypeBanner: 'Banner / text',
+    adTypePartner: 'Partnership',
+    adTypePremium: 'Premium',
+    adTypeOther: 'Other',
+    adBudget1: 'up to 5,000 ₽',
+    adBudget2: '5,000–15,000 ₽',
+    adBudget3: '15,000–30,000 ₽',
+    adBudget4: 'from 30,000 ₽',
+    adBudgetDiscuss: 'Discuss',
+    orderTypeLanding: 'Landing / Business card',
+    orderTypeMulti: 'Multi-page website',
+    orderTypeShop: 'Online store',
+    orderTypeIntegration: 'Website with integration',
+    orderTypeBot: 'Telegram bot',
+    orderTypeOther: 'Other',
+    orderBudget1: 'up to 10,000 ₽',
+    orderBudget2: '10,000–20,000 ₽',
+    orderBudget3: '20,000–35,000 ₽',
+    orderBudget4: '35,000–50,000 ₽',
+    orderBudget5: 'from 50,000 ₽',
+    orderBudgetDiscuss: 'Discuss',
+    adNamePlaceholder: 'What is your name?',
+    adContactPlaceholder: '@username or +7...',
+    adCompanyPlaceholder: 'Name',
+    adMessagePlaceholder: 'Your wishes...',
+    orderNamePlaceholder: 'What is your name?',
+    orderContactPlaceholder: '@username or +7...',
+    orderDeadlinePlaceholder: 'e.g.: in 2 weeks',
+    orderDescPlaceholder: 'Tell us about your wishes...'
+  }
+};
+
+function setSiteLanguage(lang) {
+  siteLang = lang;
+  const t = translations[lang];
+  
+  document.getElementById('backLink').textContent = t.backLink;
+  document.getElementById('mainTitle').textContent = t.mainTitle;
+  document.getElementById('subTitle').textContent = t.subTitle;
+  document.getElementById('adText').textContent = t.adText;
+  document.getElementById('adBtnText').textContent = t.adBtn;
+  document.getElementById('sourceLangLabel').textContent = t.sourceLangLabel;
+  document.getElementById('targetLangLabel').textContent = t.targetLangLabel;
+  document.getElementById('inputText').placeholder = t.inputPlaceholder;
+  document.getElementById('resultLabel').textContent = t.resultLabel;
+  document.getElementById('orderBtnText').textContent = t.orderBtn;
+  document.getElementById('seoText').innerHTML = t.seoText;
+  document.getElementById('voiceStatus').textContent = t.voiceStatus;
+  document.getElementById('copyInputBtn').title = t.copyTitle;
+  document.getElementById('clearInputBtn').title = t.clearTitle;
+  document.getElementById('copyResultBtn').title = t.copyResultTitle;
+  document.getElementById('clearResultBtn').title = t.clearResultTitle;
+  document.getElementById('swapLangBtn').title = t.swapTitle;
+  document.getElementById('adModalTitle').textContent = t.adModalTitle;
+  document.getElementById('orderModalTitle').textContent = t.orderModalTitle;
+  document.getElementById('adNameLabel').innerHTML = t.adNameLabel;
+  document.getElementById('adContactLabel').innerHTML = t.adContactLabel;
+  document.getElementById('adCompanyLabel').textContent = t.adCompanyLabel;
+  document.getElementById('adTypeLabel').textContent = t.adTypeLabel;
+  document.getElementById('adBudgetLabel').textContent = t.adBudgetLabel;
+  document.getElementById('adMessageLabel').textContent = t.adMessageLabel;
+  document.getElementById('adSubmitBtn').textContent = t.adSubmit;
+  document.getElementById('orderNameLabel').innerHTML = t.orderNameLabel;
+  document.getElementById('orderContactLabel').innerHTML = t.orderContactLabel;
+  document.getElementById('orderTypeLabel').textContent = t.orderTypeLabel;
+  document.getElementById('orderBudgetLabel').textContent = t.orderBudgetLabel;
+  document.getElementById('orderDeadlineLabel').textContent = t.orderDeadlineLabel;
+  document.getElementById('orderDescLabel').textContent = t.orderDescLabel;
+  document.getElementById('orderSubmitBtn').textContent = t.orderSubmit;
+  
+  document.getElementById('adName').placeholder = t.adNamePlaceholder;
+  document.getElementById('adContact').placeholder = t.adContactPlaceholder;
+  document.getElementById('adCompany').placeholder = t.adCompanyPlaceholder;
+  document.getElementById('adMessage').placeholder = t.adMessagePlaceholder;
+  document.getElementById('orderName').placeholder = t.orderNamePlaceholder;
+  document.getElementById('orderContact').placeholder = t.orderContactPlaceholder;
+  document.getElementById('orderDeadline').placeholder = t.orderDeadlinePlaceholder;
+  document.getElementById('orderDescription').placeholder = t.orderDescPlaceholder;
+  
+  document.getElementById('adTypeBanner').textContent = t.adTypeBanner;
+  document.getElementById('adTypePartner').textContent = t.adTypePartner;
+  document.getElementById('adTypePremium').textContent = t.adTypePremium;
+  document.getElementById('adTypeOther').textContent = t.adTypeOther;
+  document.getElementById('adBudget1').textContent = t.adBudget1;
+  document.getElementById('adBudget2').textContent = t.adBudget2;
+  document.getElementById('adBudget3').textContent = t.adBudget3;
+  document.getElementById('adBudget4').textContent = t.adBudget4;
+  document.getElementById('adBudgetDiscuss').textContent = t.adBudgetDiscuss;
+  document.getElementById('orderTypeLanding').textContent = t.orderTypeLanding;
+  document.getElementById('orderTypeMulti').textContent = t.orderTypeMulti;
+  document.getElementById('orderTypeShop').textContent = t.orderTypeShop;
+  document.getElementById('orderTypeIntegration').textContent = t.orderTypeIntegration;
+  document.getElementById('orderTypeBot').textContent = t.orderTypeBot;
+  document.getElementById('orderTypeOther').textContent = t.orderTypeOther;
+  document.getElementById('orderBudget1').textContent = t.orderBudget1;
+  document.getElementById('orderBudget2').textContent = t.orderBudget2;
+  document.getElementById('orderBudget3').textContent = t.orderBudget3;
+  document.getElementById('orderBudget4').textContent = t.orderBudget4;
+  document.getElementById('orderBudget5').textContent = t.orderBudget5;
+  document.getElementById('orderBudgetDiscuss').textContent = t.orderBudgetDiscuss;
+  
+  document.getElementById('sourceLangRu').textContent = t.langRu;
+  document.getElementById('sourceLangEn').textContent = t.langEn;
+  document.getElementById('sourceLangVi').textContent = t.langVi;
+  document.getElementById('targetLangRu').textContent = t.langRu;
+  document.getElementById('targetLangEn').textContent = t.langEn;
+  document.getElementById('targetLangVi').textContent = t.langVi;
+  
+  const flag = document.getElementById('siteFlag');
+  const label1 = document.getElementById('siteLangLabel');
+  const label2 = document.getElementById('siteLangLabel2');
+  if (lang === 'ru') {
+    flag.textContent = '🇷🇺';
+    label1.textContent = 'RU';
+    label2.textContent = 'EN';
+    label1.className = 'lang-label active-lang';
+    label2.className = 'lang-label inactive-lang';
+  } else {
+    flag.textContent = '🇬🇧';
+    label1.textContent = 'EN';
+    label2.textContent = 'RU';
+    label1.className = 'lang-label active-lang';
+    label2.className = 'lang-label inactive-lang';
+  }
+}
+
+function toggleSiteLanguage() {
+  const newLang = siteLang === 'ru' ? 'en' : 'ru';
+  setSiteLanguage(newLang);
+}
+
+// ========== ОСТАЛЬНЫЕ ФУНКЦИИ ==========
 function updateLanguageDisplay() {
   document.getElementById('sourceLangBtn').textContent = langNames[sourceLanguage] + ' ▼';
   document.getElementById('targetLangBtn').textContent = langNames[targetLanguage] + ' ▼';
@@ -561,7 +981,7 @@ function swapLanguages() {
   const inputText = document.getElementById('inputText');
   const resultDiv = document.getElementById('translationResult');
   const resultValue = resultDiv.textContent;
-  if (resultValue !== '—' && resultValue !== 'Переводим...' && !resultValue.includes('Ошибка')) {
+  if (resultValue !== '—' && resultValue !== 'Переводим...' && !resultValue.includes('Ошибка') && resultValue !== 'Translating...') {
     inputText.value = resultValue;
     resultDiv.textContent = '—';
     currentTranslation = '';
@@ -575,12 +995,15 @@ async function translateText() {
   const translateBtn = document.getElementById('translateBtn');
   
   errorDiv.textContent = '';
-  if (!inputText) { errorDiv.textContent = 'Введите текст для перевода'; return; }
+  if (!inputText) { 
+    errorDiv.textContent = translations[siteLang].errorEnterText;
+    return; 
+  }
   
   translateBtn.disabled = true;
-  const originalText = translateBtn.innerHTML;
-  translateBtn.innerHTML = '⏳ Перевод...';
-  resultDiv.textContent = 'Переводим...';
+  translateBtn.classList.add('loading');
+  translateBtn.textContent = '⏳';
+  resultDiv.textContent = siteLang === 'ru' ? 'Переводим...' : 'Translating...';
   
   try {
     let translatedText = null;
@@ -613,18 +1036,53 @@ async function translateText() {
   } catch(error) {
     resultDiv.textContent = '—';
     currentTranslation = '';
-    errorDiv.textContent = 'Ошибка перевода. Попробуйте еще раз.';
+    errorDiv.textContent = siteLang === 'ru' ? 'Ошибка перевода. Попробуйте еще раз.' : 'Translation error. Please try again.';
   } finally {
     translateBtn.disabled = false;
-    translateBtn.innerHTML = originalText;
+    translateBtn.classList.remove('loading');
+    translateBtn.textContent = '🌐';
   }
 }
 
-// ========== ГОЛОСОВОЙ ВВОД ==========
+function copyText(text, btnElement) {
+  if (!text || text === '—' || text === 'Переводим...' || text === 'Translating...') {
+    btnElement.classList.add('copied');
+    setTimeout(() => btnElement.classList.remove('copied'), 1000);
+    return;
+  }
+  
+  navigator.clipboard.writeText(text).then(() => {
+    btnElement.classList.add('copied');
+    setTimeout(() => btnElement.classList.remove('copied'), 1500);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    btnElement.classList.add('copied');
+    setTimeout(() => btnElement.classList.remove('copied'), 1500);
+  });
+}
+
+function clearText(element, btnElement) {
+  if (element.tagName === 'TEXTAREA') {
+    element.value = '';
+  } else {
+    element.textContent = '—';
+  }
+  btnElement.classList.add('cleared');
+  setTimeout(() => btnElement.classList.remove('cleared'), 400);
+  if (element.id === 'translationResult') {
+    currentTranslation = '';
+  }
+}
+
 function initSpeechRecognition() {
   if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
     const errorDiv = document.getElementById('translationError');
-    errorDiv.textContent = 'Голосовой ввод не поддерживается вашим браузером. Используйте Chrome, Edge или Safari.';
+    errorDiv.textContent = siteLang === 'ru' ? 'Голосовой ввод не поддерживается вашим браузером. Используйте Chrome, Edge или Safari.' : 'Voice input is not supported by your browser. Use Chrome, Edge or Safari.';
     return false;
   }
   
@@ -636,37 +1094,44 @@ function initSpeechRecognition() {
   
   recognition.onstart = () => {
     isRecording = true;
-    const voiceBtn = document.getElementById('voiceInputBtn');
+    const voiceBtn = document.getElementById('voiceInputIconBtn');
     voiceBtn.classList.add('recording');
-    voiceBtn.innerHTML = '🔴 Запись...';
-    document.getElementById('translationError').textContent = '🎤 Говорите...';
+    voiceBtn.textContent = '🔴';
+    document.getElementById('voiceStatus').textContent = translations[siteLang].speakHint;
+    document.getElementById('voiceStatus').className = 'voice-status active';
+    document.getElementById('translationError').textContent = '';
+    document.getElementById('inputText').value = '';
   };
   
   recognition.onend = () => {
     isRecording = false;
-    const voiceBtn = document.getElementById('voiceInputBtn');
+    const voiceBtn = document.getElementById('voiceInputIconBtn');
     voiceBtn.classList.remove('recording');
-    voiceBtn.innerHTML = '🎤 Голосовой ввод';
-    setTimeout(() => {
-      if (document.getElementById('translationError').textContent === '🎤 Говорите...') {
-        document.getElementById('translationError').textContent = '';
-      }
-    }, 1000);
+    voiceBtn.textContent = '🎤';
+    document.getElementById('voiceStatus').textContent = translations[siteLang].recordingDone;
+    document.getElementById('voiceStatus').className = 'voice-status';
+    
+    const text = document.getElementById('inputText').value.trim();
+    if (text) {
+      setTimeout(() => translateText(), 300);
+    }
   };
   
   recognition.onerror = (event) => {
     console.error('Speech recognition error:', event.error);
     isRecording = false;
-    const voiceBtn = document.getElementById('voiceInputBtn');
+    const voiceBtn = document.getElementById('voiceInputIconBtn');
     voiceBtn.classList.remove('recording');
-    voiceBtn.innerHTML = '🎤 Голосовой ввод';
+    voiceBtn.textContent = '🎤';
+    document.getElementById('voiceStatus').textContent = '❌ ' + (siteLang === 'ru' ? 'Ошибка: ' : 'Error: ') + event.error;
+    document.getElementById('voiceStatus').className = 'voice-status';
     
-    let errorMsg = 'Ошибка распознавания. ';
+    let errorMsg = siteLang === 'ru' ? 'Ошибка распознавания. ' : 'Recognition error. ';
     switch(event.error) {
-      case 'not-allowed': errorMsg += 'Разрешите доступ к микрофону.'; break;
-      case 'no-speech': errorMsg += 'Не удалось распознать речь. Попробуйте еще раз.'; break;
-      case 'audio-capture': errorMsg += 'Микрофон не обнаружен.'; break;
-      default: errorMsg += 'Попробуйте еще раз.';
+      case 'not-allowed': errorMsg += siteLang === 'ru' ? 'Разрешите доступ к микрофону.' : 'Allow microphone access.'; break;
+      case 'no-speech': errorMsg += siteLang === 'ru' ? 'Не удалось распознать речь. Попробуйте еще раз.' : 'No speech detected. Try again.'; break;
+      case 'audio-capture': errorMsg += siteLang === 'ru' ? 'Микрофон не обнаружен.' : 'Microphone not found.'; break;
+      default: errorMsg += siteLang === 'ru' ? 'Попробуйте еще раз.' : 'Try again.';
     }
     document.getElementById('translationError').textContent = errorMsg;
     setTimeout(() => {
@@ -677,28 +1142,25 @@ function initSpeechRecognition() {
   };
   
   recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    const inputTextArea = document.getElementById('inputText');
-    inputTextArea.value = transcript;
-    document.getElementById('translationError').textContent = '✅ Распознано: "' + transcript + '"';
-    setTimeout(() => {
-      if (document.getElementById('translationError').textContent.includes('Распознано')) {
-        document.getElementById('translationError').textContent = '';
-      }
-    }, 2000);
-    translateText();
+    const result = event.results[event.results.length - 1];
+    if (result.isFinal) {
+      const transcript = result[0].transcript;
+      document.getElementById('inputText').value = transcript;
+      document.getElementById('voiceStatus').textContent = '✅ ' + (siteLang === 'ru' ? 'Распознано: "' : 'Recognized: "') + transcript + '"';
+      document.getElementById('voiceStatus').className = 'voice-status';
+    }
   };
   
   return true;
 }
 
-function startVoiceInput() {
+function toggleVoiceInput() {
   if (!recognition) {
     if (!initSpeechRecognition()) return;
   }
   
   if (isRecording) {
-    recognition.stop();
+    try { recognition.stop(); } catch(e) {}
     return;
   }
   
@@ -712,13 +1174,12 @@ function startVoiceInput() {
   try {
     recognition.start();
   } catch(e) {
-    document.getElementById('translationError').textContent = 'Ошибка запуска микрофона. Попробуйте еще раз.';
+    document.getElementById('translationError').textContent = siteLang === 'ru' ? 'Ошибка запуска микрофона. Попробуйте еще раз.' : 'Microphone start error. Try again.';
   }
 }
 
-// ========== ГОЛОСОВОЕ ВОСПРОИЗВЕДЕНИЕ ==========
 function speakText(text, language) {
-  if (!text || text === '—' || text === 'Переводим...') return;
+  if (!text || text === '—' || text === 'Переводим...' || text === 'Translating...') return;
   if (window.speechSynthesis.speaking) window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
   switch(language) {
@@ -733,26 +1194,45 @@ function speakText(text, language) {
   window.speechSynthesis.speak(utterance);
 }
 
-// Обработчики
-document.getElementById('voiceInputBtn').addEventListener('click', startVoiceInput);
-document.getElementById('speakOriginalBtn').addEventListener('click', () => {
+// ========== ОБРАБОТЧИКИ ==========
+document.getElementById('siteLangSwitch').addEventListener('click', toggleSiteLanguage);
+
+document.getElementById('copyInputBtn').addEventListener('click', () => {
+  const text = document.getElementById('inputText').value;
+  copyText(text, document.getElementById('copyInputBtn'));
+});
+document.getElementById('copyResultBtn').addEventListener('click', () => {
+  const text = document.getElementById('translationResult').textContent;
+  copyText(text, document.getElementById('copyResultBtn'));
+});
+
+document.getElementById('clearInputBtn').addEventListener('click', () => {
+  clearText(document.getElementById('inputText'), document.getElementById('clearInputBtn'));
+});
+document.getElementById('clearResultBtn').addEventListener('click', () => {
+  clearText(document.getElementById('translationResult'), document.getElementById('clearResultBtn'));
+});
+
+document.getElementById('voiceInputIconBtn').addEventListener('click', toggleVoiceInput);
+document.getElementById('speakOriginalIconBtn').addEventListener('click', () => {
   const originalText = document.getElementById('inputText').value.trim();
   if (!originalText) {
-    document.getElementById('translationError').textContent = 'Нет текста для озвучки';
+    document.getElementById('translationError').textContent = translations[siteLang].errorNoText;
     setTimeout(() => document.getElementById('translationError').textContent = '', 2000);
     return;
   }
   speakText(originalText, sourceLanguage);
 });
-document.getElementById('speakTranslationBtn').addEventListener('click', () => {
+document.getElementById('speakTranslationIconBtn').addEventListener('click', () => {
   const translationText = document.getElementById('translationResult').textContent;
-  if (!translationText || translationText === '—' || translationText === 'Переводим...') {
-    document.getElementById('translationError').textContent = 'Нет перевода для озвучки';
+  if (!translationText || translationText === '—' || translationText === 'Переводим...' || translationText === 'Translating...') {
+    document.getElementById('translationError').textContent = translations[siteLang].errorNoTranslate;
     setTimeout(() => document.getElementById('translationError').textContent = '', 2000);
     return;
   }
   speakText(translationText, targetLanguage);
 });
+
 document.getElementById('translateBtn').addEventListener('click', translateText);
 document.getElementById('swapLangBtn').addEventListener('click', swapLanguages);
 document.getElementById('inputText').addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); translateText(); } });
@@ -760,11 +1240,11 @@ document.getElementById('inputText').addEventListener('keypress', e => { if (e.k
 setupDropdowns();
 updateLanguageDisplay();
 initSpeechRecognition();
+setSiteLanguage('ru');
 
 // ========== GOOGLE SCRIPT ==========
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzx5KFXhCB9zauBitCsyoWFBNFM08PAJJ1wIL1MTSM4iLg0joTu75058pQFzuNTeVA/exec';
 
-// Модалка рекламы
 const adModal = document.getElementById('adModal'), adModalBody = document.getElementById('modalBody'), openAdBtn = document.getElementById('openAdModalBtn'), closeAdBtn = document.getElementById('closeModalBtn');
 function openAdModal() { adModal.classList.add('show'); document.body.style.overflow = 'hidden'; if (adModalBody) adModalBody.scrollTop = 0; }
 function closeAdModal() { adModal.classList.remove('show'); document.body.style.overflow = ''; }
@@ -774,15 +1254,14 @@ adModal.addEventListener('click', (e) => { if(e.target === adModal) closeAdModal
 document.getElementById('adForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = document.getElementById('adName').value.trim(), contact = document.getElementById('adContact').value.trim();
-  if(!name || !contact) { showAdModalMsg('❌ Заполните имя и контакт', 'error'); return; }
+  if(!name || !contact) { showAdModalMsg('❌ ' + (siteLang === 'ru' ? 'Заполните имя и контакт' : 'Fill in name and contact'), 'error'); return; }
   const formData = { Имя: name, Контакт: contact, Название_компании: document.getElementById('adCompany').value.trim(), Тип_рекламы: document.getElementById('adType').value, Бюджет_реклама: document.getElementById('adBudget').value, Сообщение: document.getElementById('adMessage').value.trim(), Источник: 'Переводчик-реклама' };
   const btn = document.getElementById('adSubmitBtn'), orig = btn.innerHTML;
-  btn.disabled = true; btn.innerHTML = '⏳ Отправка...';
-  try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) }); showAdModalMsg('✅ Заявка отправлена!', 'success'); document.getElementById('adForm').reset(); setTimeout(() => closeAdModal(), 2000); } catch(e) { showAdModalMsg('❌ Ошибка отправки', 'error'); } finally { btn.disabled = false; btn.innerHTML = orig; }
+  btn.disabled = true; btn.innerHTML = '⏳ ' + (siteLang === 'ru' ? 'Отправка...' : 'Sending...');
+  try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) }); showAdModalMsg('✅ ' + (siteLang === 'ru' ? 'Заявка отправлена!' : 'Request sent!'), 'success'); document.getElementById('adForm').reset(); setTimeout(() => closeAdModal(), 2000); } catch(e) { showAdModalMsg('❌ ' + (siteLang === 'ru' ? 'Ошибка отправки' : 'Sending error'), 'error'); } finally { btn.disabled = false; btn.innerHTML = orig; }
 });
 function showAdModalMsg(msg, type) { const d = document.getElementById('adModalMessage'); d.textContent = msg; d.className = `modal-message ${type}`; setTimeout(() => { d.className = 'modal-message'; d.textContent = ''; }, 3000); }
 
-// Модалка заказа
 const orderModal = document.getElementById('orderModal'), orderModalBody = document.getElementById('orderModalBody'), openOrderBtn = document.getElementById('openOrderModalBtn'), closeOrderBtn = document.getElementById('closeOrderModalBtn');
 function openOrderModal() { orderModal.classList.add('show'); document.body.style.overflow = 'hidden'; if (orderModalBody) orderModalBody.scrollTop = 0; }
 function closeOrderModal() { orderModal.classList.remove('show'); document.body.style.overflow = ''; }
@@ -792,11 +1271,11 @@ orderModal.addEventListener('click', (e) => { if(e.target === orderModal) closeO
 document.getElementById('orderForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = document.getElementById('orderName').value.trim(), contact = document.getElementById('orderContact').value.trim();
-  if(!name || !contact) { showOrderModalMsg('❌ Заполните имя и контакт', 'error'); return; }
+  if(!name || !contact) { showOrderModalMsg('❌ ' + (siteLang === 'ru' ? 'Заполните имя и контакт' : 'Fill in name and contact'), 'error'); return; }
   const formData = { Имя: name, Контакт: contact, Тип_сайта: document.getElementById('orderType').value, Бюджет: document.getElementById('orderBudget').value, Сроки: document.getElementById('orderDeadline').value.trim(), Описание: document.getElementById('orderDescription').value.trim(), Источник: 'Переводчик-заказ_сайта' };
   const btn = document.getElementById('orderSubmitBtn'), orig = btn.innerHTML;
-  btn.disabled = true; btn.innerHTML = '⏳ Отправка...';
-  try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) }); showOrderModalMsg('✅ Заявка отправлена!', 'success'); document.getElementById('orderForm').reset(); setTimeout(() => closeOrderModal(), 2000); } catch(e) { showOrderModalMsg('❌ Ошибка отправки', 'error'); } finally { btn.disabled = false; btn.innerHTML = orig; }
+  btn.disabled = true; btn.innerHTML = '⏳ ' + (siteLang === 'ru' ? 'Отправка...' : 'Sending...');
+  try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) }); showOrderModalMsg('✅ ' + (siteLang === 'ru' ? 'Заявка отправлена!' : 'Request sent!'), 'success'); document.getElementById('orderForm').reset(); setTimeout(() => closeOrderModal(), 2000); } catch(e) { showOrderModalMsg('❌ ' + (siteLang === 'ru' ? 'Ошибка отправки' : 'Sending error'), 'error'); } finally { btn.disabled = false; btn.innerHTML = orig; }
 });
 function showOrderModalMsg(msg, type) { const d = document.getElementById('orderModalMessage'); d.textContent = msg; d.className = `modal-message ${type}`; setTimeout(() => { d.className = 'modal-message'; d.textContent = ''; }, 3000); }
 
